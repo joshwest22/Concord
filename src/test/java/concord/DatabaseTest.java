@@ -1,6 +1,5 @@
 package concord;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.MalformedURLException;
@@ -170,9 +169,9 @@ class DatabaseTest
 	void testXMLStorage()
 	{
 		db.storeToDisk();
-		//Database diskF = Database.loadFromDisk();
+		Database diskF = Database.loadFromDisk();
 		
-		//assertTrue(db.equals(diskF));
+		assertTrue(db.equals(diskF));
 	}
 
 }

@@ -47,7 +47,11 @@ public class Group
 		}
 		this.groupID = groupID;
 		this.groupName = groupName;
-		
+	}
+	
+	public Group()
+	{
+		this(0,"groupName");
 	}
 
 	public ArrayList<Channel> getChannels()

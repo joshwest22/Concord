@@ -20,6 +20,17 @@ public class Role
 		this.canCreateChannel = canCreateChannel;
 	}
 	
+	public Role()
+	{
+		this.roleName = "roleName";
+		Group newGroup = new Group();
+		this.myGroup = newGroup;
+		this.canKick = false;
+		this.canLockChannel = false;
+		this.canAssignRole = false;
+		this.canCreateChannel = false;
+	}
+	
 	public String getRoleName()
 	{
 		return roleName;
@@ -96,9 +107,9 @@ public class Role
 				{
 					c.setIsLocked(true); 
 					//reset allowed users
-					c.allowedUsers.clear();
+					c.allowedUserIDs.clear();
 					//only have user that locked channel in allowedList
-					c.allowedUsers.add(userID);
+					c.allowedUserIDs.add(userID);
 					return "Channel "+c.getChannelName()+" been locked.";
 				}
 			}
@@ -117,7 +128,7 @@ public class Role
 				{
 					c.setIsLocked(false); 
 					//reset allowed users
-					c.allowedUsers.clear();
+					c.allowedUserIDs.clear();
 					//add all users?
 					//c.allowedUsers = //get all registered userIDs;
 					return "Channel "+c.getChannelName()+" been locked.";

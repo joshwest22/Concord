@@ -9,7 +9,13 @@ public class Invitation
 	
 	public Invitation()
 	{
-		
+		Message invMsg = new Message();
+		this.inviteMsg = invMsg;
+		Integer gID = -1;
+		this.groupID = gID;
+		Integer invUserID = -1;
+		this.inviteUserID = invUserID;
+		this.inviteAccepted = false;
 	}
 
 	public Invitation(Message inviteMsg, Integer groupID, Integer inviteUserID, Boolean inviteAccepted)

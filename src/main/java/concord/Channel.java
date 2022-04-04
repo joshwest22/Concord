@@ -7,8 +7,20 @@ public class Channel
 	String channelName;
 	Group myGroup;
 	Boolean isLocked = false;
-	ArrayList<Integer> allowedUsers;
+	ArrayList<Integer> allowedUserIDs;
 	ArrayList<Message> messageLog;
+	
+	public Channel()
+	{
+		this.channelName = "default channel name";
+		Group newGroup = new Group();
+		this.myGroup = newGroup;
+		this.isLocked = false;
+		ArrayList<Integer> allowedUsers = new ArrayList<Integer>();
+		this.allowedUserIDs = allowedUsers;
+		ArrayList<Message> msgs = new ArrayList<Message>();
+		this.messageLog = msgs;
+	}
 	
 	public Channel(String channelName, Group myGroup, Boolean isLocked, ArrayList<Integer> allowedUsers,
 			ArrayList<Message> messageLog)
@@ -16,7 +28,7 @@ public class Channel
 		this.channelName = channelName;
 		this.myGroup = myGroup;
 		this.isLocked = isLocked;
-		this.allowedUsers = allowedUsers;
+		this.allowedUserIDs = allowedUsers;
 		this.messageLog = messageLog;
 	}
 
@@ -26,7 +38,7 @@ public class Channel
 		this.channelName = channelName;
 		this.myGroup = myGroup;
 		this.isLocked = false;
-		this.allowedUsers = new ArrayList<Integer>();
+		this.allowedUserIDs = new ArrayList<Integer>();
 		this.messageLog = new ArrayList<Message>();
 	}
 
@@ -62,12 +74,12 @@ public class Channel
 
 	public ArrayList<Integer> getAllowedUsers()
 	{
-		return allowedUsers;
+		return allowedUserIDs;
 	}
 
 	public void setAllowedUsers(ArrayList<Integer> allowedUsers)
 	{
-		this.allowedUsers = allowedUsers;
+		this.allowedUserIDs = allowedUsers;
 	}
 
 	public ArrayList<Message> getMessageLog()
@@ -96,9 +108,9 @@ public class Channel
 		{
 			setIsLocked(true);
 			//remove blacklisted users from allowedUsers
-			allowedUsers.clear();
+			allowedUserIDs.clear();
 			//add only the user who created the locked channel
-			allowedUsers.add(userID);			 
+			allowedUserIDs.add(userID);			 
 		}
 		
 	}
@@ -109,7 +121,7 @@ public class Channel
 		{
 			setIsLocked(false);
 			//reset allowedUsers list; not necessary, but ensures cleanliness
-			allowedUsers.clear();			 
+			allowedUserIDs.clear();			 
 		}
 		
 	}
@@ -121,9 +133,9 @@ public class Channel
 		if (myGroup.getRegisteredUsers().get(adder).getCanLockChannel()) //how do I get user from userID in group
 		{
 			//check whether user is in the channel they are adding someone to
-			if (allowedUsers.contains(adder.getUserID()))
+			if (allowedUserIDs.contains(adder.getUserID()))
 			{
-				allowedUsers.add(addee);
+				allowedUserIDs.add(addee);
 			}
 		}
 		

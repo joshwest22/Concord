@@ -17,7 +17,7 @@ import java.util.Set;
 public class Database
 {
 	HashMap<Integer, Group> groups;
-	//iterable list of users for XML encoding
+	//iterable list of users for XML encoding //turns out this wasn't necessary as HashMaps can be XML encoded
 	ArrayList<Group> listOfGroups;
 	ArrayList<Integer> listOfGroupIDs;
 		
@@ -211,7 +211,7 @@ public class Database
 		{
 			System.out.println("ERROR: While Creating or Opening the File dvd.xml");
 		}
-		encoder.writeObject(users);//sub this/users/groups for one thing in file at a time
+		encoder.writeObject(this);//sub this/users/groups for one thing in file at a time
 		encoder.close();
 	}
 	
@@ -221,7 +221,7 @@ public class Database
 		try {
 			decoder=new XMLDecoder(new BufferedInputStream(new FileInputStream("ConcordDatabase.xml")));
 		} catch (FileNotFoundException e) {
-			System.out.println("ERROR: File dvd.xml not found");
+			System.out.println("ERROR: File ConcordDatabase.xml not found");
 		}
 		Database f = (Database) decoder.readObject();
 		return f;

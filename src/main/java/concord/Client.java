@@ -21,7 +21,13 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 
 	protected Client() throws RemoteException
 	{
-		
+		User user = new User();
+		this.associatedUser = user;
+		Server server = new Server();
+		this.serverContact = server;
+		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
+		this.associatedGroupIDs = myGroupIDs;
+		this.clientName = "name";
 	}
 
 	private static final long serialVersionUID = -6394155878301235563L;

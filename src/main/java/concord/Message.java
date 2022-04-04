@@ -28,6 +28,11 @@ public class Message
 		this.isPinned = false;
 		this.inReplyTo = null;
 	}
+	
+	public Message()
+	{
+		this("msg",-1);
+	}
 
 	public String getText()
 	{

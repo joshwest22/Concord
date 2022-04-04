@@ -1,62 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="17" class="java.beans.XMLDecoder">
- <object class="java.util.HashMap">
-  <void method="put">
-   <int>42</int>
-   <object class="concord.User">
-    <void property="realname">
-     <string>josh</string>
-    </void>
-    <void property="userBio">
-     <string>I like butterflies</string>
-    </void>
-    <void property="userID">
-     <int>42</int>
-    </void>
-    <void property="username">
-     <string>jdubble</string>
-    </void>
-   </object>
+ <object class="concord.Database" id="Database0">
+  <void property="groups">
+   <void method="put">
+    <int>5</int>
+    <object class="concord.Group">
+     <void property="groupID">
+      <int>5</int>
+     </void>
+     <void property="groupName">
+      <string>testCreateGroup</string>
+     </void>
+    </object>
+   </void>
   </void>
-  <void method="put">
-   <int>666</int>
-   <object class="concord.User">
-    <void property="password">
-     <string>hellonearth</string>
-    </void>
-    <void property="realname">
-     <string>lucifer</string>
-    </void>
-    <void property="userBio">
-     <string>I hate butterflies</string>
-    </void>
-    <void property="userID">
-     <int>666</int>
-    </void>
-    <void property="username">
-     <string>d3vil</string>
-    </void>
-   </object>
-  </void>
-  <void method="put">
-   <int>555</int>
-   <object class="concord.User">
-    <void property="password">
-     <string>overwatch22</string>
-    </void>
-    <void property="realname">
-     <string>owen</string>
-    </void>
-    <void property="userBio">
-     <string>As above...</string>
-    </void>
-    <void property="userID">
-     <int>555</int>
-    </void>
-    <void property="username">
-     <string>OVLawd</string>
-    </void>
-   </object>
+  <void property="users">
+   <void method="put">
+    <int>42</int>
+    <object class="concord.User">
+     <void property="realname">
+      <string>josh</string>
+     </void>
+     <void property="userBio">
+      <string>I like butterflies</string>
+     </void>
+     <void property="userID">
+      <int>42</int>
+     </void>
+     <void property="username">
+      <string>jdubble</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <int>666</int>
+    <object class="concord.User">
+     <void property="password">
+      <string>hellonearth</string>
+     </void>
+     <void property="realname">
+      <string>lucifer</string>
+     </void>
+     <void property="userBio">
+      <string>I hate butterflies</string>
+     </void>
+     <void property="userID">
+      <int>666</int>
+     </void>
+     <void property="username">
+      <string>d3vil</string>
+     </void>
+    </object>
+   </void>
+   <void method="put">
+    <int>555</int>
+    <object class="concord.User">
+     <void property="password">
+      <string>overwatch22</string>
+     </void>
+     <void property="realname">
+      <string>owen</string>
+     </void>
+     <void property="userBio">
+      <string>As above...</string>
+     </void>
+     <void property="userID">
+      <int>555</int>
+     </void>
+     <void property="username">
+      <string>OVLawd</string>
+     </void>
+    </object>
+   </void>
   </void>
  </object>
 </java>

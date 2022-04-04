@@ -23,7 +23,12 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	private static final long serialVersionUID = 2580829118905122035L;
 	protected Server() throws RemoteException
 	{
-		super();
+		Database database = new Database();
+		this.db = database ;
+		HashMap<Integer, ArrayList<Client>> groupClients = new HashMap<Integer, ArrayList<Client>>();
+		this.clientsInGroups = groupClients;
+		ArrayList<RMIObserver> obsrvs = new ArrayList<RMIObserver>();
+		this.observers = obsrvs;
 	}
 	
 	ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>();
