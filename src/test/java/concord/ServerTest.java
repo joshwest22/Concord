@@ -3,40 +3,47 @@ package concord;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ServerTest
 {
 	static Server server;
-	static Database db;
+	static Database database;
+	static Database testDB;
 	static HashMap<Integer, ArrayList<Client>> clientsInGroup;
 	static ArrayList<RMIObserver> observers;
 	static Client testClient;
+	static URL url;
 	static User ol;
+	
 	@BeforeAll
-	static void setUpBeforeClass() throws Exception
+	static void setUp() throws Exception
 	{
-		clientsInGroup = new HashMap<Integer, ArrayList<Client>>();
-		Database db = new Database();
-		server = new Server(db, clientsInGroup, observers);
+		HashMap<Integer, ArrayList<Client>> clientsInGroup = new HashMap<Integer, ArrayList<Client>>();
+		ArrayList<Client> clients = new ArrayList<Client>();
 		Client testClient = new Client();
-		User ol = server.createUser("overlord", "oliver", "underwatch32");
+		clients.add(testClient);
+		clientsInGroup.put(50,clients);
+		
+		ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>();
+		Database database = new Database(); 
+		URL url = new URL("http://image.com");
+		database.createUser("overlord", "oliver", "underwatch32",00, url, "OP OL", false); //this is being seen as nul
+		User ol = database.getUser(00);		
+		assertEquals("overlord",ol.getUsername());
+		//Database testDB = new Database();
+		Server server = new Server(database, clientsInGroup, observers);
+		
+		
 		server.getDb().createGroup(50, "USA");
-		server.getDb().getGroup(50).createChannel("patriotism", db.getGroup(50));
-		
-		
-	}
-
-	@BeforeEach
-	void setUp() throws Exception
-	{
+		server.getDb().getGroup(50).createChannel("patriotism", database.getGroup(50));
 		
 	}
 	@AfterEach
@@ -85,10 +92,12 @@ class ServerTest
 	@Test
 	void testGetGroup() throws RemoteException
 	{
+		Database testDB = new Database();
 		//create group with an ID
-		db.createGroup(42, "galaxy");
-		//show that the IDcan be used to get the group in server in same way it can in db
-		assertEquals(db.getGroup(42),server.getGroup(42));
+		server.getDb().createGroup(42, "galaxy");
+		testDB.createGroup(42, "galaxy");
+		//show that the ID can be used to get the group in server in same way it can in db
+		assertEquals(testDB.getGroup(42).getGroupName(),server.getGroup(42).getGroupName());
 	}
 
 	@Test
@@ -114,9 +123,9 @@ class ServerTest
 	@Test
 	void testCreateChannel() throws RemoteException
 	{
-		db.createGroup(12, "backbackersAnonymous");
-		db.createChannel("hiker's cove",ol.getUserID(), db.getGroup(12).getGroupID());
-		assertEquals("hiker's cove",db.getGroup(12).getChannelByName("hiker's cove"));
+		server.getDb().createGroup(12, "backbackersAnonymous");
+		server.getDb().createChannel("hiker's cove",ol.getUserID(), server.getDb().getGroup(12).getGroupID());
+		assertEquals("hiker's cove",server.getDb().getGroup(12).getChannelByName("hiker's cove"));
 	}
 
 	@Test
@@ -141,15 +150,15 @@ class ServerTest
 	@Test
 	void testMessageReceiveReply() throws RemoteException
 	{
-		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),db.getGroup(50).getGroupID(),db.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0)));
+		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),server.getDb().getGroup(50).getGroupID(),server.getDb().getGroup(50).getChannelByName("patriotism").getMessageLog().get(0)));
 	}
 
 	@Test
 	void testViewChannelMessages() throws RemoteException
 	{
-		db.createGroup(12, "backbackersAnonymous");
-		db.createChannel("channelName",ol.getUserID(), db.getGroup(12).getGroupID());
-		assertEquals(db.viewChannel("channelName", ol.getUserID(), 12),server.viewChannelMessages("channelName", ol.getUserID(), 12));
+		server.getDb().createGroup(12, "backbackersAnonymous");
+		server.getDb().createChannel("channelName",ol.getUserID(), server.getDb().getGroup(12).getGroupID());
+		assertEquals(server.getDb().viewChannel("channelName", ol.getUserID(), 12),server.viewChannelMessages("channelName", ol.getUserID(), 12));
 	}
 
 	@Test
@@ -174,14 +183,14 @@ class ServerTest
 	void testLockChannel() throws RemoteException
 	{
 		assertEquals("patriotism locked.",server.lockChannel(50, ol.getUserID(), "patriotism"));
-		assertEquals(true,db.getGroup(50).getChannelByName("patriotism").getIsLocked());
+		assertEquals(true,server.getDb().getGroup(50).getChannelByName("patriotism").getIsLocked());
 	}
 
 	@Test
 	void testUnlockChannel() throws RemoteException
 	{
 		assertEquals("patriotism unlocked.",server.lockChannel(50, ol.getUserID(), "patriotism"));
-		assertEquals(false,db.getGroup(50).getChannelByName("patriotism").getIsLocked());
+		assertEquals(false,server.getDb().getGroup(50).getChannelByName("patriotism").getIsLocked());
 	}
 
 	@Test
@@ -201,7 +210,9 @@ class ServerTest
 	{
 		User user = new User();
 		user.setUsername("leetBoss");
-		assertEquals("leetBoss",server.getUserByName(user.getUsername()));
+		String ol_name = server.getUserByName("leetBoss").getUsername();
+		assertEquals("leetBoss",server.getUserByName("leetBoss").getUsername());
+		String test = "";
 	}
 
 	@Test
@@ -222,7 +233,7 @@ class ServerTest
 	@Test
 	void testGetUserCount() throws RemoteException
 	{
-		assertEquals(db.getGroup(50).registeredUsers.keySet().size(),server.getUserCount(50));
+		assertEquals(server.getDb().getGroup(50).registeredUsers.keySet().size(),server.getUserCount(50));
 	}
 
 	@Test
@@ -240,7 +251,7 @@ class ServerTest
 	@Test
 	void testPinMessage() throws RemoteException
 	{
-		assertEquals(db.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0).getIsPinned(),server.pinMessage("patriotism", ol.getUserID(), 50, 0));
+		assertEquals(server.getDb().getGroup(50).getChannelByName("patriotism").getMessageLog().get(0).getIsPinned(),server.pinMessage("patriotism", ol.getUserID(), 50, 0));
 	}
 
 	@Test

@@ -43,6 +43,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	public void login(String username, String password)
 	{
 		serverContact.login(this, username, password);
+		//set the online status to true?
 	}
 	
 	public User getAssociatedUser()

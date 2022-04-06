@@ -11,7 +11,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 {
 	private Database db;
 	private HashMap<Integer, ArrayList<Client>> clientsInGroup;
-	
+	ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>(); //should this be private?
 	
 	public Server(Database db, HashMap<Integer, ArrayList<Client>> clientsInGorups, ArrayList<RMIObserver> observers) throws RemoteException
 	{
@@ -31,7 +31,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		this.observers = obsrvs;
 	}
 	
-	ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>();
+	
 	@Override
 	public void addObserver(RMIObserver o) throws RemoteException
 	{
@@ -208,6 +208,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	public void updateNewUser(Integer groupID)
 	{
 		//refresh the users list
+		
 	}
 
 	@Override
