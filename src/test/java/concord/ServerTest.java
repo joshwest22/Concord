@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 class ServerTest
 {
 	static Server server;
-	static Database database;
-	static Database testDB;
+	//static Database database;
+	//static Database testDB;
 	static HashMap<Integer, ArrayList<Client>> clientsInGroup;
-	static ArrayList<RMIObserver> observers;
+	//static ArrayList<RMIObserver> observers;
 	static Client testClient;
 	static URL url;
 	static User ol;
@@ -26,24 +26,22 @@ class ServerTest
 	@BeforeAll
 	static void setUp() throws Exception
 	{
-		HashMap<Integer, ArrayList<Client>> clientsInGroup = new HashMap<Integer, ArrayList<Client>>();
+		clientsInGroup = new HashMap<Integer, ArrayList<Client>>();
 		ArrayList<Client> clients = new ArrayList<Client>();
 		Client testClient = new Client();
 		clients.add(testClient);
-		clientsInGroup.put(50,clients);
-		
-		ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>();
-		Database database = new Database(); 
-		URL url = new URL("http://image.com");
-		database.createUser("overlord", "oliver", "underwatch32",00, url, "OP OL", false); //this is being seen as nul
-		User ol = database.getUser(00);		
+		clientsInGroup.put(50,clients);		
+		server = new Server(new Database(), clientsInGroup, new ArrayList<RMIObserver>());
+		//Database debug = database; //gives variable that can be seen in debug
+		url = new URL("http://image.com");
+		server.getDb().createUser("overlord", "oliver", "underwatch32",00, url, "OP OL", false); //this is being seen as nul
+		ol = server.getDb().getUser(00);		
 		assertEquals("overlord",ol.getUsername());
-		//Database testDB = new Database();
-		Server server = new Server(database, clientsInGroup, observers);
+		
 		
 		
 		server.getDb().createGroup(50, "USA");
-		server.getDb().getGroup(50).createChannel("patriotism", database.getGroup(50));
+		server.getDb().getGroup(50).createChannel("patriotism", server.getDb().getGroup(50));
 		
 	}
 	@AfterEach

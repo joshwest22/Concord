@@ -208,7 +208,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	public void updateNewUser(Integer groupID)
 	{
 		//refresh the users list
-		
+		System.out.println("New user was created.");
 	}
 
 	@Override
@@ -339,7 +339,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	
 	public void updateInvite(Integer userID)
 	{
-		//TODO
+		System.out.println("New invite was created.");
 	}
 
 	@Override

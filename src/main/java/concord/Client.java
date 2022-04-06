@@ -88,7 +88,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 
 	public void updateNewUser()
 	{
-		System.out.println("New user was created.");
+		//this.serverContact.updateNewUser(groupID);
 	}
 	
 	public void updateNewMessage()
@@ -103,7 +103,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	public void updateNewInvite()
 	{
-		System.out.println("New invite was created.");
+		//this.serverContact.updateInvite();
 	}
 	
 	//Helper methods for corresponding Server methods

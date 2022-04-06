@@ -7,8 +7,8 @@ import java.util.HashMap;
 
 public class Group
 {
-	ArrayList<Channel> channels;
-	HashMap<User,Role> registeredUsers;
+	ArrayList<Channel> channels = new ArrayList<Channel>();
+	HashMap<User,Role> registeredUsers = new HashMap<User,Role>();
 	String description;
 	URL logo;
 	String groupName;
@@ -19,11 +19,9 @@ public class Group
 	//admin role with all permissions
 	Role admin = new Role("admin",this,true,true,true,true);
 	
-	public Group(ArrayList<Channel> channels, HashMap<User, Role> registeredUsers, String description, URL logo,
+	public Group(ArrayList<Channel> channels, String description, URL logo,
 			String groupName, Integer groupID)
 	{
-		this.channels = channels;
-		this.registeredUsers = registeredUsers;
 		this.description = description;
 		this.logo = logo;
 		this.groupName = groupName;
@@ -32,8 +30,6 @@ public class Group
 	//alternate constructor
 	public Group(Integer groupID, String groupName)
 	{
-		this.channels = new ArrayList<Channel>();
-		this.registeredUsers = new HashMap<User, Role>();
 		this.description = "default description; please set me";
 		try
 		{
