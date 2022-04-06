@@ -40,25 +40,9 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		System.out.println(clientName+" was called");
 	}
 	
-	public User login(String username, String password)
+	public void login(String username, String password)
 	{
-		User myUser = serverContact.login(this, username, password);
-		//for all existing users
-//		for(User user:serverContact.getAllRegisteredUsers())
-//		{
-//			//if the username exists
-//			if(user.getUsername().contains(username)) //users.getUsername().contains(username)
-//			{
-//				//AND the password matches (secure version would be if the hash of password matches)
-//				if(serverContact.getUserByName(username).getPassword().equals(password))
-//				{
-//					//set the user to be returned and update associated user
-//					associatedUser = user;
-//				}
-//			}
-//		}
-//		return associatedUser;
-		return myUser;
+		serverContact.login(this, username, password);
 	}
 	
 	public User getAssociatedUser()
@@ -103,22 +87,22 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 
 	public void updateNewUser()
 	{
-		//TODO
+		System.out.println("New user was created.");
 	}
 	
 	public void updateNewMessage()
 	{
-		//TODO
+		System.out.println("New message was created.");
 	}
 	
 	public void updateNewChannel()
 	{
-		//TODO
+		System.out.println("New channel was created.");
 	}
 	
 	public void updateNewInvite()
 	{
-		//TODO
+		System.out.println("New invite was created.");
 	}
 	
 	//Helper methods for corresponding Server methods
@@ -126,7 +110,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	public static void main(String args[])
 	{
-		
+		//GUI Code goes here
 	}
 
 }

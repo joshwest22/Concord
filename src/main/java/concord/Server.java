@@ -10,13 +10,13 @@ import java.util.Set;
 public class Server extends UnicastRemoteObject implements RMIObserved
 {
 	private Database db;
-	private HashMap<Integer, ArrayList<Client>> clientsInGroups;
+	private HashMap<Integer, ArrayList<Client>> clientsInGroup;
 	
 	
 	public Server(Database db, HashMap<Integer, ArrayList<Client>> clientsInGorups, ArrayList<RMIObserver> observers) throws RemoteException
 	{
 		this.db = db;
-		this.clientsInGroups = clientsInGorups;
+		this.clientsInGroup = clientsInGorups;
 		this.observers = observers;
 	}
 
@@ -24,9 +24,9 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	protected Server() throws RemoteException
 	{
 		Database database = new Database();
-		this.db = database ;
+		this.db = database;
 		HashMap<Integer, ArrayList<Client>> groupClients = new HashMap<Integer, ArrayList<Client>>();
-		this.clientsInGroups = groupClients;
+		this.clientsInGroup = groupClients;
 		ArrayList<RMIObserver> obsrvs = new ArrayList<RMIObserver>();
 		this.observers = obsrvs;
 	}
@@ -65,7 +65,37 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		notifyObservers();
 	}
 	
-	public User login(Client client, String username, String password)
+	public Database getDb()
+	{
+		return db;
+	}
+
+	public void setDb(Database db)
+	{
+		this.db = db;
+	}
+
+	public HashMap<Integer, ArrayList<Client>> getClientsInGroup()
+	{
+		return clientsInGroup;
+	}
+
+	public void setClientsInGroup(HashMap<Integer, ArrayList<Client>> clientsInGroup)
+	{
+		this.clientsInGroup = clientsInGroup;
+	}
+
+	public ArrayList<RMIObserver> getObservers()
+	{
+		return observers;
+	}
+
+	public void setObservers(ArrayList<RMIObserver> observers)
+	{
+		this.observers = observers;
+	}
+
+	public void login(Client client, String username, String password)
 	{
 		//client is added to clientsInGroups during login
 		//server verifies credentials
@@ -80,12 +110,18 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 				if(this.getUserByName(username).getPassword().equals(password))
 				{
 					//set the user to be returned and update associated user
-					//client.setAssociatedUser(user);
-					return user;
+					client.setAssociatedUser(user);
+					for(Integer currentGroupID = 0;currentGroupID < db.getGroups().size();currentGroupID++)
+					{
+						//add client to the clientGroup for each group client user is in
+						ArrayList<Client> groupClients = new ArrayList<Client>();
+						groupClients.add(client);
+						clientsInGroup.put(currentGroupID,groupClients); //this needs to have another parameter; should clientsInGroups be a list of all groups a user is in not just one?
+					}
+					//return user;
 				}
 			}
 		}
-		return null;
 	}
 
 	@Override
@@ -104,10 +140,26 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	@Override
-	public ArrayList<Group> getUserGroups(Integer userID, String groupName)
+	public ArrayList<Group> getUserGroups(Integer userID)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Group> userGroups = new ArrayList<Group>();
+		//look through db.groups to see if the user is in any of them by ID
+		for(int i = 0; i<db.groups.size(); i++)
+		{
+			//for every group, does the group's registered user have specific user?
+			HashMap<User, Role> regUsers = db.getGroup(i).getRegisteredUsers();
+			Set<User> keys = regUsers.keySet();
+			for (User user : keys)
+			{
+				//if there is a user in registered users that matches user we want, add group to list
+				if(user.getUserID().equals(userID))
+				{
+					Group myGroup = db.getGroup(i);
+					userGroups.add(myGroup);
+				}
+			}
+		}
+		return userGroups;
 	}
 
 	@Override
@@ -119,12 +171,16 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	
 	public void updateNewChannel(Integer groupID)
 	{
-		//TODO
+		//tell the client to update their channels
+		
 	}
 	
-	public void updateNewMessage(Integer gorupID)
+	public void updateNewMessage(Integer groupID)
 	{
-		//TODO
+		//tell each client in a group to update their messageLog
+		//what is updating? Setting client object to server version, but aren't they already linked?
+		//modify this to work as for loops instead of chained for each (that don't currently work)
+		//TODO clientsInGroup.get(groupID).forEach((client) -> db.getGroup(groupID).getChannels().forEach((channel) -> channel.setMessageLog(db.getGroup(groupID).getChannels().get(i).getMessageLog())));
 	}
 
 	@Override
@@ -136,10 +192,10 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 
 	@Override
 	public String messageReceiveReply(String channelName, String message, Integer userID, Integer groupID,
-			Message ReplyTo)
+			Message replyTo)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		db.messageReceivedReply(channelName, message, userID, groupID, replyTo);
+		return message+" has been receieved in reply to : "+replyTo.getText();
 	}
 
 	@Override
@@ -151,14 +207,15 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	
 	public void updateNewUser(Integer groupID)
 	{
-		//TODO
+		//refresh the users list
 	}
 
 	@Override
 	public String addUserToGroup(Integer groupID, Integer addingUserID, Integer addedUserID)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Group group = db.getGroup(groupID);
+		group.addNewUser(db.getUser(addedUserID), db.getUser(addedUserID),group.basic);
+		return db.getUser(addedUserID).getUsername()+" was added to "+db.getGroup(groupID);
 	}
 
 	@Override
@@ -289,6 +346,14 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	{
 		ArrayList<User> regUsers = db.listOfUsers;
 		return regUsers;
+	}
+
+	@Override
+	public Group createGroup(Integer groupID, String groupName)
+	{
+		db.createGroup(groupID, groupName);
+		Group newGroup = db.getGroup(groupID);
+		return newGroup;
 	}
 	
 }

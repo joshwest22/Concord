@@ -42,7 +42,13 @@ class ClientTest
 			observed.addObserver(client);
 			client.clientName = "Tony";
 			
+			//use asserts to test
 			server.makeDonuts();
+			Group clientGroup = server.createGroup(27, "newClientGroup");
+			clientGroup.createChannel("newClientChannel", clientGroup);
+			Channel clientChannel = server.getDb().getGroup(clientGroup.getGroupID()).getChannelByName("newClientChannel");
+			//clientChannel.sendNewMessage();
+			
 		} catch (MalformedURLException | RemoteException | NotBoundException e)
 		{
 			// TODO Auto-generated catch block

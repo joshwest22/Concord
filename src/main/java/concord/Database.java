@@ -142,6 +142,21 @@ public class Database
 			}
 		}
 	}
+	public void messageReceivedReply(String channelName, String msg, Integer userID, Integer groupID, Message replyTo)
+	{
+		//package message in Message and send to role and then to messageLog
+		Message m = new Message(msg,userID);
+		Role r = getRole(groupID,userID);
+		//set this new message as a reply to a previous message
+		m.setInReplyTo(replyTo);
+		for(Channel ch : r.getGroup().channels)
+		{
+			if (ch.channelName.equals(channelName))
+			{
+				r.sendMessage(m, ch);
+			}
+		}
+	}
 	public ArrayList<Message> viewChannel(String channelName, Integer userID, Integer groupID)
 	{
 		//check through all channels for the channel with channelName

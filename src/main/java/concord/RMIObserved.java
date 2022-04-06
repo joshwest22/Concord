@@ -10,28 +10,29 @@ public interface RMIObserved extends Remote
 	public void addObserver(RMIObserver o) throws RemoteException;
 	public void removeObserver(RMIObserver o) throws RemoteException;
 	
-	public User createUser(String username, String realname, String password) throws MalformedURLException;
-	public Group getGroup(Integer groupID);
-	public ArrayList<Group> getUserGroups(Integer userID, String groupName);
-	public String createChannel(String channelName, Integer userID, Integer groupID);
-	public String messageReceived(String channelName, String message, Integer userID, Integer groupID);
-	public String messageReceiveReply (String channelName, String message, Integer userID, Integer groupID, Message ReplyTo); 
-	public ArrayList<Message> viewChannelMessages (String channelName, Integer userID, Integer groupID);
-	public String addUserToGroup (Integer groupID, Integer addingUserID, Integer addedUserID);
-	public String removeUserFromGroup (Integer groupID, Integer removingUserID, Integer removedUserID); 
-	public String lockChannel (Integer groupID, Integer userID, String channelName);
-	public String unlockChannel (Integer groupID, Integer userID, String channelName); 
-	public String leaveGroup (Integer groupID, Integer userID);
-	public User viewUser (Integer userID);
-	public User getUserByName (String username); 
-	public Integer getUserIDByName (String username); 
-	public ArrayList<User> getAllUsers(Integer groupID); 
-	public Integer getUserCount(Integer groupID);
-	public String addAllowedUser(String channelName, User adder, Integer addee, Integer groupID);
-	public void blockUser(Integer blockingUserID, Integer blockedUserID); 
-	public String pinMessage(String channelName, Integer userID, Integer groupID, Integer messageIndex); 
+	public User createUser(String username, String realname, String password) throws MalformedURLException, RemoteException;
+	public Group createGroup(Integer groupID, String groupName) throws RemoteException;
+	public Group getGroup(Integer groupID) throws RemoteException;
+	public ArrayList<Group> getUserGroups(Integer userID) throws RemoteException;
+	public String createChannel(String channelName, Integer userID, Integer groupID) throws RemoteException;
+	public String messageReceived(String channelName, String message, Integer userID, Integer groupID) throws RemoteException;
+	public String messageReceiveReply (String channelName, String message, Integer userID, Integer groupID, Message ReplyTo) throws RemoteException; 
+	public ArrayList<Message> viewChannelMessages (String channelName, Integer userID, Integer groupID) throws RemoteException;
+	public String addUserToGroup (Integer groupID, Integer addingUserID, Integer addedUserID) throws RemoteException;
+	public String removeUserFromGroup (Integer groupID, Integer removingUserID, Integer removedUserID) throws RemoteException; 
+	public String lockChannel (Integer groupID, Integer userID, String channelName) throws RemoteException;
+	public String unlockChannel (Integer groupID, Integer userID, String channelName) throws RemoteException; 
+	public String leaveGroup (Integer groupID, Integer userID) throws RemoteException;
+	public User viewUser (Integer userID) throws RemoteException;
+	public User getUserByName (String username) throws RemoteException; 
+	public Integer getUserIDByName (String username) throws RemoteException; 
+	public ArrayList<User> getAllUsers(Integer groupID) throws RemoteException; 
+	public Integer getUserCount(Integer groupID) throws RemoteException;
+	public String addAllowedUser(String channelName, User adder, Integer addee, Integer groupID) throws RemoteException;
+	public void blockUser(Integer blockingUserID, Integer blockedUserID) throws RemoteException; 
+	public String pinMessage(String channelName, Integer userID, Integer groupID, Integer messageIndex) throws RemoteException; 
 	public String assignNewRole(Integer changerID, Integer changerdID, Integer groupID, Boolean canKick, Boolean canLockChannel, Boolean canAssignRole,
-			Boolean canCreateChannel);
-	public ArrayList<User> getAllRegisteredUsers();
+			Boolean canCreateChannel) throws RemoteException;
+	public ArrayList<User> getAllRegisteredUsers() throws RemoteException;
 
 }
