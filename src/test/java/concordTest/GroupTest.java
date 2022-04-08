@@ -1,4 +1,4 @@
-package concord;
+package concordTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +9,12 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import concord.Channel;
+import concord.Group;
+import concord.Message;
+import concord.Role;
+import concord.User;
 
 class GroupTest
 {
@@ -38,12 +44,12 @@ class GroupTest
 		Role adminRole = new Role("admin", group1, true, true, true, true);
 		registeredUsers.put(josh, adminRole);
 		registeredUsers.put(overlord, adminRole);
-		group1.registeredUsers.put(overlord, adminRole);
+		group1.getRegisteredUsers().put(overlord, adminRole);
 		//test that all parameters of group were assigned correctly using long constructor
-		group2 = new Group(channels, registeredUsers, "cool group", URL("http://logo.com"), "group2", 2);
+		group2 = new Group(channels, "cool group", URL("http://logo.com"), "group2", 2);
 		//create another group for testing purposes
 		group3 = new Group(3,"group3");
-		group3.registeredUsers.put(overlord, adminRole);
+		group3.getRegisteredUsers().put(overlord, adminRole);
 		
 }
 
@@ -78,7 +84,7 @@ class GroupTest
 		ArrayList<Channel> channels = new ArrayList<Channel>();
 		HashMap<User,Role> regUsers = new HashMap<User,Role>();
 		regUsers.put(overlord, adminRole);
-		group1.logo = new URL("http://logo-url.com");
+		group1.setLogo(new URL("http://logo-url.com"));
 		assertEquals(group1.getGroupID(),1);
 		assertEquals(group1.getGroupName(),"group1");
 		assertEquals(group1.getDescription(),"default description; please set me");
@@ -175,8 +181,8 @@ class GroupTest
 		group2.getRegisteredUsers().get(josh).sendMessage(msg0, group2.getChannels().get(0));
 		group2.getRegisteredUsers().get(josh).sendMessage(msg1, group2.getChannels().get(1));
 		//check if the message is in the channel and message text matches text sent
-		assertEquals(group2.channels.get(0).getMessageLog().get(0).getText(),msg0.getText());
-		assertEquals(group2.channels.get(1).getMessageLog().get(0).getText(),msg1.getText());
+		assertEquals(group2.getChannels().get(0).getMessageLog().get(0).getText(),msg0.getText());
+		assertEquals(group2.getChannels().get(1).getMessageLog().get(0).getText(),msg1.getText());
 	}
 	
 	@Test

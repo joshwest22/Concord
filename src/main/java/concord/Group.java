@@ -15,9 +15,9 @@ public class Group
 	Integer groupID;
 	
 	//basic role with no permissions except sendMessage
-	Role basic = new Role("basic",this,false,false,false,false);
+	public Role basic = new Role("basic",this,false,false,false,false);
 	//admin role with all permissions
-	Role admin = new Role("admin",this,true,true,true,true);
+	public Role admin = new Role("admin",this,true,true,true,true);
 	
 	public Group(ArrayList<Channel> channels, String description, URL logo,
 			String groupName, Integer groupID)

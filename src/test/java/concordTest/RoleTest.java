@@ -1,4 +1,4 @@
-package concord;
+package concordTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import concord.Channel;
+import concord.Group;
+import concord.Message;
+import concord.Role;
+import concord.User;
 
 class RoleTest
 {
@@ -27,7 +33,7 @@ class RoleTest
 		basic = new Role("basic",testGroup,false,false,false,false);
 		admin = new Role("admin",testGroup,true,true,true,true);
 		overlord = new User("OVLad", "owen", "pass123", 567, pfp, "bio", false);
-		testGroup.registeredUsers.put(overlord, admin);
+		testGroup.getRegisteredUsers().put(overlord, admin);
 		noob = new User("n008", "noob", "123", 63, pfp, "I'm new here", false);
 		expert = new User("Hexpert","Hector Spurt","asdfJkhlu124~",1337,pfp,"I run this place",false);
 		testGroup.addNewUser(overlord,noob, basic);
@@ -77,7 +83,7 @@ class RoleTest
 	{
 		Message m = new Message("hello", noob.getUserID());
 		basic.sendMessage(m, channel);
-		assertEquals("hello",channel.messageLog.get(0).getText());
+		assertEquals("hello",channel.getMessageLog().get(0).getText());
 	}
 
 	@Test
@@ -95,14 +101,14 @@ class RoleTest
 		testGroup.addNewUser(overlord,bill, basic);
 		assertEquals("basic",testGroup.getRegisteredUsers().get(bill).getRoleName());
 		//overlord assigns bill from basic to admin
-		testGroup.registeredUsers.get(overlord).assignRole(bill, admin);
+		testGroup.getRegisteredUsers().get(overlord).assignRole(bill, admin);
 		String billRoleName = testGroup.getRegisteredUsers().get(bill).getRoleName(); 
 		assertEquals("admin",billRoleName);
 		//test when no permission to assign role
 		User joe = new User("namoth12","joe","qwertyuiop",1217,pfp,"Everybody knows joe's mother; Joe Mama.",false);
 		testGroup.addNewUser(overlord, joe, basic);
 		//user with basic role attempts to assign
-		assertEquals("Role assignment failed. basic does not have permission to assign roles.",testGroup.registeredUsers.get(joe).assignRole(bill, basic));
+		assertEquals("Role assignment failed. basic does not have permission to assign roles.",testGroup.getRegisteredUsers().get(joe).assignRole(bill, basic));
 		//role assignment should fail and bill should have the role he had before
 		assertEquals("admin",testGroup.getRegisteredUsers().get(bill).getRoleName());
 	}

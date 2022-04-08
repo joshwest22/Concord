@@ -1,4 +1,4 @@
-package concord;
+package concordTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +11,13 @@ import java.util.HashMap;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import concord.Client;
+import concord.Database;
+import concord.Group;
+import concord.RMIObserver;
+import concord.Server;
+import concord.User;
 
 class ServerTest
 {
@@ -52,19 +59,19 @@ class ServerTest
 	@Test
 	void testAddObserver() throws RemoteException
 	{
-		int ob_size = server.observers.size();
-		assertEquals(ob_size,server.observers.size());
+		int ob_size = server.getObservers().size();
+		assertEquals(ob_size,server.getObservers().size());
 		server.addObserver(testClient);
-		assertEquals(ob_size+1,server.observers.size());
+		assertEquals(ob_size+1,server.getObservers().size());
 	}
 
 	@Test
 	void testRemoveObserver() throws RemoteException
 	{
-		int ob_size = server.observers.size();
-		assertEquals(ob_size,server.observers.size());
+		int ob_size = server.getObservers().size();
+		assertEquals(ob_size,server.getObservers().size());
 		server.removeObserver(testClient);
-		assertEquals(ob_size-1,server.observers.size());
+		assertEquals(ob_size-1,server.getObservers().size());
 	}
 
 	@Test
@@ -231,7 +238,7 @@ class ServerTest
 	@Test
 	void testGetUserCount() throws RemoteException
 	{
-		assertEquals(server.getDb().getGroup(50).registeredUsers.keySet().size(),server.getUserCount(50));
+		assertEquals(server.getDb().getGroup(50).getRegisteredUsers().keySet().size(),server.getUserCount(50));
 	}
 
 	@Test

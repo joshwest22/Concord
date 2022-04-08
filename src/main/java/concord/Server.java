@@ -21,7 +21,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	private static final long serialVersionUID = 2580829118905122035L;
-	protected Server() throws RemoteException
+	public Server() throws RemoteException
 	{
 		Database database = new Database();
 		this.db = database;

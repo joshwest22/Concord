@@ -1,4 +1,4 @@
-package concord;
+package concordTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +12,12 @@ import java.rmi.registry.Registry;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import concord.Channel;
+import concord.Client;
+import concord.Group;
+import concord.RMIObserved;
+import concord.Server;
 
 class ClientTest
 {
@@ -40,7 +46,7 @@ class ClientTest
 			Client client = new Client();
 			observed = (RMIObserved) Naming.lookup("rmi://127.0.0.1/SERVER");
 			observed.addObserver(client);
-			client.clientName = "Tony";
+			client.setClientName("Tony");
 			
 			//use asserts to test
 			server.makeDonuts();

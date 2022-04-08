@@ -19,7 +19,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.clientName = name;
 	}
 
-	protected Client() throws RemoteException
+	public Client() throws RemoteException
 	{
 		User user = new User();
 		this.associatedUser = user;

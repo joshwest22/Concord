@@ -1,4 +1,4 @@
-package concord;
+package concordTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import concord.Channel;
+import concord.Database;
+import concord.Group;
+import concord.Message;
+import concord.Role;
+import concord.User;
 
 import java.lang.Integer;
 class DatabaseTest
@@ -70,16 +77,16 @@ class DatabaseTest
 		assertEquals(chan.getChannelName(),"testChannel1");
 		//Testing the db createChannel method
 		//This puts the first all powerful user into the group
-		chgroup.registeredUsers.put(overlord, chgroup.admin); //DESIGN FLAW: How do we know which user created the group; That user should be overlord
+		chgroup.getRegisteredUsers().put(overlord, chgroup.admin); //DESIGN FLAW: How do we know which user created the group; That user should be overlord
 		db.createChannel("testChannel2", overlord.getUserID(), chgroup.getGroupID());
 		Channel dbchan = chgroup.getChannels().get(2);
 		assertEquals(dbchan.getChannelName(),"testChannel2");
 		//threat testing
 		chgroup.addNewUser(overlord, satan, chgroup.basic);
-		int channelSizeBefore = chgroup.channels.size();
+		int channelSizeBefore = chgroup.getChannels().size();
 		db.createChannel("testChannel3", satan.getUserID(), chgroup.getGroupID());
 		//channel above should not be created so length of channels in chgroup should not change
-		assertEquals(channelSizeBefore,chgroup.channels.size());
+		assertEquals(channelSizeBefore,chgroup.getChannels().size());
 		
 		//test role can lock channel
 		assertEquals(false,dbchan.getIsLocked());
@@ -104,7 +111,7 @@ class DatabaseTest
 	{
 		db.createGroup(49, "msgGroup");
 		Group msgGroup = db.getGroups().get(49);
-		msgGroup.registeredUsers.put(overlord,msgGroup.admin);
+		msgGroup.getRegisteredUsers().put(overlord,msgGroup.admin);
 		msgGroup.addNewUser(overlord, josh, msgGroup.admin);
 		msgGroup.addNewUser(overlord,satan, msgGroup.admin);
 		db.createChannel("5Chan", overlord.getUserID(), msgGroup.getGroupID());
@@ -126,7 +133,7 @@ class DatabaseTest
 		Group chgroup1 = db.getGroups().get(48);
 		//test getGroup
 		assertEquals("testCreateChannelGroup1",db.getGroup(chgroup1.getGroupID()).getGroupName());
-		chgroup1.registeredUsers.put(overlord,chgroup1.admin);
+		chgroup1.getRegisteredUsers().put(overlord,chgroup1.admin);
 		chgroup1.addNewUser(overlord, josh, chgroup1.admin);
 		chgroup1.addNewUser(overlord,satan, chgroup1.admin);
 		//test getUser
@@ -162,7 +169,7 @@ class DatabaseTest
 		assertEquals(blockedListSize - 1,overlord.getBlockedUserIDs().size());
 		//view channel
 		ArrayList<Message> msgs = db.viewChannel(chgroup1.getChannels().get(0).getChannelName(), satan.getUserID(), chgroup1.getGroupID());
-		assertEquals(chgroup1.channels.get(0).messageLog.size(),msgs.size());
+		assertEquals(chgroup1.getChannels().get(0).getMessageLog().size(),msgs.size());
 	}
 	
 	@Test
