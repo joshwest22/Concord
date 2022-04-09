@@ -165,7 +165,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	@Override
 	public String createChannel(String channelName, Integer userID, Integer groupID)
 	{
-		db.getGroup(groupID).getRegisteredUsers().get(db.getUser(userID)).createChannel(channelName);
+		db.getGroup(groupID).createChannel(channelName, db.getGroup(groupID));
 		return channelName+" was created in "+db.getGroup(groupID).getGroupName()+" by "+db.getUser(userID).getUsername();
 	}
 	
@@ -318,6 +318,11 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	public void blockUser(Integer blockingUserID, Integer blockedUserID)
 	{
 		db.blockUser(blockingUserID, blockedUserID);
+	}
+	
+	public void unblockUser(Integer unblockingID, Integer unblockedID)
+	{
+		db.unblockUser(unblockingID, unblockedID);
 		
 	}
 

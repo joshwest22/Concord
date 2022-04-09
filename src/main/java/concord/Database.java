@@ -268,7 +268,7 @@ public class Database
 		}
 		catch(FileNotFoundException fileNotFound)
 		{
-			System.out.println("ERROR: While Creating or Opening the File dvd.xml");
+			System.out.println("ERROR: While Creating or Opening the File ConcordDatabase.xml");
 		}
 		encoder.writeObject(this);//sub this/users/groups for one thing in file at a time
 		encoder.close();

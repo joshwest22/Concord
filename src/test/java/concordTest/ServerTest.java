@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import concord.Client;
 import concord.Database;
 import concord.Group;
+import concord.Message;
 import concord.RMIObserver;
 import concord.Server;
 import concord.User;
@@ -88,14 +89,13 @@ class ServerTest
 		server.login(testClient, ol.getUsername(), ol.getPassword());
 		//client has an associated user
 		assertEquals(ol.getUsername(),testClient.getAssociatedUser().getUsername());
-		
 	}
 
 	@Test
 	void testCreateUser() throws MalformedURLException, RemoteException
 	{
 		server.createUser("anonPhilanthropist", "Robin H.", "merrymen123");
-		assertEquals("Robin H.",server.getUserByName("anonPhilanthropist"));
+		assertEquals("Robin H.",server.getUserByName("anonPhilanthropist").getRealname());
 	}
 
 	@Test
@@ -139,9 +139,9 @@ class ServerTest
 	@Test
 	void testCreateChannel() throws RemoteException
 	{
-		server.getDb().createGroup(12, "backbackersAnonymous");
-		server.getDb().createChannel("hiker's cove",ol.getUserID(), server.getDb().getGroup(12).getGroupID());
-		assertEquals("hiker's cove",server.getDb().getGroup(12).getChannelByName("hiker's cove"));
+		server.createGroup(12, "backbackersAnonymous");
+		server.createChannel("hiker's cove",ol.getUserID(), server.getGroup(12).getGroupID());
+		assertEquals("hiker's cove",server.getGroup(12).getChannelByName("hiker's cove").getChannelName());
 	}
 
 	@Test
@@ -257,15 +257,32 @@ class ServerTest
 	}
 
 	@Test
-	void testBlockUser() throws RemoteException
+	void testBlockUser() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		server.createUser("devil", "lucius pher", "666");
+		server.blockUser(ol.getUserID(), 666);
+		assertEquals(666,ol.getBlockedUserIDs().get(0));
+	}
+	
+	@Test
+	void testUnblockUser() throws RemoteException, MalformedURLException
+	{
+		server.createUser("devil", "lucius pher", "666");
+		server.unblockUser(ol.getUserID(), 666);
+		assertEquals(0,ol.getBlockedUserIDs().size());
 	}
 
 	@Test
 	void testPinMessage() throws RemoteException
 	{
-		assertEquals(server.getDb().getGroup(50).getChannelByName("patriotism").getMessageLog().get(0).getIsPinned(),server.pinMessage("patriotism", ol.getUserID(), 50, 0));
+		//check that there are no pinned messages
+		Message m = new Message("god bless america",ol.getUserID());
+		server.getGroup(50).getChannelByName("patriotism").sendNewMessage(m);
+		assertEquals(false,server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0).getIsPinned());
+		//pin message in a channel
+		server.pinMessage("patriotism", ol.getUserID(), 50, 0);
+		//check that the message's pinned boolean is true
+		assertEquals(true,server.getDb().getGroup(50).getChannelByName("patriotism").getMessageLog().get(0).getIsPinned());
 	}
 
 	@Test
