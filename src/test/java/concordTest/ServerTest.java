@@ -166,14 +166,14 @@ class ServerTest
 	@Test
 	void testMessageReceiveReply() throws RemoteException
 	{
-		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),server.getDb().getGroup(50).getGroupID(),server.getDb().getGroup(50).getChannelByName("patriotism").getMessageLog().get(0)));
+		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),server.getGroup(50).getGroupID(),server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0)));
 	}
 
 	@Test
 	void testViewChannelMessages() throws RemoteException
 	{
-		server.getDb().createGroup(12, "backbackersAnonymous");
-		server.getDb().createChannel("channelName",ol.getUserID(), server.getDb().getGroup(12).getGroupID());
+		server.createGroup(12, "backbackersAnonymous");
+		server.createChannel("channelName",ol.getUserID(), server.getDb().getGroup(12).getGroupID());
 		assertEquals(server.getDb().viewChannel("channelName", ol.getUserID(), 12),server.viewChannelMessages("channelName", ol.getUserID(), 12));
 	}
 
@@ -184,9 +184,14 @@ class ServerTest
 	}
 
 	@Test
-	void testAddUserToGroup() throws RemoteException
+	void testAddUserToGroup() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		//create a new user
+		User sam = server.createUser("sarah walker", "sam", "buymore");
+		//add user to group
+		server.addUserToGroup(50, ol.getUserID(), sam.getUserID());
+		//check that user is in group's registeredUsers
+		assertEquals(true,server.getGroup(50).getRegisteredUsers().containsKey(sam));
 	}
 
 	@Test
@@ -216,9 +221,13 @@ class ServerTest
 	}
 
 	@Test
-	void testViewUser() throws RemoteException
+	void testViewUser() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		//viewUser is akin to getUser in db
+		User bob = server.createUser("builder", "robert", "bobbuilds124");
+		assertEquals("builder",server.viewUser(bob.getUserID()).getUsername());
+		assertEquals("robert",server.viewUser(bob.getUserID()).getRealname());
+		assertEquals("bobbuilds124",server.viewUser(bob.getUserID()).getPassword());
 	}
 
 	@Test
@@ -237,12 +246,6 @@ class ServerTest
 		assertEquals(1337,server.getUserIDByName(user.getUsername()));
 	}
 
-	@Test
-	void testGetAllUsers() throws RemoteException
-	{
-		//check that size of regUsers is the same as size of listOfUsers
-		assertEquals(server.getDb().getGroup(12).getRegisteredUsers().size(),server.getAllUsers(12));
-	}
 
 	@Test
 	void testGetUserCount() throws RemoteException
@@ -300,7 +303,7 @@ class ServerTest
 	@Test
 	void testGetAllRegisteredUsers() throws RemoteException
 	{
-		fail("Not yet implemented");
+		assertEquals(server.getDb().getListOfUsers(),server.getAllRegisteredUsers());
 	}
 
 }

@@ -286,21 +286,6 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	@Override
-	public ArrayList<User> getAllUsers(Integer groupID)
-	{
-		//gets all users in a particular group
-		
-		//convert hash of registered users, role in group to list of users
-		HashMap<User,Role> hashUsers = db.getGroups().get(groupID).getRegisteredUsers();
-		Set<User> keySet = hashUsers.keySet();
-		ArrayList<User> listOfKeys = new ArrayList<User>(keySet);
-		//Collection<Role> values = hashUsers.values();
-		//ArrayList<Role> listOfValues = new ArrayList<>(values);
-		ArrayList<User> allUsers = listOfKeys;
-		return allUsers;
-	}
-
-	@Override
 	public Integer getUserCount(Integer groupID)
 	{
 		Integer count = db.getGroups().get(groupID).getRegisteredUsers().size();
@@ -353,6 +338,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	@Override
 	public ArrayList<User> getAllRegisteredUsers()
 	{
+		//gets a list of all users known in the database
 		ArrayList<User> regUsers = db.listOfUsers;
 		return regUsers;
 	}
