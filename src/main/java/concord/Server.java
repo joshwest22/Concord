@@ -257,11 +257,12 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	@Override
 	public User getUserByName(String username)
 	{
-		for (int i = 0;i<db.listOfUsers.size();i++)
+		
+		for (int i = 0;i<db.getListOfUsers().size();i++)
 		{
-			if (db.listOfUsers.get(i).getUsername().equals(username))
+			User user = db.getListOfUsers().get(i);
+			if (user.getUsername() == username)
 			{
-				User user = db.listOfUsers.get(i);
 				return user;
 			}
 		}
@@ -287,6 +288,8 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	@Override
 	public ArrayList<User> getAllUsers(Integer groupID)
 	{
+		//gets all users in a particular group
+		
 		//convert hash of registered users, role in group to list of users
 		HashMap<User,Role> hashUsers = db.getGroups().get(groupID).getRegisteredUsers();
 		Set<User> keySet = hashUsers.keySet();

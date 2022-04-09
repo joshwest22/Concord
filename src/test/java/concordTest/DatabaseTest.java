@@ -173,10 +173,22 @@ class DatabaseTest
 	}
 	
 	@Test
+	void testListOfUsers() throws MalformedURLException
+	{
+		//check that existing number of users in db is same number in list of users
+		assertEquals(db.getUsers().size(),db.getListOfUsers().size());
+		//add a new user and check that the size of list of users is updated
+		db.createUser("username", "realname", "password");
+		assertEquals(db.getUsers().size(),db.getListOfUsers().size());
+		//check that the value of the first user's username is correct in listOfUsers
+		assertEquals("jdubble",db.getListOfUsers().get(0).getUsername());
+	}
+	
+	@Test
 	void testXMLStorage()
 	{
 		db.storeToDisk();
-		Database diskF = Database.loadFromDisk();
+		Database diskF = Database.loadFromDisk(); //XML doesn't match after listOfUsers added
 		
 		assertTrue(db.equals(diskF));
 	}

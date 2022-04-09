@@ -96,17 +96,61 @@ public class Database
 		this.users = users;
 	}
 	
+	public ArrayList<Group> getListOfGroups()
+	{
+		return listOfGroups;
+	}
+
+	public void setListOfGroups(ArrayList<Group> listOfGroups)
+	{
+		this.listOfGroups = listOfGroups;
+	}
+
+	public ArrayList<Integer> getListOfGroupIDs()
+	{
+		return listOfGroupIDs;
+	}
+
+	public void setListOfGroupIDs(ArrayList<Integer> listOfGroupIDs)
+	{
+		this.listOfGroupIDs = listOfGroupIDs;
+	}
+
+	public ArrayList<User> getListOfUsers()
+	{
+		return listOfUsers;
+	}
+
+	public void setListOfUsers(ArrayList<User> listOfUsers)
+	{
+		this.listOfUsers = listOfUsers;
+	}
+
+	public ArrayList<Integer> getListOfUserIDs()
+	{
+		return listOfUserIDs;
+	}
+
+	public void setListOfUserIDs(ArrayList<Integer> listOfUserIDs)
+	{
+		this.listOfUserIDs = listOfUserIDs;
+	}
+
 	public void createUser(String username, String realname, String password, Integer userID, URL userPic, String userBio, Boolean onlineStatus)
 	{
 		//create User and add to users HashMap
 		User user = new User(username,realname,password,userID,userPic,userBio,onlineStatus);
 		users.put(userID, user);
+		listOfUsers.add(user);
+		listOfUserIDs.add(userID);
 	}
 	public void createUser(String username, String realname, String password) throws MalformedURLException
 	{
 		//create User and add to users HashMap
 		User user = new User(username,realname,password);
 		users.put(user.getUserID(), user);
+		listOfUsers.add(user);
+		listOfUserIDs.add(user.getUserID());
 	}
 	public void createGroup(Integer groupID, String groupName)
 	{

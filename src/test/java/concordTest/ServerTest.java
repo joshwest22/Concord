@@ -35,7 +35,7 @@ class ServerTest
 	{
 		clientsInGroup = new HashMap<Integer, ArrayList<Client>>();
 		ArrayList<Client> clients = new ArrayList<Client>();
-		Client testClient = new Client();
+		testClient = new Client();
 		clients.add(testClient);
 		clientsInGroup.put(50,clients);		
 		server = new Server(new Database(), clientsInGroup, new ArrayList<RMIObserver>());
@@ -83,8 +83,12 @@ class ServerTest
 	@Test
 	void testLogin() throws RemoteException
 	{
+		//client does not have an associated user
+		assertEquals("username",testClient.getAssociatedUser().getUsername());
 		server.login(testClient, ol.getUsername(), ol.getPassword());
-		fail("not implemented");
+		//client has an associated user
+		assertEquals(ol.getUsername(),testClient.getAssociatedUser().getUsername());
+		
 	}
 
 	@Test
@@ -103,6 +107,13 @@ class ServerTest
 		testDB.createGroup(42, "galaxy");
 		//show that the ID can be used to get the group in server in same way it can in db
 		assertEquals(testDB.getGroup(42).getGroupName(),server.getGroup(42).getGroupName());
+	}
+	
+	@Test
+	void testCreateGroup() throws RemoteException
+	{
+		server.createGroup(422, "coolGroup");
+		assertEquals("coolGroup",server.getGroup(422).getGroupName());
 	}
 
 	@Test
@@ -194,7 +205,7 @@ class ServerTest
 	@Test
 	void testUnlockChannel() throws RemoteException
 	{
-		assertEquals("patriotism unlocked.",server.lockChannel(50, ol.getUserID(), "patriotism"));
+		assertEquals("patriotism unlocked.",server.unlockChannel(50, ol.getUserID(), "patriotism"));
 		assertEquals(false,server.getDb().getGroup(50).getChannelByName("patriotism").getIsLocked());
 	}
 
@@ -211,13 +222,10 @@ class ServerTest
 	}
 
 	@Test
-	void testGetUserByName() throws RemoteException
+	void testGetUserByName() throws RemoteException, MalformedURLException
 	{
-		User user = new User();
-		user.setUsername("leetBoss");
-		String ol_name = server.getUserByName("leetBoss").getUsername();
-		assertEquals("leetBoss",server.getUserByName("leetBoss").getUsername());
-		String test = "";
+		User user = server.createUser("leetBoss", "ethan leech", "leetithdeletith");
+		assertEquals("leetBoss",user.getUsername());
 	}
 
 	@Test
@@ -232,7 +240,8 @@ class ServerTest
 	@Test
 	void testGetAllUsers() throws RemoteException
 	{
-		fail("Not yet implemented");
+		//check that size of regUsers is the same as size of listOfUsers
+		assertEquals(server.getDb().getGroup(12).getRegisteredUsers().size(),server.getAllUsers(12));
 	}
 
 	@Test
