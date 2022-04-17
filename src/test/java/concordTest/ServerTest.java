@@ -283,14 +283,14 @@ class ServerTest
 	{
 		//create User via server.create user
 		server.createUser("taika", "watiti", "rflagmeansdeath");
-		User pirate = server.getUserByUsername("taika");
+		User pirate = server.getUserByUsername("taika"); 
 		Group group = server.getGroup(50);
-		server.getGroup(50).addNewUser(ol, pirate, server.getGroup(50).admin); // this is not doing what I expect
+		server.getGroup(50).addNewUser(ol, pirate, server.getGroup(50).admin); 
 		// add user to allowed user list (channel)
 		String return_msg = server.addAllowedUser(server.getGroup(50).getChannels().get(0).getChannelName(), ol, pirate.getUserID(), 50);
 		assertEquals(return_msg, ol.getUsername()+" added "+pirate.getUsername()+" to "+server.getGroup(50).getGroupName()+"'s channel "+server.getGroup(50).getChannels().get(0).getChannelName());
 		//check if userID in allowedList
-		assertEquals(pirate.getUserID(),server.getGroup(50).getChannels().get(0).getAllowedUsers().get(0));
+		assertEquals(pirate.getUserID(),server.getGroup(50).getChannels().get(0).getAllowedUsers().get(1));
 	}
 	
 
