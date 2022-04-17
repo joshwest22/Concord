@@ -25,5 +25,45 @@ public class Invitation
 		this.inviteUserID = inviteUserID;
 		this.inviteAccepted = inviteAccepted;
 	}
+
+	public Message getInviteMsg()
+	{
+		return inviteMsg;
+	}
+
+	public void setInviteMsg(Message inviteMsg)
+	{
+		this.inviteMsg = inviteMsg;
+	}
+
+	public Integer getGroupID()
+	{
+		return groupID;
+	}
+
+	public void setGroupID(Integer groupID)
+	{
+		this.groupID = groupID;
+	}
+
+	public Integer getInviteUserID()
+	{
+		return inviteUserID;
+	}
+
+	public void setInviteUserID(Integer inviteUserID)
+	{
+		this.inviteUserID = inviteUserID;
+	}
+
+	public Boolean getInviteAccepted()
+	{
+		return inviteAccepted;
+	}
+
+	public void setInviteAccepted(Boolean inviteAccepted)
+	{
+		this.inviteAccepted = inviteAccepted;
+	}
 	
 }

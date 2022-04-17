@@ -24,7 +24,7 @@ public interface RMIObserved extends Remote
 	public String unlockChannel (Integer groupID, Integer userID, String channelName) throws RemoteException; 
 	public String leaveGroup (Integer groupID, Integer userID) throws RemoteException;
 	public User viewUser (Integer userID) throws RemoteException;
-	public User getUserByName (String username) throws RemoteException; 
+	public User getUserByUsername (String username) throws RemoteException; 
 	public Integer getUserIDByName (String username) throws RemoteException; 
 	public Integer getUserCount(Integer groupID) throws RemoteException;
 	public String addAllowedUser(String channelName, User adder, Integer addee, Integer groupID) throws RemoteException;

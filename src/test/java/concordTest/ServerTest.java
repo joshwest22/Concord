@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import concord.Client;
 import concord.Database;
 import concord.Group;
+import concord.Invitation;
 import concord.Message;
 import concord.RMIObserver;
 import concord.Server;
@@ -98,7 +99,7 @@ class ServerTest
 	void testCreateUser() throws MalformedURLException, RemoteException
 	{
 		server.createUser("anonPhilanthropist", "Robin H.", "merrymen123");
-		assertEquals("Robin H.",server.getUserByName("anonPhilanthropist").getRealname());
+		assertEquals("Robin H.",server.getUserByUsername("anonPhilanthropist").getRealname());
 	}
 
 	@Test
@@ -153,13 +154,13 @@ class ServerTest
 	@Test
 	void testUpdateNewChannel() throws RemoteException
 	{
-		fail("Not yet implemented");
+		assertEquals("New channel created",server.updateNewChannel(50));
 	}
 
 	@Test
 	void testUpdateNewMessage() throws RemoteException
 	{
-		fail("Not yet implemented");
+		assertEquals("New message created",server.updateNewMessage(50));
 	}
 
 	@Test
@@ -172,7 +173,7 @@ class ServerTest
 	@Test
 	void testMessageReceiveReply() throws RemoteException
 	{
-		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),server.getGroup(50).getGroupID(),server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0)));
+		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),server.getGroup(50).getGroupID(),server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0))); //see if I am checking the correct message
 	}
 
 	@Test
@@ -186,7 +187,7 @@ class ServerTest
 	@Test
 	void testUpdateNewUser() throws RemoteException
 	{
-		fail("Not yet implemented");
+		assertEquals("New user was created",server.updateNewUser(50));
 	}
 
 	@Test
@@ -197,7 +198,7 @@ class ServerTest
 		//add user to group
 		String result = server.addUserToGroup(50, ol.getUserID(), sam.getUserID());
 		//check that user is in group's registeredUsers
-		assertEquals(server.getUserByName(sam.getUsername()).getUsername()+" was added to "+server.getGroup(50),result);
+		assertEquals(server.getUserByUsername(sam.getUsername()).getUsername()+" was added to "+server.getGroup(50),result);
 		assertEquals("basic",server.getGroup(50).getRegisteredUsers().get(sam).getRoleName());
 		assertTrue(server.getGroup(50).getRegisteredUsers().containsKey(sam));
 	}
@@ -207,14 +208,15 @@ class ServerTest
 	{
 		//create user
 		server.createUser("retrop", "porter", "beeboop3234", 1570);
-		User porter = server.getUserByName("retrop");
+		User porter = server.getUserByUsername("retrop");
 		//add a user to a group
 		server.getGroup(50).addNewUser(ol, porter, server.getGroup(50).admin);
 		//take the user out of the group and show that the size is one less
-		int b_size = server.getGroup(50).getRegisteredUsers().size();
-		assertEquals(b_size, server.getGroup(50).getRegisteredUsers().size());
-		int a_size = b_size - 1;
-		assertEquals(a_size,server.removeUserFromGroup(50, ol.getUserID(), porter.getUserID()));
+		int before_size = server.getGroup(50).getRegisteredUsers().size();
+		assertEquals(before_size, server.getGroup(50).getRegisteredUsers().size());
+		int after_size = before_size - 1;
+		assertEquals("retrop was removed from USA by overlord",server.removeUserFromGroup(50, ol.getUserID(), porter.getUserID()));
+		assertEquals(after_size,server.getGroup(50).getRegisteredUsers().size());
 	}
 
 	@Test
@@ -273,7 +275,7 @@ class ServerTest
 	{
 		//create User via server.create user
 		server.createUser("taika", "watiti", "rflagmeansdeath");
-		User pirate = server.getUserByName("taika");
+		User pirate = server.getUserByUsername("taika");
 		Group group = server.getGroup(50);
 		server.getGroup(50).addNewUser(ol, pirate, server.getGroup(50).admin); // this is not doing what I expect
 		// add user to allowed user list (channel)
@@ -314,15 +316,29 @@ class ServerTest
 	}
 
 	@Test
-	void testAssignNewRole() throws RemoteException
+	void testAssignNewRole() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		//create new user and assign them default role by default
+		server.createUser("bagelman", "einstein", "emc2");
+		User einstein = server.getUserByUsername("bagelman");
+		//add new user to group
+		server.addUserToGroup(50, ol.getUserID(), einstein.getUserID());
+		//allow them permission to create channel
+		assertEquals(false,server.getGroup(50).getRegisteredUsers().get(einstein).getCanCreateChannel());
+		server.assignNewRole(ol.getUserID(), einstein.getUserID(), 50, false, false, false, true);
+		assertEquals(true,server.getGroup(50).getRegisteredUsers().get(einstein).getCanCreateChannel());
 	}
 
 	@Test
-	void testUpdateInvite() throws RemoteException
+	void testUpdateInvite() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		server.createUser("who?", "james", "widowmain");
+		User james = server.getUserByUsername("who?");
+		Message m = new Message("want to join?", ol.getUserID());
+		Invitation inv = new Invitation();
+		inv.setInviteMsg(m);
+		james.getPendingInvites().add(inv);
+		assertEquals("New invite was created",server.updateInvite(james.getUserID()));
 	}
 
 	@Test

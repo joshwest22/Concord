@@ -108,7 +108,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 			if(user.getUsername().contains(username)) //users.getUsername().contains(username)
 			{
 				//AND the password matches (secure version would be if the hash of password matches)
-				if(this.getUserByName(username).getPassword().equals(password))
+				if(this.getUserByUsername(username).getPassword().equals(password))
 				{
 					//set the user to be returned and update associated user
 					client.setAssociatedUser(user);
@@ -129,14 +129,14 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	public User createUser(String username, String realname, String password) throws MalformedURLException
 	{
 		db.createUser(username, realname, password);
-		User user = getUserByName(username);
+		User user = getUserByUsername(username);
 		return user;
 	}
 	
 	public User createUser(String username, String realname, String password, Integer userID) throws MalformedURLException
 	{
 		db.createUser(username, realname, password, userID);
-		User user = getUserByName(username);
+		User user = getUserByUsername(username);
 		return user;
 	}
 
@@ -178,18 +178,20 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		return channelName+" was created in "+db.getGroup(groupID).getGroupName()+" by "+db.getUser(userID).getUsername();
 	}
 	
-	public void updateNewChannel(Integer groupID)
+	public String updateNewChannel(Integer groupID)
 	{
 		//tell the client to update their channels
+		return "New channel created";
 		
 	}
 	
-	public void updateNewMessage(Integer groupID)
+	public String updateNewMessage(Integer groupID)
 	{
 		//tell each client in a group to update their messageLog
 		//what is updating? Setting client object to server version, but aren't they already linked?
 		//modify this to work as for loops instead of chained for each (that don't currently work)
 		//TODO clientsInGroup.get(groupID).forEach((client) -> db.getGroup(groupID).getChannels().forEach((channel) -> channel.setMessageLog(db.getGroup(groupID).getChannels().get(i).getMessageLog())));
+		return "New message created";
 	}
 
 	@Override
@@ -214,10 +216,10 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		return messages;
 	}
 	
-	public void updateNewUser(Integer groupID)
+	public String updateNewUser(Integer groupID)
 	{
-		//refresh the users list
-		System.out.println("New user was created.");
+		//System.out.println("New user was created.");
+		return "New user was created";
 	}
 
 	@Override
@@ -264,7 +266,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	@Override
-	public User getUserByName(String username)
+	public User getUserByUsername(String username)
 	{
 		
 		for (int i = 0;i<db.getListOfUsers().size();i++)
@@ -329,19 +331,20 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	@Override
-	public String assignNewRole(Integer changerID, Integer changedID, Integer groupID, Boolean canKick,
+	public String assignNewRole(Integer changerUserID, Integer changedUserID, Integer groupID, Boolean canKick,
 			Boolean canLockChannel, Boolean canAssignRole, Boolean canCreateChannel)
 	{
-		Role newRole = db.getGroup(groupID).getRegisteredUsers().get(db.getUser(changerID)).createRole(changerID, "user generated role", db.getGroup(groupID), canKick,
+		Role newRole = db.getGroup(groupID).getRegisteredUsers().get(db.getUser(changerUserID)).createRole(changerUserID, "user generated role", db.getGroup(groupID), canKick,
 				canLockChannel, canAssignRole, canCreateChannel); //create role with role params
 		//assign role using chain above
-		db.getGroup(groupID).getRegisteredUsers().get(db.getUser(changerID)).assignRole(db.getUser(changedID), newRole);
-		return newRole.getRoleName()+" was assigned to "+db.getUser(changedID).getUsername()+" by "+db.getUser(changerID).getUsername();
+		db.getGroup(groupID).getRegisteredUsers().get(db.getUser(changerUserID)).assignRole(db.getUser(changedUserID), newRole);
+		return newRole.getRoleName()+" was assigned to "+db.getUser(changedUserID).getUsername()+" by "+db.getUser(changerUserID).getUsername();
 	}
 	
-	public void updateInvite(Integer userID)
+	public String updateInvite(Integer userID)
 	{
-		System.out.println("New invite was created.");
+		//System.out.println("New invite was created.");
+		return "New invite was created";
 	}
 
 	@Override
