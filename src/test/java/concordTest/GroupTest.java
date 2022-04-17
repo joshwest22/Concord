@@ -41,12 +41,14 @@ class GroupTest
 		josh = new User("joshanator", "josh", "pass", 00, url, "bio", true);
 		gus = new User("crow", "gus", "5678", 02, url, "gustav", true);
 		overlord = new User("overlord","bill","xxxyyyzzz",123,url,"bio",true);
-		Role adminRole = new Role("admin", group1, true, true, true, true);
+		adminRole = new Role("admin", group1, true, true, true, true);
+		basicRole = new Role("basic",group1, false, false, false, false);
 		registeredUsers.put(josh, adminRole);
 		registeredUsers.put(overlord, adminRole);
 		group1.getRegisteredUsers().put(overlord, adminRole);
 		//test that all parameters of group were assigned correctly using long constructor
 		group2 = new Group(channels, "cool group", URL("http://logo.com"), "group2", 2);
+		group2.getRegisteredUsers().put(overlord, adminRole);
 		//create another group for testing purposes
 		group3 = new Group(3,"group3");
 		group3.getRegisteredUsers().put(overlord, adminRole);
@@ -61,11 +63,12 @@ class GroupTest
 
 	@Test
 	void testGroupArrayListOfChannelHashMapOfUserRoleStringURLStringInteger() throws MalformedURLException
-	{		
-		//assertEquals(group2.getChannels(),channel1); //out of scope
-		assertEquals(group2.getChannels().get(0).getChannelName(),"channel1");
+	{	
+		group2.createChannel("testAChannel",group1);
+		group2.addNewUser(overlord,josh,group2.admin);
+		assertEquals("testAChannel", group2.getChannelByName("testAChannel").getChannelName()); //channel name is null
 		
-		//assertEquals(group2.getRegisteredUsers(),registeredUsers); //out of scope
+		//assertEquals(group2.getRegisteredUsers().size(),registeredUsers); //out of scope
 		assertEquals(group2.getRegisteredUsers().get(josh).getRoleName(),"admin");
 		
 		assertEquals(group2.getDescription(),"cool group");
@@ -99,11 +102,11 @@ class GroupTest
 	{
 		HashMap<User,Role> testRegUsers = new HashMap<User,Role>();
 		testRegUsers.put(overlord, adminRole);
-		group1.addNewUser(overlord, josh, adminRole); //size = 1
+		group1.addNewUser(overlord, josh, group1.admin); //size = 1
 		testRegUsers.put(josh,adminRole);
-		//assertEquals(group1.getRegisteredUsers().get(josh).getRoleName(),testRegUsers.get(josh).getRoleName());
+		assertEquals(group1.getRegisteredUsers().get(josh).getRoleName(),testRegUsers.get(josh).getRoleName());
 		assertEquals(group1.getRegisteredUsers().size(),testRegUsers.size());
-		group1.addNewUser(overlord,gus, adminRole); // size = 2
+		group1.addNewUser(overlord,gus, group1.admin); // size = 2
 		testRegUsers.put(gus, adminRole);
 		assertEquals(group1.getRegisteredUsers().size(),testRegUsers.size());		
 	}
@@ -111,13 +114,18 @@ class GroupTest
 	@Test
 	void testRemoveUser() //this is also how a user leaves
 	{
-		group2.addNewUser(overlord,josh, adminRole);
+		adminRole = new Role("admin", group2, true, true, true, true); //redefine for this test
 		HashMap<User,Role> testRegUsers = new HashMap<User,Role>();
+		testRegUsers.put(overlord, adminRole);
+		group2.addNewUser(overlord,josh,group2.admin);
 		testRegUsers.put(josh,adminRole);
-		group2.addNewUser(overlord,gus, adminRole);
+		
+		group2.addNewUser(overlord,gus,group2.admin);
 		testRegUsers.put(gus, adminRole);
-		testRegUsers.remove(josh);
-		assertEquals(group2.getRegisteredUsers().get(josh),testRegUsers.get(josh)); // might need to compare users
+		group2.removeUser(gus);
+		testRegUsers.remove(gus);
+		assertEquals(testRegUsers.size(),group2.getRegisteredUsers().size()); 
+		assertEquals(group2.getRegisteredUsers().get(josh).getRoleName(),testRegUsers.get(josh).getRoleName()); // might need to compare users
 	}
 
 	@Test
@@ -148,6 +156,7 @@ class GroupTest
 	void testCreateChannel()
 	{
 		group1.addNewUser(overlord,josh,adminRole);
+		group2.addNewUser(overlord, josh, adminRole);
 		ArrayList<Integer> allowedUserIDs = new ArrayList<Integer>();
 		//allowedUserIDs.add(josh.getUserID());
 		ArrayList<Message> log = new ArrayList<Message>();
@@ -179,10 +188,10 @@ class GroupTest
 		Message msg0 = new Message("Message0",josh.getUserID());
 		Message msg1 = new Message("Message1",josh.getUserID());
 		group2.getRegisteredUsers().get(josh).sendMessage(msg0, group2.getChannels().get(0));
-		group2.getRegisteredUsers().get(josh).sendMessage(msg1, group2.getChannels().get(1));
+		group2.getRegisteredUsers().get(josh).sendMessage(msg1, group2.getChannels().get(0));
 		//check if the message is in the channel and message text matches text sent
 		assertEquals(group2.getChannels().get(0).getMessageLog().get(0).getText(),msg0.getText());
-		assertEquals(group2.getChannels().get(1).getMessageLog().get(0).getText(),msg1.getText());
+		assertEquals(group2.getChannels().get(0).getMessageLog().get(1).getText(),msg1.getText());
 	}
 	
 	@Test

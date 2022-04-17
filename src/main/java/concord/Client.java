@@ -27,17 +27,18 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.serverContact = server;
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
-		this.clientName = "name";
+		this.clientName = "Name: 'client'";
 	}
 
 	private static final long serialVersionUID = -6394155878301235563L;
 	
-	String clientName = "Clyde Client";
+	String clientName = "Name: 'client'";
 	
 	@Override
-	public void notifyFinished()
+	public String notifyFinished()
 	{
 		System.out.println(clientName+" was called");
+		return clientName+" was called";
 	}
 	
 	public void login(String username, String password)

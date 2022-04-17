@@ -31,6 +31,7 @@ class ServerTest
 	static URL url;
 	static User ol;
 	
+	
 	@BeforeAll
 	static void setUp() throws Exception
 	{
@@ -49,7 +50,9 @@ class ServerTest
 		
 		
 		server.getDb().createGroup(50, "USA");
+		Group USAGroup = server.getGroup(50);
 		server.getDb().getGroup(50).createChannel("patriotism", server.getDb().getGroup(50));
+		USAGroup.getRegisteredUsers().put(ol, USAGroup.admin);
 		
 	}
 	@AfterEach
@@ -78,7 +81,7 @@ class ServerTest
 	@Test
 	void testMakeDonuts() throws RemoteException
 	{
-		fail("TBD");
+		assertEquals("Name: 'client' was called",server.makeDonuts());
 	}
 
 	@Test
@@ -117,23 +120,26 @@ class ServerTest
 	}
 
 	@Test
-	void testGetUserGroups() throws RemoteException
+	void testGetUserGroups() throws RemoteException, MalformedURLException
 	{
 		//add user to 2 groups
-		Group groupA = new Group();
-		groupA.setGroupName("A");
-		Group groupB = new Group();
-		groupB.setGroupName("B");
-		User u = new User();
-		u.setUserID(111);
-		groupA.addNewUser(ol, u, groupA.basic);
-		groupB.addNewUser(ol, u, groupB.basic);
+		server.createGroup(01, "A");
+		Group groupA = server.getGroup(01);
+		server.createGroup(02, "B");
+		Group groupB = server.getGroup(02);
+		//add overlord to groups
+		groupA.getRegisteredUsers().put(ol, groupA.admin);
+		groupB.getRegisteredUsers().put(ol, groupB.admin);
+		User u = server.createUser("usernomen", "Igor", "trollBridge659%", 111);
+		server.addUserToGroup(groupA.getGroupID(), ol.getUserID(), u.getUserID());
+		server.addUserToGroup(groupB.getGroupID(), ol.getUserID(), u.getUserID());
 		//make a dummy list of those 2 groups
 		ArrayList<Group> dummyGroups = new ArrayList<Group>();
 		dummyGroups.add(groupA);
 		dummyGroups.add(groupB);
-		//assertEquals dummy list of groups with result
-		assertEquals(dummyGroups,server.getUserGroups(u.getUserID()));
+		//check that group names in dummy list match group names in server list
+		assertEquals(dummyGroups.get(0).getGroupName(),server.getUserGroups(u.getUserID()).get(0).getGroupName());
+		assertEquals(dummyGroups.get(1).getGroupName(),server.getUserGroups(u.getUserID()).get(1).getGroupName());
 	}
 
 	@Test
@@ -189,15 +195,26 @@ class ServerTest
 		//create a new user
 		User sam = server.createUser("sarah walker", "sam", "buymore");
 		//add user to group
-		server.addUserToGroup(50, ol.getUserID(), sam.getUserID());
+		String result = server.addUserToGroup(50, ol.getUserID(), sam.getUserID());
 		//check that user is in group's registeredUsers
-		assertEquals(true,server.getGroup(50).getRegisteredUsers().containsKey(sam));
+		assertEquals(server.getUserByName(sam.getUsername()).getUsername()+" was added to "+server.getGroup(50),result);
+		assertEquals("basic",server.getGroup(50).getRegisteredUsers().get(sam).getRoleName());
+		assertTrue(server.getGroup(50).getRegisteredUsers().containsKey(sam));
 	}
 
 	@Test
-	void testRemoveUserFromGroup() throws RemoteException
+	void testRemoveUserFromGroup() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		//create user
+		server.createUser("retrop", "porter", "beeboop3234", 1570);
+		User porter = server.getUserByName("retrop");
+		//add a user to a group
+		server.getGroup(50).addNewUser(ol, porter, server.getGroup(50).admin);
+		//take the user out of the group and show that the size is one less
+		int b_size = server.getGroup(50).getRegisteredUsers().size();
+		assertEquals(b_size, server.getGroup(50).getRegisteredUsers().size());
+		int a_size = b_size - 1;
+		assertEquals(a_size,server.removeUserFromGroup(50, ol.getUserID(), porter.getUserID()));
 	}
 
 	@Test
@@ -238,12 +255,10 @@ class ServerTest
 	}
 
 	@Test
-	void testGetUserIDByName() throws RemoteException
+	void testGetUserIDByName() throws RemoteException, MalformedURLException
 	{
-		User user = new User();
-		user.setUsername("leetBoss");
-		user.setUserID(1337);
-		assertEquals(1337,server.getUserIDByName(user.getUsername()));
+		User user = server.createUser("leetBoss","evan leech","leetTeam4Life",1337);
+		assertEquals(user.getUserID(),server.getUserIDByName(user.getUsername()));
 	}
 
 
@@ -254,10 +269,20 @@ class ServerTest
 	}
 
 	@Test
-	void testAddAllowedUser() throws RemoteException
+	void testAddAllowedUser() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		//create User via server.create user
+		server.createUser("taika", "watiti", "rflagmeansdeath");
+		User pirate = server.getUserByName("taika");
+		Group group = server.getGroup(50);
+		server.getGroup(50).addNewUser(ol, pirate, server.getGroup(50).admin); // this is not doing what I expect
+		// add user to allowed user list (channel)
+		String return_msg = server.addAllowedUser(server.getGroup(50).getChannels().get(0).getChannelName(), ol, pirate.getUserID(), 50);
+		assertEquals(return_msg, ol.getUsername()+" added "+pirate.getUsername()+" to "+server.getGroup(50).getGroupName()+"'s channel "+server.getGroup(50).getChannels().get(0).getChannelName());
+		//check if userID in allowedList
+		assertEquals(pirate.getUserID(),server.getGroup(50).getChannels().get(0).getAllowedUsers().get(0));
 	}
+	
 
 	@Test
 	void testBlockUser() throws RemoteException, MalformedURLException

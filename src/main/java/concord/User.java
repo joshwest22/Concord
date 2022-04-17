@@ -60,6 +60,30 @@ public class User
 		this.pendingInvites = new ArrayList<Invitation>();
 	}
 	
+	public User(String username, String realname, String password, Integer userID)
+	{
+		
+		this.username = username;
+		this.realname = realname;
+		this.password = password;
+		this.userID = userID;
+		URL defualtUserPic = null;
+		try
+		{
+			defualtUserPic = new URL("http://concordLogo.png"); //url might be wrong
+		} 
+			catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		this.userPic = defualtUserPic ;
+		this.userBio = "No bio";
+		this.onlineStatus = false;
+		this.blockedUserIDs = new ArrayList<Integer>();
+		this.pendingInvites = new ArrayList<Invitation>();
+	}
+	
 	public User()
 	{
 		this("username", "realname", "password");

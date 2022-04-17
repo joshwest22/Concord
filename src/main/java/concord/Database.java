@@ -344,4 +344,14 @@ public class Database
 		return group;
 		
 	}
+
+	public void createUser(String username, String realname, String password, Integer userID)
+	{
+		//create User and add to users HashMap
+		User user = new User(username,realname,password,userID);
+		users.put(user.getUserID(), user);
+		listOfUsers.add(user);
+		listOfUserIDs.add(user.getUserID());
+		
+	}
 }

@@ -5,5 +5,5 @@ import java.rmi.RemoteException;
 
 public interface RMIObserver extends Remote
 {
-	public void notifyFinished() throws RemoteException;
+	public String notifyFinished() throws RemoteException;
 }

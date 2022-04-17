@@ -190,5 +190,4 @@ public class Role
 		}
 		return null;
 	}
-	//Might need a view channel
 }

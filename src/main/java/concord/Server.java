@@ -44,25 +44,26 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		observers.remove(o);
 	}
 	
-	public void notifyObservers()
+	public String notifyObservers()
 	{
 		for(RMIObserver o : observers)
 		{
 			try
 			{
-				o.notifyFinished();
+				return o.notifyFinished();
 			} catch (RemoteException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		return null;
 	}
 	
-	public void makeDonuts()
+	public String makeDonuts()
 	{
 		//example rmi test method should be more complicated in implementation
-		notifyObservers();
+		return notifyObservers();
 	}
 	
 	public Database getDb()
@@ -131,6 +132,13 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		User user = getUserByName(username);
 		return user;
 	}
+	
+	public User createUser(String username, String realname, String password, Integer userID) throws MalformedURLException
+	{
+		db.createUser(username, realname, password, userID);
+		User user = getUserByName(username);
+		return user;
+	}
 
 	@Override
 	public Group getGroup(Integer groupID)
@@ -146,7 +154,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		//look through db.groups to see if the user is in any of them by ID
 		for(int i = 0; i<db.groups.size(); i++)
 		{
-			//for every group, does the group's registered user have specific user?
+			//for every group, does the group's registeredUsers contain specific user?
 			HashMap<User, Role> regUsers = db.getGroup(i).getRegisteredUsers();
 			Set<User> keys = regUsers.keySet();
 			for (User user : keys)
@@ -156,10 +164,11 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 				{
 					Group myGroup = db.getGroup(i);
 					userGroups.add(myGroup);
+					return userGroups;
 				}
 			}
 		}
-		return userGroups;
+		return new ArrayList<Group>(); //user not found in groups
 	}
 
 	@Override
@@ -215,14 +224,14 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	public String addUserToGroup(Integer groupID, Integer addingUserID, Integer addedUserID)
 	{
 		Group group = db.getGroup(groupID);
-		group.addNewUser(db.getUser(addedUserID), db.getUser(addedUserID),group.basic);
+		group.addNewUser(db.getUser(addingUserID), db.getUser(addedUserID),group.basic);
 		return db.getUser(addedUserID).getUsername()+" was added to "+db.getGroup(groupID);
 	}
 
 	@Override
 	public String removeUserFromGroup(Integer groupID, Integer removingUserID, Integer removedUserID)
 	{
-		db.getGroup(groupID).getRegisteredUsers().get(db.getUser(removedUserID)).kickUser(db.getUser(removedUserID));
+		db.getGroup(groupID).getRegisteredUsers().get(db.getUser(removingUserID)).kickUser(db.getUser(removedUserID));
 		return db.getUser(removedUserID).getUsername()+" was removed from "+db.getGroup(groupID).getGroupName() +" by "+db.getUser(removingUserID).getUsername();
 	}
 
@@ -273,11 +282,11 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	@Override
 	public Integer getUserIDByName(String username)
 	{
-		for (int i = 0;i<db.listOfUsers.size();i++)
+		for (int i = 0;i<db.getListOfUsers().size();i++)
 		{
-			if (db.listOfUsers.get(i).getUsername().equals(username))
+			if (db.getListOfUsers().get(i).getUsername().equals(username))
 			{
-				Integer userID = db.listOfUsers.get(i).getUserID();
+				Integer userID = db.getListOfUsers().get(i).getUserID();
 				return userID;
 			}
 		}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #36393F;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Label fx:id="channelNameLabel" prefHeight="32.0" prefWidth="173.0" text="ChannelName" textFill="WHITE">
+                     <font>
+                        <Font name="Courier New" size="24.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="111.0" text="Overview" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="120.0" text="Channel Name" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="editChannelNameTextField" maxWidth="200.0" prefHeight="25.0" prefWidth="50.0" promptText="Edit Channel Name">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onDeleteChannelClicked" style="-fx-background-color: ad2316; -fx-background-radius: 4px;" text="Delete Channel" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="3.0" left="5.0" right="5.0" top="3.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+   <left>
+      <VBox prefWidth="119.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Overview" textFill="#999999">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Button>
+            <Button fx:id="PermissionsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPermissionsButton" prefHeight="30.0" prefWidth="120.0" text="Permissions" textFill="#999999">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>
