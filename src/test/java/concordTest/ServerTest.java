@@ -234,9 +234,17 @@ class ServerTest
 	}
 
 	@Test
-	void testLeaveGroup() throws RemoteException
+	void testLeaveGroup() throws RemoteException, MalformedURLException
 	{
-		fail("Not yet implemented");
+		//create new user
+		server.createUser("greenthumb", "tom thumb", "forefinger12");
+		User tom = server.getUserByUsername("greenthumb");
+		//add user to group
+		server.addUserToGroup(50, ol.getUserID(), tom.getUserID());
+		//let user leave
+		String result = server.leaveGroup(50, tom.getUserID());
+		//check that leave group message is correct
+		assertEquals(server.getUserByUsername(tom.getUsername()).getUsername()+"left "+server.getGroup(50).getGroupName(),result);
 	}
 
 	@Test
