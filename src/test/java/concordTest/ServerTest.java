@@ -173,7 +173,11 @@ class ServerTest
 	@Test
 	void testMessageReceiveReply() throws RemoteException
 	{
-		assertEquals("grain? has been received in reply to amber waves . . .",server.messageReceiveReply("patriotism", "grain?",ol.getUserID(),server.getGroup(50).getGroupID(),server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0))); //see if I am checking the correct message
+		Message m = server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0);
+		String s = "grain?";
+		Message m2 = new Message(s, ol.getUserID());
+		m2.setInReplyTo(m);
+		assertEquals(s+" has been receieved in reply to : "+m.getText(),server.messageReceiveReply("patriotism", s,ol.getUserID(),server.getGroup(50).getGroupID(),server.getGroup(50).getChannelByName("patriotism").getMessageLog().get(0))); //see if I am checking the correct message
 	}
 
 	@Test
