@@ -8,7 +8,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -24,14 +23,10 @@ import concord.User;
 class ServerTest
 {
 	static Server server;
-	//static Database database;
-	//static Database testDB;
 	static HashMap<Integer, ArrayList<Client>> clientsInGroup;
-	//static ArrayList<RMIObserver> observers;
 	static Client testClient;
 	static URL url;
 	static User ol;
-	
 	
 	@BeforeAll
 	static void setUp() throws Exception
@@ -48,17 +43,11 @@ class ServerTest
 		ol = server.getDb().getUser(00);		
 		assertEquals("overlord",ol.getUsername());
 		
-		
-		
 		server.getDb().createGroup(50, "USA");
 		Group USAGroup = server.getGroup(50);
 		server.getDb().getGroup(50).createChannel("patriotism", server.getDb().getGroup(50));
 		USAGroup.getRegisteredUsers().put(ol, USAGroup.admin);
 		
-	}
-	@AfterEach
-	void tearDown() throws Exception
-	{
 	}
 
 	@Test
@@ -289,12 +278,12 @@ class ServerTest
 		server.createUser("taika", "watiti", "rflagmeansdeath");
 		User pirate = server.getUserByUsername("taika"); 
 		Group group = server.getGroup(50);
-		server.getGroup(50).addNewUser(ol, pirate, server.getGroup(50).admin); 
+		group.addNewUser(ol, pirate, group.admin); 
 		// add user to allowed user list (channel)
-		String return_msg = server.addAllowedUser(server.getGroup(50).getChannels().get(0).getChannelName(), ol, pirate.getUserID(), 50);
-		assertEquals(return_msg, ol.getUsername()+" added "+pirate.getUsername()+" to "+server.getGroup(50).getGroupName()+"'s channel "+server.getGroup(50).getChannels().get(0).getChannelName());
+		String return_msg = server.addAllowedUser(group.getChannels().get(0).getChannelName(), ol, pirate.getUserID(), 50);
+		assertEquals(return_msg, ol.getUsername()+" added "+pirate.getUsername()+" to "+group.getGroupName()+"'s channel "+group.getChannels().get(0).getChannelName());
 		//check if userID in allowedList
-		assertEquals(pirate.getUserID(),server.getGroup(50).getChannels().get(0).getAllowedUsers().get(1));
+		assertEquals(pirate.getUserID(),group.getChannels().get(0).getAllowedUsers().get(1));
 	}
 	
 

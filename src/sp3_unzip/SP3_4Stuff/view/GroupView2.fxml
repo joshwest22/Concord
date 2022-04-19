@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GroupViewController">
+   <left>
+      <HBox prefHeight="383.0" prefWidth="126.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="383.0" prefWidth="125.0">
+               <children>
+                  <Button id="createChannelButton" fx:id="createChannelButton" mnemonicParsing="false" onAction="#onClickedCreateChannel" text="Create Channel">
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" top="12.0" />
+                     </VBox.margin></Button>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="126.0" text="Channels" />
+                  <ListView id="channelsListView" fx:id="channelsListView" prefHeight="243.0" prefWidth="125.0">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </left>
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="26.0" prefWidth="148.0" text="Back">
+               <HBox.margin>
+                  <Insets left="2.0" top="2.0" />
+               </HBox.margin></Button>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="589.0" text="Concord">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField id="sendMessageBoxTextField" fx:id="sendMessageBoxTextField" layoutX="9.0" layoutY="336.0" prefHeight="32.0" prefWidth="337.0" promptText="Type a message . . ." />
+            <ListView layoutX="8.0" layoutY="58.0" prefHeight="272.0" prefWidth="347.0" />
+            <HBox layoutX="257.0" layoutY="5.0" prefHeight="29.0" prefWidth="212.0" spacing="10.0">
+               <children>
+                  <Button id="pinnedMessageButton" fx:id="pinnedMessageButton" mnemonicParsing="false" onAction="#onClickPinnedMessageButton" prefHeight="25.0" prefWidth="129.0" text="PinnedMsg">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <TextField id="searchUsersTextField" fx:id="searchUsersTextField" prefHeight="25.0" prefWidth="92.0" text="Search ">
+                     <font>
+                        <Font size="8.0" />
+                     </font>
+                  </TextField>
+                  <Button id="giveRoleButton" fx:id="giveRoleButton" mnemonicParsing="false" onAction="#onClickGiveRoleButton" prefHeight="26.0" prefWidth="131.0" text="Give Role">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <TextField id="channelNameTextField" fx:id="channelNameTextField" layoutX="14.0" layoutY="14.0" text="Channel Name" />
+            <VBox layoutX="363.0" layoutY="39.0" prefHeight="291.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="103.0" text="Users" />
+                  <ListView id="usersListView" fx:id="usersListView" prefHeight="292.0" prefWidth="100.0" />
+               </children>
+            </VBox>
+            <Button id="sendButton" fx:id="sendButton" layoutX="355.0" layoutY="340.0" mnemonicParsing="false" onAction="#onClickSendButton" prefHeight="26.0" prefWidth="55.0" text="Send" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

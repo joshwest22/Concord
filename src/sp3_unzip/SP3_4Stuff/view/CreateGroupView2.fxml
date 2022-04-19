@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateGroupController">
+   <top>
+      <Button id="exitButton" fx:id="exitButton" mnemonicParsing="false" onAction="#onClickExitButton" text="exit" textFill="#fb0f0f" BorderPane.alignment="TOP_RIGHT" />
+   </top>
+   <center>
+      <VBox prefHeight="286.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea prefHeight="67.0" prefWidth="600.0" text="                 Customize your server">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextArea>
+            <TextArea prefHeight="110.0" prefWidth="600.0" text="                   Give your new server a personality with a name and icon. &#10;                              You can always change it later">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding>
+            </TextArea>
+            <Circle fill="#b9c0c7" radius="46.0" stroke="BLACK" strokeType="INSIDE">
+               <VBox.margin>
+                  <Insets left="250.0" top="5.0" />
+               </VBox.margin>
+            </Circle>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Server Name">
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+            </Text>
+            <TextField id="serverNameTextField" fx:id="serverNameTextField" prefHeight="65.0" prefWidth="540.0" text="Enter Group Name">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
+            </TextField>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="43.0" prefWidth="79.0" text="Back">
+                     <HBox.margin>
+                        <Insets right="100.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button id="enterButton" fx:id="enterButton" mnemonicParsing="false" onAction="#onClickEnterButton" prefHeight="43.0" prefWidth="79.0" text="Enter">
+                     <HBox.margin>
+                        <Insets left="230.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

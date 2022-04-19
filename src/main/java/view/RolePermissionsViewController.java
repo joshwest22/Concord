@@ -1,4 +1,4 @@
-package views;
+package view;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

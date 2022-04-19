@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,8 +15,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-public class Database
+public class Database implements Serializable
 {
+	private static final long serialVersionUID = -7839546588414426458L;
 	HashMap<Integer, Group> groups;
 	//iterable list of users for XML encoding //turns out this wasn't necessary as HashMaps can be XML encoded
 	ArrayList<Group> listOfGroups;
@@ -158,6 +160,8 @@ public class Database
 		HashMap<User,Role> regUsers = new HashMap<User,Role>();
 		group.registeredUsers = regUsers;
 		groups.put(groupID, group);
+		listOfGroups.add(group);
+		listOfGroupIDs.add(groupID);
 	}
 	public void createChannel(String channelName, Integer userID, Integer groupID)
 	{
@@ -277,9 +281,12 @@ public class Database
 	public static Database loadFromDisk()
 	{
 		XMLDecoder decoder=null;
-		try {
+		try 
+		{
 			decoder=new XMLDecoder(new BufferedInputStream(new FileInputStream("ConcordDatabase.xml")));
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) 
+		{
 			System.out.println("ERROR: File ConcordDatabase.xml not found");
 		}
 		Database f = (Database) decoder.readObject();
@@ -294,7 +301,7 @@ public class Database
 		}
 		for (User u : listOfUsers) 
 		{
-			if (!that.contains(u))
+			if (!that.listOfUsers.contains(u))
 			{
 				return false;
 			}
@@ -306,7 +313,7 @@ public class Database
 		}
 		for (Group g : listOfGroups)
 		{
-			if (!that.contains(g))
+			if (!that.listOfGroups.contains(g))
 			{
 				return false;
 			}

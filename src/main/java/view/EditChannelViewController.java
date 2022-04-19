@@ -1,4 +1,4 @@
-package views;
+package view;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
+import mainapplication.ViewTransitionalModelInterface;
 
 ViewTransitionalModelInterface model;
 

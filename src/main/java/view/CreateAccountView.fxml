@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateAccountController">
+   <center>
+      <BorderPane>
+         <top>
+            <Label id="createAccountLabel" fx:id="createAccountLabel" text="Create your account!" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <VBox alignment="CENTER" prefHeight="230.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Username">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField id="createAccountUsername" fx:id="createAccountUsername" promptText="New username" />
+                  <Label text="Real name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField id="realNameTextField" fx:id="realNameTextField" promptText="Real name" />
+                  <Label text="Password">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField id="createAccountPassword" fx:id="createAccountPassword" promptText="New password" />
+                  <Button id="createAccountButton" fx:id="createAccountButton" mnemonicParsing="false" onAction="#onClickSignUp" prefHeight="26.0" prefWidth="268.0" text="Sign up" />
+               </children>
+               <BorderPane.margin>
+                  <Insets top="-30.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

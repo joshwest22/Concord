@@ -4,7 +4,7 @@
   <void property="groups">
    <void method="put">
     <int>5</int>
-    <object class="concord.Group">
+    <object class="concord.Group" id="Group0">
      <void property="groupID">
       <int>5</int>
      </void>
@@ -12,6 +12,16 @@
       <string>testCreateGroup</string>
      </void>
     </object>
+   </void>
+  </void>
+  <void property="listOfGroupIDs">
+   <void method="add">
+    <int>5</int>
+   </void>
+  </void>
+  <void property="listOfGroups">
+   <void method="add">
+    <object idref="Group0"/>
    </void>
   </void>
   <void property="listOfUserIDs">
@@ -25,7 +35,7 @@
     <int>666</int>
    </void>
    <void method="add">
-    <int>782197</int>
+    <int>972775</int>
    </void>
   </void>
   <void property="listOfUsers">
@@ -86,12 +96,16 @@
    <void method="add">
     <object class="concord.User" id="User3">
      <void property="userID">
-      <int>782197</int>
+      <int>972775</int>
      </void>
     </object>
    </void>
   </void>
   <void property="users">
+   <void method="put">
+    <int>972775</int>
+    <object idref="User3"/>
+   </void>
    <void method="put">
     <int>42</int>
     <object idref="User0"/>
@@ -103,10 +117,6 @@
    <void method="put">
     <int>555</int>
     <object idref="User1"/>
-   </void>
-   <void method="put">
-    <int>782197</int>
-    <object idref="User3"/>
    </void>
   </void>
  </object>

@@ -9,7 +9,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,11 +29,6 @@ class ClientTest
 		server = new Server();
 		Registry registry = LocateRegistry.createRegistry(1099);
 		registry.rebind("SERVER", server);
-	}
-
-	@AfterEach
-	void tearDown() throws Exception
-	{
 	}
 
 	@Test

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainPageController">
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <VBox>
+               <children>
+                  <Button id="myProfileButton" fx:id="myProfileButton" mnemonicParsing="false" onAction="#onClickMyProfile" text="My Profile" />
+                  <Button id="viewInvitesButton" fx:id="viewInvitesButton" mnemonicParsing="false" onAction="#onClickViewInvites" text="View Invites" />
+                  <Button id="createGroupButton" fx:id="createGroupButton" mnemonicParsing="false" onAction="#onClickCreateGroupButton" text="Create group" />
+               </children>
+            </VBox>
+            <Label text="Welcome to Concord!">
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <FlowPane id="groupButtonFlowPane" fx:id="groupButtonFlowPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="Group3" />
+            <Button mnemonicParsing="false" text="Group2" />
+            <Button id="group1Button" fx:id="group1Button" mnemonicParsing="false" onAction="#onClickGroupButton" text="Group1" />
+         </children>
+      </FlowPane>
+   </center>
+</BorderPane>

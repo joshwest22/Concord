@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateChannelViewController">
+   <top>
+      <Label text="Create a new channel" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="125.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Channel name" />
+            <TextField id="createChannelText" fx:id="createChannelText" promptText="Channel name" />
+            <Label text="Locked channel?" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <RadioButton id="createChannelYes" fx:id="createChannelYes" mnemonicParsing="false" text="Yes" />
+                  <RadioButton id="createChannelNo" fx:id="createChannelNo" mnemonicParsing="false" text="No">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <Button id="createChannelButton" fx:id="createChannelButton" mnemonicParsing="false" onAction="#onClickedCreateChannel" text="Create channel" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

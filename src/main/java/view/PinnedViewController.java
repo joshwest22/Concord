@@ -1,4 +1,5 @@
-package views;
+package view;
+import mainapplication.ViewTransitionalModelInterface;
 
 ViewTransitionalModelInterface model;
 

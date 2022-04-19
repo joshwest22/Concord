@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EditProfileViewController">
    <top>
-      <HBox prefHeight="62.0" prefWidth="600.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
+      <HBox prefHeight="62.0" style="-fx-background-color: #2F3136;" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="47.0" prefWidth="162.0" text="User Profile" textFill="WHITE">
                <font>
@@ -25,7 +25,7 @@
                </padding>
             </Label>
             <ImageView id="userPic" fx:id="userPicImageView" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickEsc" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #ffffff; -fx-border-radius: 12px;" text="Esc" textFill="WHITE" translateX="265.0" translateY="10.0">
+            <Button id="escapeButton" fx:id="escapeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickEsc" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #ffffff; -fx-border-radius: 12px;" text="Esc" textFill="WHITE" translateX="265.0" translateY="10.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
@@ -40,7 +40,7 @@
       </HBox>
    </top>
    <center>
-      <VBox prefHeight="320.0" prefWidth="360.0" style="-fx-background-color: #36393F;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="300.0" style="-fx-background-color: #36393F;" BorderPane.alignment="CENTER">
          <children>
             <Label id="usernameLabel" fx:id="usernameLabel" text="Username" textFill="WHITE">
                <VBox.margin>
