@@ -71,7 +71,7 @@ class ServerTest
 	@Test
 	void testMakeDonuts() throws RemoteException
 	{
-		assertEquals("Name: 'client' was called",server.makeDonuts());
+		assertEquals("Name: 'client' was called",server.rmiConnected());
 	}
 
 	@Test

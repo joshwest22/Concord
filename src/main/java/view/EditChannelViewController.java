@@ -10,9 +10,9 @@ import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import mainapplication.ViewTransitionalModelInterface;
 
-ViewTransitionalModelInterface model;
 
 public class EditChannelViewController {
+	ViewTransitionalModelInterface model;
 //	StoreModel model;
 //	
 //	public void setModel(StoreModel newModel)

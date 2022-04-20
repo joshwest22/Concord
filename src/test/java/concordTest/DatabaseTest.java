@@ -155,7 +155,7 @@ class DatabaseTest
 		//block satan
 		josh.blockUser(satan.getUserID());
 		assertEquals(satan.getUserID(),josh.getBlockedUserIDs().get(0));
-		//show length doesnt change
+		//show length doesn't change
 		Message secondMsg = new Message("Hell is really hot.",666);
 		chgroup1.admin.sendMessage(secondMsg, channel1); //should not send bc blocked
 		assertEquals(channel1.getMessageLog().size(),2);
@@ -188,9 +188,9 @@ class DatabaseTest
 	void testXMLStorage()
 	{
 		db.storeToDisk();
-		Database diskF = Database.loadFromDisk(); //XML doesn't match after listOfUsers added
+		Database diskDB = Database.loadFromDisk(); //XML doesn't match after listOfUsers added
 		
-		assertTrue(db.equals(diskF));
+		assertTrue(db.equals(diskDB));
 	}
 
 }

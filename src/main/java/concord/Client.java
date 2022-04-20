@@ -1,6 +1,7 @@
 package concord;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -45,6 +46,15 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	{
 		serverContact.login(this, username, password);
 		//set the online status to true?
+		associatedUser.setOnlineStatus(true);
+		try
+		{
+			serverContact.createUser(this.getAssociatedUser().getUsername(), this.getAssociatedUser().getRealname(), this.getAssociatedUser().getPassword(), this.getAssociatedUser().getUserID());
+		} catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public User getAssociatedUser()
@@ -89,22 +99,24 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 
 	public void updateNewUser()
 	{
-		//this.serverContact.updateNewUser(groupID);
+		//this.serverContact.updateNewUser(groupID); //check if new user in one group or all groups?
 	}
 	
 	public void updateNewMessage()
 	{
+		//serverContact.updateNewMessage(currentGroupID) //how to get current selected groupID
 		System.out.println("New message was created.");
 	}
 	
 	public void updateNewChannel()
 	{
+		//serverContact.updateNewChannel(currentGroupID) //how to get current selected groupID; when button selected
 		System.out.println("New channel was created.");
 	}
 	
 	public void updateNewInvite()
 	{
-		//this.serverContact.updateInvite();
+		this.serverContact.updateInvite(associatedUser.getUserID());
 	}
 	
 	//Helper methods for corresponding Server methods

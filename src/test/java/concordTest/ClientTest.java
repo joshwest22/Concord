@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 import concord.Channel;
 import concord.Client;
 import concord.Group;
+import concord.Message;
 import concord.RMIObserved;
 import concord.Server;
+import concord.User;
 
 class ClientTest
 {
@@ -42,12 +44,40 @@ class ClientTest
 			observed.addObserver(client);
 			client.setClientName("Tony");
 			
-			//use asserts to test
-			server.makeDonuts();
+			//test rmi working
+			server.rmiConnected();
+			assertEquals("Tony was called",server.rmiConnected());
+			//test login
+			client.login(client.getAssociatedUser().getUsername(), client.getAssociatedUser().getPassword());
+			assertTrue(client.getAssociatedUser().getOnlineStatus());
+			//assertEquals(0,server.getClientsInGroup().get(client)); //make sure login is thoroughly tested
+			//test group, channel, and send message
 			Group clientGroup = server.createGroup(27, "newClientGroup");
+			assertEquals("newClientGroup",server.getGroup(27).getGroupName());
 			clientGroup.createChannel("newClientChannel", clientGroup);
 			Channel clientChannel = server.getDb().getGroup(clientGroup.getGroupID()).getChannelByName("newClientChannel");
-			//clientChannel.sendNewMessage();
+			assertEquals("newClientChannel",clientChannel.getChannelName());
+			Message clientMessage = new Message("hello client", client.getAssociatedUser().getUserID());
+			clientChannel.sendNewMessage(clientMessage);
+			assertEquals("hello client",clientChannel.getMessageLog().get(0).getText());
+			//test pinned message
+			clientMessage.setIsPinned(true);
+			assertTrue(clientMessage.getIsPinned());
+			//test send invitation
+			
+			//test receive invitation
+			
+			//test block user
+			//add a user to be blocked to the server
+			server.createUser("3v1l", "devil", "angerandPain12", 666); //this is not visible to the client; might need to refresh server contact
+			User blockedUser = client.getServerContact().getAllRegisteredUsers().get(0); //0 index is clientAssocUser, but 1 is out of range
+			client.getAssociatedUser().blockUser(blockedUser.getUserID());
+			assertTrue(client.getAssociatedUser().getBlockedUserIDs().contains(blockedUser.getUserID()));
+			assertEquals("devil",client.getServerContact().getDb().getUser(client.getAssociatedUser().getBlockedUserIDs().get(0)).getRealname());
+			//test unblock user
+			
+			//test assign role/permissions
+			
 			
 		} catch (MalformedURLException | RemoteException | NotBoundException e)
 		{

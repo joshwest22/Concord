@@ -5,11 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
+import mainapplication.ViewTransitionalModelInterface;
 
-ViewTransitionalModelInterface model;
+
 
 public class RolePermissionsViewController
 {
+	ViewTransitionalModelInterface model;
 //	StoreModel model;
 //	
 //	public void setModel(StoreModel newModel)

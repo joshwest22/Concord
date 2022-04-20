@@ -18,15 +18,15 @@ import java.util.Set;
 public class Database implements Serializable
 {
 	private static final long serialVersionUID = -7839546588414426458L;
-	HashMap<Integer, Group> groups;
+	transient HashMap<Integer, Group> groups;
 	//iterable list of users for XML encoding //turns out this wasn't necessary as HashMaps can be XML encoded
-	ArrayList<Group> listOfGroups;
-	ArrayList<Integer> listOfGroupIDs;
+	transient ArrayList<Group> listOfGroups;
+	transient ArrayList<Integer> listOfGroupIDs;
 		
 	HashMap<Integer, User> users;
 	//iterable list of users for XML encoding
-	ArrayList<User> listOfUsers;
-	ArrayList<Integer> listOfUserIDs;
+	transient ArrayList<User> listOfUsers; //use transient to debug XML storage
+	transient ArrayList<Integer> listOfUserIDs;
 	
 	//alternate constructor
 	public Database(HashMap<Integer, Group> groups, HashMap<Integer, User> users)
@@ -289,8 +289,8 @@ public class Database implements Serializable
 		{
 			System.out.println("ERROR: File ConcordDatabase.xml not found");
 		}
-		Database f = (Database) decoder.readObject();
-		return f;
+		Database d = (Database) decoder.readObject();
+		return d;
 	}
 	
 	public boolean equals(Database that)
@@ -303,7 +303,7 @@ public class Database implements Serializable
 		{
 			if (!that.listOfUsers.contains(u))
 			{
-				return false;
+				return false; //doesn't think list contains u
 			}
 		}
 		
@@ -321,11 +321,11 @@ public class Database implements Serializable
 		return true;
 	}
 
-	public boolean contains(User member)
+	public boolean contains(User user)
 	{
 		for (User u: listOfUsers)
 		{
-			if (u.equals(member))
+			if (u.equals(user))
 			{
 				return true;
 			}

@@ -60,7 +60,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		return null;
 	}
 	
-	public String makeDonuts()
+	public String rmiConnected()
 	{
 		//example rmi test method should be more complicated in implementation
 		return notifyObservers();
