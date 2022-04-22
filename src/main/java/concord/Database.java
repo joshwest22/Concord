@@ -295,27 +295,28 @@ public class Database implements Serializable
 	
 	public boolean equals(Database that)
 	{
+		//users
 		if (users.size() != that.users.size())
 		{
 			return false;
 		}
 		for (User u : listOfUsers) 
 		{
-			if (!that.listOfUsers.contains(u))
+			if (!that.contains(u))
 			{
-				return false; //doesn't think list contains u
+				return false; 
 			}
 		}
-		
+		//groups
 		if (groups.size() != that.groups.size())
 		{
 			return false;
 		}
 		for (Group g : listOfGroups)
 		{
-			if (!that.listOfGroups.contains(g))
+			if (!that.contains(g))
 			{
-				return false;
+				return false; //needed to add equals for group
 			}
 		}
 		return true;
@@ -349,7 +350,6 @@ public class Database implements Serializable
 	{
 		Group group = groups.get(groupID);
 		return group;
-		
 	}
 
 	public void createUser(String username, String realname, String password, Integer userID)
@@ -359,6 +359,5 @@ public class Database implements Serializable
 		users.put(user.getUserID(), user);
 		listOfUsers.add(user);
 		listOfUserIDs.add(user.getUserID());
-		
 	}
 }

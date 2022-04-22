@@ -30,7 +30,7 @@ class DatabaseTest
 	static void setUp() throws Exception
 	{
 		db = new Database();
-		url = new URL("http://google.com");
+		url = new URL("http://concordLogo.png");
 		db.createUser("jdubble","josh","password",42,url,"I like butterflies",false);
 		josh = db.getUser(42);
 		db.createUser("OVLawd","owen","overwatch22",555,url,"As above...",false);

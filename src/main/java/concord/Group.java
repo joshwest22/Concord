@@ -156,4 +156,35 @@ public class Group
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object groupObj)
+	{
+		if(!this.getChannels().equals(((Group) groupObj).getChannels()))
+		{
+			return false;
+		}
+		if(!this.getRegisteredUsers().equals(((Group) groupObj).getRegisteredUsers()))
+		{
+			return false;
+		}
+		if(!this.getDescription().equals(((Group) groupObj).getDescription()))
+		{
+			return false;
+		}
+		if(!this.getLogo().equals(((Group) groupObj).getLogo()))
+		{
+			return false;
+		}
+		if(!this.getGroupName().equals(((Group) groupObj).getGroupName()))
+		{
+			return false;
+		}
+		if(!this.getGroupID().equals(((Group) groupObj).getGroupID()))
+		{
+			return false;
+		}
+	
+		return true;
+	}
 }

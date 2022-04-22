@@ -177,4 +177,46 @@ public class User
 		return newM;
 	}
 	
+	@Override
+	public boolean equals(Object userObj)
+	{
+		if(!this.getBlockedUserIDs().equals(((User) userObj).getBlockedUserIDs()))
+		{
+			return false;
+		}
+		if(!this.getOnlineStatus().equals(((User) userObj).getOnlineStatus()))
+		{
+			return false;
+		}
+		if(!this.getPassword().equals(((User) userObj).getPassword()))
+		{
+			return false;
+		}
+		if(!this.getPendingInvites().equals(((User) userObj).getPendingInvites()))
+		{
+			return false;
+		}
+		if(!this.getRealname().equals(((User) userObj).getRealname()))
+		{
+			return false;
+		}
+		if(!this.getUserBio().equals(((User) userObj).getUserBio()))
+		{
+			return false;
+		}
+		if(!this.getUserID().equals(((User) userObj).getUserID()))
+		{
+			return false;
+		}
+		if(!this.getUsername().equals(((User) userObj).getUsername()))
+		{
+			return false;
+		}
+		if(!this.getUserPic().equals(((User) userObj).getUserPic()))
+		{
+			return false; // was returning false
+		}
+		return true;
+	}
+	
 }
