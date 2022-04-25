@@ -35,7 +35,7 @@
     <int>666</int>
    </void>
    <void method="add">
-    <int>737672</int>
+    <int>356719</int>
    </void>
   </void>
   <void property="listOfUsers">
@@ -96,16 +96,12 @@
    <void method="add">
     <object class="concord.User" id="User3">
      <void property="userID">
-      <int>737672</int>
+      <int>356719</int>
      </void>
     </object>
    </void>
   </void>
   <void property="users">
-   <void method="put">
-    <int>737672</int>
-    <object idref="User3"/>
-   </void>
    <void method="put">
     <int>42</int>
     <object idref="User0"/>
@@ -113,6 +109,10 @@
    <void method="put">
     <int>666</int>
     <object idref="User2"/>
+   </void>
+   <void method="put">
+    <int>356719</int>
+    <object idref="User3"/>
    </void>
    <void method="put">
     <int>555</int>

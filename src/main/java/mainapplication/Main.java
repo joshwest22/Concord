@@ -1,6 +1,6 @@
 package mainapplication;
 
-import concord.ClientSubstitute;
+import concord.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,7 +23,7 @@ public class Main extends Application
 		loader.setLocation(Main.class.getResource("../view/LoginView.fxml"));
 		BorderPane view = loader.load();
 		LoginController cont = loader.getController();
-		ClientSubstitute myClient = new ClientSubstitute("TestName","TestPass");
+		Client myClient = new Client("TestName","TestPass");
 		myClient.addGroupID(12);
 		myClient.addGroupID(5);
 		ViewTransitionalModel vm =new ViewTransitionalModel(view,myClient); 

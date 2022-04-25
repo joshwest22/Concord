@@ -2,7 +2,7 @@ package mainapplication;
 
 import java.io.IOException;
 
-import concord.ClientSubstitute;
+import concord.Client;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -21,10 +21,11 @@ import view.ProfilePreviewController;
 public class ViewTransitionalModel implements ViewTransitionalModelInterface
 {
 	BorderPane mainview;
-	ClientSubstitute client;
+	//ClientSubstitute client;
+	Client client;
 	 
 	
-	public ViewTransitionalModel(BorderPane view, ClientSubstitute newClient)
+	public ViewTransitionalModel(BorderPane view, Client newClient)
 	{
 		this.mainview = view;
 		this.client = newClient;
@@ -257,7 +258,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		}
 		}
 		
-		public ClientSubstitute getClientModel()
+		public Client getClientModel()
 		{
 			return this.client;
 		}

@@ -112,7 +112,7 @@ class ServerTest
 	@Test
 	void testGetUserGroups() throws RemoteException, MalformedURLException
 	{
-		//add user to 2 groups
+		//create 2 groups
 		server.createGroup(01, "A");
 		Group groupA = server.getGroup(01);
 		server.createGroup(02, "B");
@@ -120,6 +120,7 @@ class ServerTest
 		//add overlord to groups
 		groupA.getRegisteredUsers().put(ol, groupA.admin);
 		groupB.getRegisteredUsers().put(ol, groupB.admin);
+		//create new user and add to groups
 		User u = server.createUser("usernomen", "Igor", "trollBridge659%", 111);
 		server.addUserToGroup(groupA.getGroupID(), ol.getUserID(), u.getUserID());
 		server.addUserToGroup(groupB.getGroupID(), ol.getUserID(), u.getUserID());
@@ -128,8 +129,15 @@ class ServerTest
 		dummyGroups.add(groupA);
 		dummyGroups.add(groupB);
 		//check that group names in dummy list match group names in server list
-		assertEquals(dummyGroups.get(0).getGroupName(),server.getUserGroups(u.getUserID()).get(0).getGroupName());
-		assertEquals(dummyGroups.get(1).getGroupName(),server.getUserGroups(u.getUserID()).get(1).getGroupName());
+		String dummyGroupAName = dummyGroups.get(0).getGroupName();
+		String dummyGroupBName = dummyGroups.get(1).getGroupName();
+		String serverGroupAName = server.getUserGroups(u.getUserID()).get(0).getGroupName();
+		String serverGroupBName = server.getUserGroups(u.getUserID()).get(1).getGroupName(); 
+		assertEquals(dummyGroupAName,serverGroupAName);
+		assertEquals(dummyGroupBName,serverGroupBName);
+		//test threat path 
+		User lonelyUser = server.createUser("1on31y", "linus lonesome", "blankie67", 67);
+		assertEquals(new ArrayList<Group>(),server.getUserGroups(lonelyUser.getUserID()));
 	}
 
 	@Test

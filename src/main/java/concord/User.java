@@ -1,5 +1,6 @@
 package concord;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,17 +44,46 @@ public class User
 		int range = MAX - MIN + 1;
 		Integer generatedID = rn.nextInt(range) + MIN; 
 		this.userID = generatedID;
-		URL defualtUserPic = null;
+		URL defaultUserPic = null;
 		try
 		{
-			defualtUserPic = new URL("http://concordLogo.png"); //url might be wrong
+			//defaultUserPic = new URL("http://concordLogo.png"); //url might be wrong
+			defaultUserPic = new File("concordLogo.png").toURI().toURL();
 		} 
 			catch (MalformedURLException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		this.userPic = defualtUserPic ;
+		this.userPic = defaultUserPic ;
+		this.userBio = "No bio";
+		this.onlineStatus = false;
+		this.blockedUserIDs = new ArrayList<Integer>();
+		this.pendingInvites = new ArrayList<Invitation>();
+	}
+	
+	public User(String username, String password)
+	{
+		
+		this.username = username;
+		this.realname = "realname";
+		this.password = password;
+		Random rn = new Random();
+		int range = MAX - MIN + 1;
+		Integer generatedID = rn.nextInt(range) + MIN; 
+		this.userID = generatedID;
+		URL defaultUserPic = null;
+		try
+		{
+			//defaultUserPic = new URL("http://concordLogo.png"); //url might be wrong
+			defaultUserPic = new File("concordLogo.png").toURI().toURL();
+		} 
+			catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		this.userPic = defaultUserPic ;
 		this.userBio = "No bio";
 		this.onlineStatus = false;
 		this.blockedUserIDs = new ArrayList<Integer>();

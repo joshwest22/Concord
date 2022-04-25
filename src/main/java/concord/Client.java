@@ -30,6 +30,17 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
 	}
+	
+	public Client(String username, String password) throws RemoteException
+	{
+		User user = new User(username,password);
+		this.associatedUser = user;
+		Server server = new Server();
+		this.serverContact = server;
+		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
+		this.associatedGroupIDs = myGroupIDs;
+		this.clientName = "Name: 'client'";
+	}
 
 	private static final long serialVersionUID = -6394155878301235563L;
 	
@@ -42,19 +53,36 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		return clientName+" was called";
 	}
 	
-	public void login(String username, String password)
+	public boolean login(String enteredName, String enteredPassword)
 	{
-		serverContact.login(this, username, password);
-		//set the online status to true?
-		associatedUser.setOnlineStatus(true);
-		try
+		String clientUsername = this.getAssociatedUser().getUsername();
+		String clientPassword = this.getAssociatedUser().getPassword();
+		//if login already exists
+		if (enteredName.equals(clientUsername) && enteredPassword.equals(clientPassword))
 		{
-			serverContact.createUser(this.getAssociatedUser().getUsername(), this.getAssociatedUser().getRealname(), this.getAssociatedUser().getPassword(), this.getAssociatedUser().getUserID());
-		} catch (MalformedURLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//set the online status to true
+			associatedUser.setOnlineStatus(true);
+			//first time login, but don't create a new user for a wrong password
+			serverContact.login(this, clientUsername, clientPassword);
+			
+			try
+			{
+				serverContact.createUser(this.getAssociatedUser().getUsername(), this.getAssociatedUser().getRealname(), this.getAssociatedUser().getPassword(), this.getAssociatedUser().getUserID());
+				//should I call updateNewUser to alert the server to a change?
+				
+			} catch (MalformedURLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
 		}
+		else
+		{
+			//wrong password
+			return false;
+		}
+		
 	}
 	
 	public User getAssociatedUser()
@@ -114,17 +142,17 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		System.out.println("New channel was created.");
 	}
 	
-	public void updateNewInvite()
+	public void updateNewInvitation()
 	{
 		this.serverContact.updateInvite(associatedUser.getUserID());
 	}
 	
 	//Helper methods for corresponding Server methods
 	//TODO
-	
-	public static void main(String args[])
+
+	public void addGroupID(int i)
 	{
-		//GUI Code goes here
+		this.getAssociatedGroupIDs().add(i);		
 	}
 
 }

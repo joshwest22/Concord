@@ -114,10 +114,15 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 					client.setAssociatedUser(user);
 					for(Integer currentGroupID = 0;currentGroupID < db.getGroups().size();currentGroupID++)
 					{
-						//add client to the clientGroup for each group client user is in
 						ArrayList<Client> groupClients = new ArrayList<Client>();
-						groupClients.add(client);
-						clientsInGroup.put(currentGroupID,groupClients); //this needs to have another parameter; should clientsInGroups be a list of all groups a user is in not just one?
+						//if the current client is not present in this list
+						if (!groupClients.contains(client))
+						{
+							//add client to the clientGroup for each group client user is in
+							
+							groupClients.add(client);
+							clientsInGroup.put(currentGroupID,groupClients); //this needs to have another parameter; should clientsInGroups be a list of all groups a user is in not just one?
+						}
 					}
 					//return user;
 				}
@@ -152,23 +157,22 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	{
 		ArrayList<Group> userGroups = new ArrayList<Group>();
 		//look through db.groups to see if the user is in any of them by ID
-		for(int i = 0; i<db.groups.size(); i++)
+		for(Integer groupID : db.getListOfGroupIDs()) 
 		{
 			//for every group, does the group's registeredUsers contain specific user?
-			HashMap<User, Role> regUsers = db.getGroup(i).getRegisteredUsers();
+			HashMap<User, Role> regUsers = db.getGroup(groupID).getRegisteredUsers();
 			Set<User> keys = regUsers.keySet();
 			for (User user : keys)
 			{
 				//if there is a user in registered users that matches user we want, add group to list
 				if(user.getUserID().equals(userID))
 				{
-					Group myGroup = db.getGroup(i);
+					Group myGroup = db.getGroup(groupID);
 					userGroups.add(myGroup);
-					return userGroups;
 				}
 			}
 		}
-		return new ArrayList<Group>(); //user not found in groups
+		return userGroups; //user not found in groups returns a blank list
 	}
 
 	@Override

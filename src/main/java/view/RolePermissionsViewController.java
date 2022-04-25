@@ -1,13 +1,8 @@
 package view;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.util.StringConverter;
-import javafx.util.converter.NumberStringConverter;
 import mainapplication.ViewTransitionalModelInterface;
-
-
 
 public class RolePermissionsViewController
 {

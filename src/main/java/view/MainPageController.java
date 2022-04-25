@@ -53,7 +53,7 @@ public class MainPageController {
     public void setModel(ViewTransitionalModelInterface model)
     {
     	this.model = model;
-    	for(Integer i:this.model.getClientModel().getListOfGroupIDs())
+    	for(Integer i:this.model.getClientModel().getAssociatedGroupIDs())
     	{
     		GroupButton newButton = new GroupButton(i,"PlaceholderName");
     		//Button newButton = new Button();

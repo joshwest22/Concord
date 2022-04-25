@@ -1,7 +1,8 @@
 package mainapplication;
 
-import concord.ClientInterface; //Replace client substitue with actual client interface
-import concord.ClientSubstitute;
+import concord.Client;
+//import concord.ClientInterface; //Replace client substitue with actual client interface
+//import concord.ClientSubstitute;
 
 public interface ViewTransitionalModelInterface
 {
@@ -27,6 +28,8 @@ public interface ViewTransitionalModelInterface
 	
 	public void showLoginView();
 	
-	public ClientSubstitute getClientModel();
+	public Client getClientModel();
+	
+	//public ClientInterface getClientModel();
 	
 }

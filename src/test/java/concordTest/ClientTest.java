@@ -64,7 +64,7 @@ class ClientTest
 			clientMessage.setIsPinned(true);
 			assertTrue(clientMessage.getIsPinned());
 			//test send invitation
-			
+			//client.sendInvite(User user); //TODO
 			//test receive invitation
 			
 			//test block user

@@ -15,6 +15,7 @@ import concord.Message;
 import concord.Role;
 import concord.User;
 
+import java.io.File;
 import java.lang.Integer;
 class DatabaseTest
 {
@@ -30,7 +31,16 @@ class DatabaseTest
 	static void setUp() throws Exception
 	{
 		db = new Database();
-		url = new URL("http://concordLogo.png");
+		url = null;
+		try
+		{
+			url = new File("concordLogo.png").toURI().toURL(); //thanks to stackoverflow for file to URL
+		} 
+			catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		db.createUser("jdubble","josh","password",42,url,"I like butterflies",false);
 		josh = db.getUser(42);
 		db.createUser("OVLawd","owen","overwatch22",555,url,"As above...",false);
