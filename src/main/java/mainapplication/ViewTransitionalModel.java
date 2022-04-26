@@ -23,6 +23,8 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 	BorderPane mainview;
 	//ClientSubstitute client;
 	Client client;
+	Integer TargetedGroupID;
+	//Add other targeted properties for message etc
 	 
 	
 	public ViewTransitionalModel(BorderPane view, Client newClient)
@@ -40,6 +42,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		try
 		{
 			view = loader.load();
+			view.setPrefSize(400, 300);
 			mainview.setCenter(view);
 			MainPageController controller = loader.getController();
 			controller.setModel(this);
@@ -100,6 +103,8 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
+				view.setPrefSize(800, 400);
+				//view.setMinSize(1000, 800);
 				mainview.setCenter(view);
 				//CreateGroupController controller = loader.getController();
 				CreateGroupController controller = loader.getController();
@@ -117,7 +122,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		public void showGroupView()
 		{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(ViewTransitionalModel.class.getResource("../view/GroupView2.fxml"));
+			loader.setLocation(ViewTransitionalModel.class.getResource("../view/GroupView.fxml"));
 			Pane view;
 			try
 			{

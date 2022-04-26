@@ -149,6 +149,22 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	//Helper methods for corresponding Server methods
 	//TODO
+	
+	public void sendInvitation(Integer invitedUserID, Integer groupID)
+	{
+		Message inviteMsg = new Message("Want to join my group?", associatedUser.getUserID());
+		Invitation invite = new Invitation(inviteMsg,groupID,invitedUserID,false);
+		
+		try
+		{
+			serverContact.sendInvitation(invitedUserID, invite);
+		} catch (RemoteException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	public void addGroupID(int i)
 	{

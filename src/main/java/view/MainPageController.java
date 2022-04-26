@@ -29,6 +29,10 @@ public class MainPageController {
     void onClickGroupButton(ActionEvent event) 
     {
     	//Logic for figuring which group it actually is
+    	GroupButton groupButtonClicked = (GroupButton)event.getSource();
+    	groupButtonClicked.getAssociatedGroupID();
+    	//connect groupID clicked with the group to be shown
+    	
     	this.model.showGroupView();
     }
     
@@ -53,11 +57,10 @@ public class MainPageController {
     public void setModel(ViewTransitionalModelInterface model)
     {
     	this.model = model;
-    	for(Integer i:this.model.getClientModel().getAssociatedGroupIDs())
+    	for(Integer groupID:this.model.getClientModel().getAssociatedGroupIDs())
     	{
-    		GroupButton newButton = new GroupButton(i,"PlaceholderName");
-    		//Button newButton = new Button();
-    		newButton.setText("Group " + i);
+    		GroupButton newButton = new GroupButton(groupID,"PlaceholderName");
+    		newButton.setText("Group " + groupID);
     		newButton.setOnAction(e->this.onClickGroupButton(e));
     		groupButtonFlowPane.getChildren().add(newButton);
     	}

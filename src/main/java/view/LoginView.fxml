@@ -25,26 +25,41 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField id="loginUsername" fx:id="loginUsername" promptText="Enter Username">
+                  <TextField id="loginUsername" fx:id="loginUsername" alignment="CENTER" promptText="Enter Username">
                      <VBox.margin>
-                        <Insets />
+                        <Insets left="50.0" right="50.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
                   </TextField>
                   <Label text="Password">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField id="loginPassword" fx:id="loginPassword" promptText="Enter password" />
+                  <PasswordField id="loginPassword" fx:id="loginPassword" alignment="CENTER" promptText="Enter Password">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font></PasswordField>
                   <Button id="loginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="26.0" prefWidth="314.0" text="Log in!">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
                   </Button>
-                  <Button id="makeAccountButton" fx:id="makeAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#onMakeAccountClicked" prefHeight="26.0" prefWidth="165.0" text="No account? Make one">
+                  <Button id="makeAccountButton" fx:id="makeAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#onMakeAccountClicked" prefHeight="26.0" prefWidth="165.0" text="No account? Make one!">
                      <VBox.margin>
                         <Insets top="30.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>

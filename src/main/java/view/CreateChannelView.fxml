@@ -29,7 +29,7 @@
                   </RadioButton>
                </children>
             </HBox>
-            <Button id="createChannelButton" fx:id="createChannelButton" mnemonicParsing="false" onAction="#onClickedCreateChannel" text="Create channel" />
+            <Button id="createChannelSubmitButton" fx:id="createChannelSubmitButton" mnemonicParsing="false" onAction="#onClickedCreateChannelSubmit" text="Create channel" />
          </children>
       </VBox>
    </center>

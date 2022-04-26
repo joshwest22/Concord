@@ -20,11 +20,11 @@ public class Message
 		this.inReplyTo = inReplyTo;
 	}
 	//alternate constructor
-	public Message(String msg, Integer userID)
+	public Message(String msg, Integer sentByUserID)
 	{
 		this.text = msg;
 		this.timestamp = Timestamp.from(Instant.now());
-		this.sentByUserID = userID;
+		this.sentByUserID = sentByUserID;
 		this.isPinned = false;
 		this.inReplyTo = null;
 	}

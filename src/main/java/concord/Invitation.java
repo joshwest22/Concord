@@ -4,7 +4,7 @@ public class Invitation
 {
 	public Message inviteMsg;
 	public Integer groupID;
-	public Integer inviteUserID;
+	public Integer invitedUserID;
 	public Boolean inviteAccepted;
 	
 	public Invitation()
@@ -14,15 +14,15 @@ public class Invitation
 		Integer gID = -1;
 		this.groupID = gID;
 		Integer invUserID = -1;
-		this.inviteUserID = invUserID;
+		this.invitedUserID = invUserID;
 		this.inviteAccepted = false;
 	}
 
-	public Invitation(Message inviteMsg, Integer groupID, Integer inviteUserID, Boolean inviteAccepted)
+	public Invitation(Message inviteMsg, Integer groupID, Integer invitedUserID, Boolean inviteAccepted)
 	{
 		this.inviteMsg = inviteMsg;
 		this.groupID = groupID;
-		this.inviteUserID = inviteUserID;
+		this.invitedUserID = invitedUserID;
 		this.inviteAccepted = inviteAccepted;
 	}
 
@@ -46,14 +46,14 @@ public class Invitation
 		this.groupID = groupID;
 	}
 
-	public Integer getInviteUserID()
+	public Integer getInvitedUserID()
 	{
-		return inviteUserID;
+		return invitedUserID;
 	}
 
-	public void setInviteUserID(Integer inviteUserID)
+	public void setInvitedUserID(Integer invitedUserID)
 	{
-		this.inviteUserID = inviteUserID;
+		this.invitedUserID = invitedUserID;
 	}
 
 	public Boolean getInviteAccepted()

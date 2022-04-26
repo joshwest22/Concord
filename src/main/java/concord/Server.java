@@ -366,5 +366,14 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		Group newGroup = db.getGroup(groupID);
 		return newGroup;
 	}
+
+
+	@Override
+	public void sendInvitation(Integer invitedUserID, Invitation invite)
+			throws RemoteException
+	{
+		db.getUser(invitedUserID).getPendingInvites().add(invite);
+		
+	}
 	
 }

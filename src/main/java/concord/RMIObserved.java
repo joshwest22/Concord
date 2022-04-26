@@ -33,5 +33,6 @@ public interface RMIObserved extends Remote
 	public String assignNewRole(Integer changerID, Integer changerdID, Integer groupID, Boolean canKick, Boolean canLockChannel, Boolean canAssignRole,
 			Boolean canCreateChannel) throws RemoteException;
 	public ArrayList<User> getAllRegisteredUsers() throws RemoteException;
+	public void sendInvitation(Integer invitedUserID, Invitation invite) throws RemoteException;
 
 }

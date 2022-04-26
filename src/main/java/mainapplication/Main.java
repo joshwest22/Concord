@@ -13,7 +13,8 @@ public class Main extends Application
 {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception 
+    {
     	//Server myServer = new Server();
 		//Registry registry = LocateRegistry.createRegistry(1099);
 		//registry.rebind("SERVER", myServer);
