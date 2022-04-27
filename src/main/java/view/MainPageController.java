@@ -28,12 +28,7 @@ public class MainPageController {
     @FXML
     void onClickGroupButton(ActionEvent event) 
     {
-    	//Logic for figuring which group it actually is
-    	GroupButton groupButtonClicked = (GroupButton)event.getSource();
-    	groupButtonClicked.getAssociatedGroupID();
-    	//connect groupID clicked with the group to be shown
-    	
-    	this.model.showGroupView();
+    	//GroupButton now handles logic
     }
     
     @FXML
@@ -59,9 +54,7 @@ public class MainPageController {
     	this.model = model;
     	for(Integer groupID:this.model.getClientModel().getAssociatedGroupIDs())
     	{
-    		GroupButton newButton = new GroupButton(groupID,"PlaceholderName");
-    		newButton.setText("Group " + groupID);
-    		newButton.setOnAction(e->this.onClickGroupButton(e));
+    		GroupButton newButton = new GroupButton(groupID,"PlaceholderName", model);
     		groupButtonFlowPane.getChildren().add(newButton);
     	}
     }

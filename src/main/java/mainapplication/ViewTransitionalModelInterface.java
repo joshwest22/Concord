@@ -14,7 +14,7 @@ public interface ViewTransitionalModelInterface
 	
 	public void showCreateGroupView();
 	
-	public void showGroupView();
+	public void showGroupView(int i);
 	
 	public void showInvitations();
 	
@@ -31,5 +31,5 @@ public interface ViewTransitionalModelInterface
 	public Client getClientModel();
 	
 	//public ClientInterface getClientModel();
-	
+		
 }

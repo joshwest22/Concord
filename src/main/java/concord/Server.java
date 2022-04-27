@@ -11,7 +11,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 {
 	private Database db;
 	private HashMap<Integer, ArrayList<Client>> clientsInGroup;
-	ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>(); //should this be private?
+	ArrayList<RMIObserver> observers = new ArrayList<RMIObserver>();
 	
 	public Server(Database db, HashMap<Integer, ArrayList<Client>> clientsInGorups, ArrayList<RMIObserver> observers) throws RemoteException
 	{
@@ -181,20 +181,40 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		db.getGroup(groupID).createChannel(channelName, db.getGroup(groupID));
 		return channelName+" was created in "+db.getGroup(groupID).getGroupName()+" by "+db.getUser(userID).getUsername();
 	}
-	
+	@Override
 	public String updateNewChannel(Integer groupID)
 	{
 		//tell the client to update their channels
+		for (RMIObserver o : observers)
+		{
+			try
+			{
+				o.updateNewChannel();
+			} catch (RemoteException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return "New channel created";
 		
 	}
-	
+	@Override
 	public String updateNewMessage(Integer groupID)
 	{
 		//tell each client in a group to update their messageLog
-		//what is updating? Setting client object to server version, but aren't they already linked?
-		//modify this to work as for loops instead of chained for each (that don't currently work)
 		//TODO clientsInGroup.get(groupID).forEach((client) -> db.getGroup(groupID).getChannels().forEach((channel) -> channel.setMessageLog(db.getGroup(groupID).getChannels().get(i).getMessageLog())));
+		for (RMIObserver o : observers)
+		{
+			try
+			{
+				o.updateNewMessage(groupID);
+			} catch (RemoteException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return "New message created";
 	}
 
@@ -220,9 +240,20 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		return messages;
 	}
 	
+	@Override
 	public String updateNewUser(Integer groupID)
 	{
-		//System.out.println("New user was created.");
+		for (RMIObserver o : observers)
+		{
+			try
+			{
+				o.updateNewUser(groupID);
+			} catch (RemoteException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return "New user was created";
 	}
 

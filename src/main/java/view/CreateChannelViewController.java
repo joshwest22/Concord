@@ -1,5 +1,7 @@
 package view;
 
+import java.rmi.RemoteException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,7 +12,8 @@ import mainapplication.ViewTransitionalModelInterface;
 
 public class CreateChannelViewController {
 	ViewTransitionalModelInterface model;
-
+	//channel needs to know its group
+	int myGroupID = model.getClientModel().getCurrentSelectedGroupID();
     @FXML
     private Button createChannelButton;
 
@@ -26,7 +29,24 @@ public class CreateChannelViewController {
     @FXML
     void onClickedCreateChannel(ActionEvent event) 
     {
-    	this.model.showGroupView();
+    	try
+		{
+    		String channelName = createChannelText.getText();
+			model.getClientModel().createChannel(channelName, model.getClientModel().getAssociatedUser().getUserID(), myGroupID);
+			if (createChannelYes.isSelected())
+			{
+				model.getClientModel().getServerContact().getGroup(myGroupID).getChannelByName(channelName).setIsLocked(true);
+			}
+			else if (createChannelNo.isSelected())
+			{
+				model.getClientModel().getServerContact().getGroup(myGroupID).getChannelByName(channelName).setIsLocked(false);
+			}
+		} catch (RemoteException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	this.model.showGroupView(myGroupID); //TODO //Does this actually work?
     }
 
 	public void setModel(ViewTransitionalModel model)

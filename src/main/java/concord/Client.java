@@ -6,11 +6,19 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
+
 public class Client extends UnicastRemoteObject implements RMIObserver, Serializable
 {	
 	private User associatedUser;
 	private Server serverContact;
 	private ArrayList<Integer> associatedGroupIDs;
+	
+	private int currentSelectedGroupID;
+	private User currentSelectedUser;
+	
+	private ObservableList<Group> selectedGroup;
+	private ObservableList<Channel> selectedChannel;
 	
 	public Client(User associatedUser, Server serverContact, ArrayList<Integer> associatedGroupIDs, String name) throws RemoteException
 	{
@@ -53,11 +61,13 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		return clientName+" was called";
 	}
 	
+	@Override
 	public boolean login(String enteredName, String enteredPassword)
 	{
 		String clientUsername = this.getAssociatedUser().getUsername();
 		String clientPassword = this.getAssociatedUser().getPassword();
 		//if login already exists
+		
 		if (enteredName.equals(clientUsername) && enteredPassword.equals(clientPassword))
 		{
 			//set the online status to true
@@ -130,7 +140,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		//this.serverContact.updateNewUser(groupID); //check if new user in one group or all groups?
 	}
 	
-	public void updateNewMessage()
+	public void updateNewMessage() //client give the server the new message
 	{
 		//serverContact.updateNewMessage(currentGroupID) //how to get current selected groupID
 		System.out.println("New message was created.");
@@ -149,7 +159,12 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	//Helper methods for corresponding Server methods
 	//TODO
+	public void sendMessage()
+	{
+		
+	}
 	
+	@Override
 	public void sendInvitation(Integer invitedUserID, Integer groupID)
 	{
 		Message inviteMsg = new Message("Want to join my group?", associatedUser.getUserID());
@@ -169,6 +184,67 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	public void addGroupID(int i)
 	{
 		this.getAssociatedGroupIDs().add(i);		
+	}
+
+	public int getCurrentSelectedGroupID()
+	{
+		return currentSelectedGroupID;
+	}
+
+	public void setCurrentSelectedGroupID(int currentSelectedGroupID)
+	{
+		this.currentSelectedGroupID = currentSelectedGroupID;
+	}
+
+	public User getCurrentSelectedUser()
+	{
+		return currentSelectedUser;
+	}
+
+	public void setCurrentSelectedUser(User currentSelectedUser)
+	{
+		this.currentSelectedUser = currentSelectedUser;
+	}
+
+	public ObservableList<Group> getSelectedGroup()
+	{
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(ObservableList<Group> selectedGroup)
+	{
+		this.selectedGroup = selectedGroup;
+	}
+
+	public ObservableList<Channel> getSelectedChannel()
+	{
+		return selectedChannel;
+	}
+
+	public void setSelectedChannel(ObservableList<Channel> selectedChannel)
+	{
+		this.selectedChannel = selectedChannel;
+	}
+
+	@Override
+	public String createChannel(String channelName, Integer userID, Integer groupID) throws RemoteException
+	{
+		serverContact.createChannel(channelName, userID, groupID);
+		return channelName+"was created in group "+groupID+" on client";
+	}
+
+	@Override
+	public void updateNewUser(Integer groupID) throws RemoteException
+	{
+		this.serverContact.updateNewUser(groupID);
+		
+	}
+
+	@Override
+	public void updateNewMessage(Integer groupID) throws RemoteException
+	{
+		this.serverContact.updateNewMessage(groupID);
+		
 	}
 
 }

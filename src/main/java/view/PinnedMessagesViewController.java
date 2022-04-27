@@ -15,7 +15,7 @@ public class PinnedMessagesViewController {
     @FXML
     void onClickBackButton(ActionEvent event) 
     {
-    	this.model.showGroupView();
+    	this.model.showGroupView(int groupID); //TODO //get the groupID from the channel's myGroup
     }
     
     public void setModel(ViewTransitionalModelInterface model)

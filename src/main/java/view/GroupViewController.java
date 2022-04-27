@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import mainapplication.ViewTransitionalModelInterface;
 
 public class GroupViewController {
@@ -45,34 +46,56 @@ public class GroupViewController {
     @FXML
     void onClickBackButton(ActionEvent event) 
     {
-    	this.model.showMainView();
+    	model.showMainView();
     }
-    
+
     @FXML
-    void onClickedCreateChannel(ActionEvent event) 
+    void onClickChannelListView(MouseEvent event) 
     {
-    	this.model.showCreateChannelView();
+    	
     }
-    
-    @FXML
-    void onClickedSampleUser(ActionEvent event) 
-    {
-    	this.model.showProfilePreviewView();
-    }
-    
-    @FXML
-    void onClickPinnedMessageButton(ActionEvent event) 
-    {
-    	this.model.showPinnedMessagesView();
-    }
-    
+
     @FXML
     void onClickGiveRoleButton(ActionEvent event) 
     {
-    	this.model.showGiveRoleView();
+
     }
-    
-   
+
+    @FXML
+    void onClickInvite(ActionEvent event) 
+    {
+    	model.showInvitations();
+    }
+
+    @FXML
+    void onClickMessageListView(MouseEvent event) 
+    {
+
+    }
+
+    @FXML
+    void onClickPinnedMessageButton(ActionEvent event) 
+    {
+    	model.showPinnedMessagesView();
+    }
+
+    @FXML
+    void onClickSendButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onClickUsersListView(MouseEvent event) 
+    {
+    	
+    }
+
+    @FXML
+    void onClickedCreateChannel(ActionEvent event) 
+    {
+    	model.showCreateChannelView();
+    }
+
     
     public void setModel(ViewTransitionalModelInterface model)
     {

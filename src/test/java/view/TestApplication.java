@@ -38,7 +38,7 @@ public class TestApplication
 			BorderPane view;
 			view = loader.load();
 			LoginController controller = loader.getController();
-			ViewTransitionalModel vm =new ViewTransitionalModel(view,myClient); 
+			ViewTransitionalModel vm =new ViewTransitionalModel(view,myClient,stage); 
 			controller.setModel(vm);
 			Scene s = new Scene(view);
 			stage.setScene(s);
@@ -72,7 +72,7 @@ public class TestApplication
 	{
 		//TODO
 		//click on group
-		
+		//robot.clickOn("#groupButtonFlowPane").;
 		//create unlocked channel
 		robot.clickOn("#createChannelButton");
 		robot.clickOn("#createChannelText");

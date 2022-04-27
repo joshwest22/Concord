@@ -18,13 +18,13 @@ public class GiveRoleViewController {
     @FXML
     void onClickBackButton(ActionEvent event) 
     {
-    	this.model.showGroupView();
+    	//this.model.showGroupView(int groupID); //TODO
     }
 
     @FXML
     void onClickSubmitButton(ActionEvent event) 
     {
-    	this.model.showGroupView();
+    	//this.model.showGroupView(int groupID); //TODO
     }
     
     public void setModel(ViewTransitionalModelInterface model)

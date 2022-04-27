@@ -34,5 +34,8 @@ public interface RMIObserved extends Remote
 			Boolean canCreateChannel) throws RemoteException;
 	public ArrayList<User> getAllRegisteredUsers() throws RemoteException;
 	public void sendInvitation(Integer invitedUserID, Invitation invite) throws RemoteException;
+	public String updateNewChannel(Integer groupID) throws RemoteException;
+	public String updateNewUser(Integer groupID) throws RemoteException;
+	public String updateNewMessage(Integer groupID) throws RemoteException;
 
 }

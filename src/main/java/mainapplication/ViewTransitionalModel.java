@@ -6,6 +6,7 @@ import concord.Client;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import view.CreateAccountController;
 import view.CreateChannelViewController;
 import view.CreateGroupController;
@@ -21,16 +22,17 @@ import view.ProfilePreviewController;
 public class ViewTransitionalModel implements ViewTransitionalModelInterface
 {
 	BorderPane mainview;
-	//ClientSubstitute client;
 	Client client;
-	Integer TargetedGroupID;
+	Integer targetedGroupID;
+	private Stage stage;
 	//Add other targeted properties for message etc
 	 
 	
-	public ViewTransitionalModel(BorderPane view, Client newClient)
+	public ViewTransitionalModel(BorderPane view, Client newClient, Stage stage)
 	{
 		this.mainview = view;
 		this.client = newClient;
+		this.stage = stage;
 	}
 	
 	@Override
@@ -42,7 +44,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		try
 		{
 			view = loader.load();
-			view.setPrefSize(400, 300);
+			setSize(1000,600);
 			mainview.setCenter(view);
 			MainPageController controller = loader.getController();
 			controller.setModel(this);
@@ -53,6 +55,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		}
 	}	
 	
+
 	@Override
 	public void showCreateAccountView()
 	{
@@ -62,6 +65,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		try
 		{
 			view = loader.load();
+			setSize(800,500);
 			mainview.setCenter(view);
 			CreateAccountController controller = loader.getController();
 			controller.setModel(this);
@@ -82,6 +86,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
+				setSize(1080,720);
 				mainview.setCenter(view);
 				EditProfileViewController controller = loader.getController();
 				controller.setModel(this);
@@ -103,8 +108,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
-				view.setPrefSize(800, 400);
-				//view.setMinSize(1000, 800);
+				setSize(800,400);
 				mainview.setCenter(view);
 				//CreateGroupController controller = loader.getController();
 				CreateGroupController controller = loader.getController();
@@ -119,7 +123,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		}
 		
 		@Override
-		public void showGroupView()
+		public void showGroupView(int groupID)
 		{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ViewTransitionalModel.class.getResource("../view/GroupView.fxml"));
@@ -212,6 +216,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
+				setSize(500,500);
 				mainview.setCenter(view);
 				PinnedMessagesViewController controller = loader.getController();
 				controller.setModel(this);
@@ -232,6 +237,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
+				setSize(800,500);
 				mainview.setCenter(view);
 				GiveRoleViewController controller = loader.getController();
 				controller.setModel(this);
@@ -266,5 +272,11 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		public Client getClientModel()
 		{
 			return this.client;
+		}
+		
+		private void setSize(int width, int height)
+		{
+			stage.setWidth(width);
+			stage.setHeight(height);
 		}
 }
