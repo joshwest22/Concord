@@ -1,5 +1,6 @@
 package view;
 
+import concord.Channel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,7 +20,7 @@ public class GroupViewController {
     private TextField channelNameTextField;
 
     @FXML
-    private ListView<ChannelButton> channelsListView;
+    private ListView<Channel> channelsListView;
 
     @FXML
     private Button createChannelButton;
@@ -55,10 +56,10 @@ public class GroupViewController {
     	
     }
 
-    @FXML
+	@FXML
     void onClickGiveRoleButton(ActionEvent event) 
     {
-
+    	model.showGiveRoleView();
     }
 
     @FXML
@@ -70,7 +71,7 @@ public class GroupViewController {
     @FXML
     void onClickMessageListView(MouseEvent event) 
     {
-
+    	
     }
 
     @FXML
@@ -80,8 +81,9 @@ public class GroupViewController {
     }
 
     @FXML
-    void onClickSendButton(ActionEvent event) {
-
+    void onClickSendButton(ActionEvent event) 
+    {
+    	model.getClientModel().sendMessage(sendMessageBoxTextField.getText());
     }
 
     @FXML
@@ -100,6 +102,20 @@ public class GroupViewController {
     public void setModel(ViewTransitionalModelInterface model)
     {
     	this.model = model;
+    	channelsListView.getSelectionModel().selectedItemProperty().addListener(e->{onSelectedChannel();}); //grocView is the actual list view
+    	usersListView.getSelectionModel().selectedItemProperty().addListener(e->{onSelectedUser();});
     }
+
+	private void onSelectedUser()
+	{
+		System.out.println("user selected");
+		
+	}
+
+	private void onSelectedChannel()
+	{
+		System.out.println("channel selected");
+		
+	}
 
 }

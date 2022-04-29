@@ -406,5 +406,14 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		db.getUser(invitedUserID).getPendingInvites().add(invite);
 		
 	}
+
+
+	@Override
+	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException
+	{
+		//db.getUser(message.getSentBy()).sendMessage(message)
+		db.getGroup(groupID).getChannelByName(channelName).getMessageLog().add(message);
+		
+	}
 	
 }

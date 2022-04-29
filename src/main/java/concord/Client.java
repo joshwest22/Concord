@@ -15,10 +15,11 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	private ArrayList<Integer> associatedGroupIDs;
 	
 	private int currentSelectedGroupID;
+	private String currentSelectedChannelName;
 	private User currentSelectedUser;
 	
-	private ObservableList<Group> selectedGroup;
-	private ObservableList<Channel> selectedChannel;
+	private ObservableList<Group> groupList;
+	private ObservableList<Channel> channelList;
 	
 	public Client(User associatedUser, Server serverContact, ArrayList<Integer> associatedGroupIDs, String name) throws RemoteException
 	{
@@ -137,18 +138,18 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 
 	public void updateNewUser()
 	{
-		//this.serverContact.updateNewUser(groupID); //check if new user in one group or all groups?
+		this.serverContact.updateNewUser(currentSelectedGroupID); //check if new user in one group or all groups?
 	}
 	
 	public void updateNewMessage() //client give the server the new message
 	{
-		//serverContact.updateNewMessage(currentGroupID) //how to get current selected groupID
+		this.serverContact.updateNewMessage(currentSelectedGroupID); //how to get current selected groupID
 		System.out.println("New message was created.");
 	}
 	
 	public void updateNewChannel()
 	{
-		//serverContact.updateNewChannel(currentGroupID) //how to get current selected groupID; when button selected
+		this.serverContact.updateNewChannel(currentSelectedGroupID); //how to get current selected groupID; when button selected
 		System.out.println("New channel was created.");
 	}
 	
@@ -159,9 +160,17 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	//Helper methods for corresponding Server methods
 	//TODO
-	public void sendMessage()
+	public void sendMessage(String message)
 	{
-		
+		try
+		{
+			Message msg = this.getAssociatedUser().sendMessage(message);
+			this.getServerContact().sendMessage(msg, currentSelectedGroupID, currentSelectedChannelName);
+		} catch (RemoteException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -196,6 +205,16 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.currentSelectedGroupID = currentSelectedGroupID;
 	}
 
+	public String getCurrentSelectedChannelName()
+	{
+		return currentSelectedChannelName;
+	}
+
+	public void setCurrentSelectedChannelName(String currentSelectedChannelName)
+	{
+		this.currentSelectedChannelName = currentSelectedChannelName;
+	}
+
 	public User getCurrentSelectedUser()
 	{
 		return currentSelectedUser;
@@ -208,22 +227,22 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 
 	public ObservableList<Group> getSelectedGroup()
 	{
-		return selectedGroup;
+		return groupList;
 	}
 
 	public void setSelectedGroup(ObservableList<Group> selectedGroup)
 	{
-		this.selectedGroup = selectedGroup;
+		this.groupList = selectedGroup;
 	}
 
 	public ObservableList<Channel> getSelectedChannel()
 	{
-		return selectedChannel;
+		return channelList;
 	}
 
 	public void setSelectedChannel(ObservableList<Channel> selectedChannel)
 	{
-		this.selectedChannel = selectedChannel;
+		this.channelList = selectedChannel;
 	}
 
 	@Override

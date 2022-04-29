@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import concord.Message;
 import concord.User;
 
 class UserTest
@@ -98,6 +99,15 @@ class UserTest
 		john.unblockUser(satan.getUserID());
 		blockList.remove(satan.getUserID());
 		assertEquals(john.getBlockedUserIDs(),blockList);
+	}
+	
+	@Test
+	void testSendMessage()
+	{
+		User john = new User("jimmy129", "jim", "jimbo10", 10, url, "slim jim", false);
+		Message msg = john.sendMessage("hello world");
+		assertEquals("hello world",msg.getText());
+		assertEquals(john.getUserID(),msg.getSentBy());
 	}
 
 }

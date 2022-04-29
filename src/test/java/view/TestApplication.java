@@ -11,6 +11,7 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import concord.Client;
+import concord.Group;
 //import concord.ClientInterface;
 //import concord.ClientSubstitute;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,8 @@ public class TestApplication
 	{
 		Client myClient = new Client("TestUser","TestPass");
 		myClient.addGroupID(12);
+		Group testGroup = myClient.getServerContact().getGroup(12);
+		//testGroup.createChannel("testChannel", testGroup);
 		myClient.addGroupID(5);
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Client.class.getResource("../view/LoginView.fxml"));
@@ -70,9 +73,12 @@ public class TestApplication
 	
 	public void testGroup(FxRobot robot)
 	{
-		//TODO
+		
 		//click on group
-		//robot.clickOn("#groupButtonFlowPane").;
+		robot.clickOn("Group 12"); //directly look for button text
+		//click on existing channel
+		//robot.clickOn("testChannel");
+		
 		//create unlocked channel
 		robot.clickOn("#createChannelButton");
 		robot.clickOn("#createChannelText");
@@ -86,9 +92,11 @@ public class TestApplication
 		robot.clickOn("#createChannelYes");
 		robot.clickOn("#createChannelSubmitButton");
 		//click on unlocked channel
-		
+		robot.clickOn("testChannel");
 		//send message in channel
-		
+		robot.clickOn("#sendMessageBoxTextField");
+		robot.write("testMessage");
+		robot.clickOn("#sendButton");
 		//pin the message
 		
 		//open pinned view

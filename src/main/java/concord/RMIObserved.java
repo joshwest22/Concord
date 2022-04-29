@@ -37,5 +37,6 @@ public interface RMIObserved extends Remote
 	public String updateNewChannel(Integer groupID) throws RemoteException;
 	public String updateNewUser(Integer groupID) throws RemoteException;
 	public String updateNewMessage(Integer groupID) throws RemoteException;
+	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException;
 
 }

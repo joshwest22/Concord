@@ -63,6 +63,11 @@ class ClientTest
 			Message clientMessage = new Message("hello client", client.getAssociatedUser().getUserID());
 			clientChannel.sendNewMessage(clientMessage);
 			assertEquals("hello client",clientChannel.getMessageLog().get(0).getText());
+			//test send message directly from client rather than via channel
+			client.setCurrentSelectedGroupID(clientGroup.getGroupID());
+			client.setCurrentSelectedChannelName(clientChannel.getChannelName());
+			client.sendMessage("hello again");
+			assertEquals("hello again", clientChannel.getMessageLog().get(1).getText());
 			//test pinned message
 			clientMessage.setIsPinned(true);
 			assertTrue(clientMessage.getIsPinned());

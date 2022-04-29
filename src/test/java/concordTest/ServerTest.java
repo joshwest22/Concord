@@ -11,6 +11,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import concord.Channel;
 import concord.Client;
 import concord.Database;
 import concord.Group;
@@ -354,6 +355,17 @@ class ServerTest
 	void testGetAllRegisteredUsers() throws RemoteException
 	{
 		assertEquals(server.getDb().getListOfUsers(),server.getAllRegisteredUsers());
+	}
+	
+	@Test
+	void testSendMessage() throws RemoteException
+	{
+		User ol = server.getUserByUsername("overlord");
+		Group group = server.getGroup(50);
+		Channel channel = group.getChannelByName("patriotism");
+		//user sends a message in a channel
+		server.sendMessage(ol.sendMessage("hello world"), group.getGroupID(), channel.getChannelName());
+		assertEquals("hello world",channel.getMessageLog().get(2).getText());
 	}
 
 }

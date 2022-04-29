@@ -33,7 +33,11 @@ public class Main extends Application
 	    primaryStage.show();
 	    
 	    //handle close clicked BUT JavaFX program still running in background	    
-	    primaryStage.setOnCloseRequest(e->{Platform.exit();});
+	    primaryStage.setOnCloseRequest(e->
+	    {
+	    	Platform.exit();
+	    	primaryStage.close();
+	    });
     }
 
 
