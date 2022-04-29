@@ -21,25 +21,38 @@
          <center>
             <VBox alignment="CENTER" prefHeight="230.0" prefWidth="450.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Username">
+                  <Label alignment="CENTER" text="Username">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField id="createAccountUsername" fx:id="createAccountUsername" promptText="New username" />
-                  <Label text="Real name">
+                  <TextField id="createAccountUsername" fx:id="createAccountUsername" alignment="CENTER" promptText="New username">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" />
+                     </VBox.margin></TextField>
+                  <Label alignment="CENTER" text="Real Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <TextField id="realNameTextField" fx:id="realNameTextField" alignment="CENTER" promptText="Real Name">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" />
+                     </VBox.margin></TextField>
+                  <Label alignment="CENTER" text="Password">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField id="realNameTextField" fx:id="realNameTextField" promptText="Real name" />
-                  <Label text="Password">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField id="createAccountPassword" fx:id="createAccountPassword" promptText="New password" />
-                  <Button id="createAccountButton" fx:id="createAccountButton" mnemonicParsing="false" onAction="#onClickSignUp" prefHeight="26.0" prefWidth="268.0" text="Sign up" />
+                  <TextField id="createAccountPassword" fx:id="createAccountPassword" alignment="CENTER" promptText="New password">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" />
+                     </VBox.margin></TextField>
+                  <Button id="createAccountButton" fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickSignUp" prefHeight="26.0" prefWidth="268.0" text="Sign up" />
+                  <Button id="backButton" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
                </children>
                <BorderPane.margin>
                   <Insets top="-30.0" />

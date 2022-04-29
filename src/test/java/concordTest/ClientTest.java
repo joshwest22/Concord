@@ -60,6 +60,7 @@ class ClientTest
 			clientGroup.createChannel("newClientChannel", clientGroup);
 			Channel clientChannel = client.getServerContact().getDb().getGroup(clientGroup.getGroupID()).getChannelByName("newClientChannel");
 			assertEquals("newClientChannel",clientChannel.getChannelName());
+			//assertEquals("newClienthannel",client.getChannelList().get(0).getChannelName());
 			Message clientMessage = new Message("hello client", client.getAssociatedUser().getUserID());
 			clientChannel.sendNewMessage(clientMessage);
 			assertEquals("hello client",clientChannel.getMessageLog().get(0).getText());
@@ -98,7 +99,11 @@ class ClientTest
 			Role chanCreate = new Role("chanCreate",server.getGroup(clientGroup.getGroupID()),false,false,false,true);
 			clientGroup.getRegisteredUsers().get(client.getAssociatedUser()).assignRole(blockedUser, chanCreate);
 			assertEquals(true,clientGroup.getRegisteredUsers().get(blockedUser).getCanCreateChannel());
-			
+			//misc helper method testing
+			//getGroup
+			assertEquals(clientGroup.getGroupName(),client.getGroup(clientGroup.getGroupID()).getGroupName());
+			//getUserByUserName
+			assertEquals(gump.getRealname(),client.getUserByUsername(gump.getUsername()).getRealname());
 		} catch (MalformedURLException | RemoteException | NotBoundException e)
 		{
 			// TODO Auto-generated catch block

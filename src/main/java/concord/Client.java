@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Client extends UnicastRemoteObject implements RMIObserver, Serializable
@@ -20,6 +21,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	private ObservableList<Group> groupList;
 	private ObservableList<Channel> channelList;
+	//private ObservableList<User> userList;
 	
 	public Client(User associatedUser, Server serverContact, ArrayList<Integer> associatedGroupIDs, String name) throws RemoteException
 	{
@@ -27,6 +29,8 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.serverContact = serverContact;
 		this.associatedGroupIDs = associatedGroupIDs;
 		this.clientName = name;
+		//this.groupList = FXCollections.observableList(groupList); //not sure this is exactly the right syntax
+		//this.channelList = FXCollections.observableList(channelList);
 	}
 
 	public Client() throws RemoteException
@@ -38,6 +42,8 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
+		//this.groupList = FXCollections.observableList(groupList); //not sure this is exactly the right syntax
+		//this.channelList = FXCollections.observableList(channelList);
 	}
 	
 	public Client(String username, String password) throws RemoteException
@@ -49,6 +55,8 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
+		//this.groupList = FXCollections.observableList(groupList); //not sure this is exactly the right syntax
+		//this.channelList = FXCollections.observableList(channelList);
 	}
 
 	private static final long serialVersionUID = -6394155878301235563L;
@@ -159,7 +167,6 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	}
 	
 	//Helper methods for corresponding Server methods
-	//TODO
 	public void sendMessage(String message)
 	{
 		try
@@ -245,12 +252,52 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.channelList = selectedChannel;
 	}
 
+	public ObservableList<Group> getGroupList()
+	{
+		return groupList;
+	}
+
+	public void setGroupList(ObservableList<Group> groupList)
+	{
+		this.groupList = groupList;
+	}
+
+	public ObservableList<Channel> getChannelList()
+	{
+		return channelList;
+	}
+
+	public void setChannelList(ObservableList<Channel> channelList)
+	{
+		this.channelList = channelList;
+	}
+	
+	@Override
+	public User createUser(String username, String realname, String password)
+			throws MalformedURLException, RemoteException
+	{
+		serverContact.createUser(username, realname, password);
+		User user = getUserByUsername(username);
+		//userList.add(user); //add this back when observable lists figured out
+		return user;
+	}
+
+	@Override
+	public Group createGroup(Integer groupID, String groupName) throws RemoteException
+	{
+		serverContact.createGroup(groupID, groupName);
+		//groupList.add(getGroup(groupID));
+		return getGroup(groupID);
+	}
+	
 	@Override
 	public String createChannel(String channelName, Integer userID, Integer groupID) throws RemoteException
 	{
 		serverContact.createChannel(channelName, userID, groupID);
+		//channelList.add(getServerContact().getGroup(groupID).getChannelByName(channelName));
 		return channelName+"was created in group "+groupID+" on client";
 	}
+	
 
 	@Override
 	public void updateNewUser(Integer groupID) throws RemoteException
@@ -265,5 +312,145 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.serverContact.updateNewMessage(groupID);
 		
 	}
+
+	@Override
+	public Group getGroup(Integer groupID) throws RemoteException
+	{
+		return serverContact.getGroup(groupID);
+	}
+
+	@Override
+	public User getUserByUsername(String username) throws RemoteException
+	{
+		return serverContact.getUserByUsername(username);
+	}
+
+	@Override
+	public ArrayList<Group> getUserGroups(Integer userID) throws RemoteException
+	{
+		return serverContact.getUserGroups(userID);
+	}
+
+	@Override
+	public String messageReceived(String channelName, String message, Integer userID, Integer groupID)
+			throws RemoteException
+	{
+		return serverContact.messageReceived(channelName, message, userID, groupID);
+	}
+
+	@Override
+	public String messageReceiveReply(String channelName, String message, Integer userID, Integer groupID,
+			Message ReplyTo) throws RemoteException
+	{
+		return serverContact.messageReceiveReply(channelName, message, userID, groupID, ReplyTo);
+	}
+
+	@Override
+	public ArrayList<Message> viewChannelMessages(String channelName, Integer userID, Integer groupID)
+			throws RemoteException
+	{
+		return serverContact.viewChannelMessages(channelName, userID, groupID);
+	}
+
+	@Override
+	public String addUserToGroup(Integer groupID, Integer addingUserID, Integer addedUserID) throws RemoteException
+	{
+		return serverContact.addUserToGroup(groupID, addingUserID, addedUserID);
+	}
+
+	@Override
+	public String removeUserFromGroup(Integer groupID, Integer removingUserID, Integer removedUserID)
+			throws RemoteException
+	{
+		return serverContact.removeUserFromGroup(groupID, removingUserID, removedUserID);
+	}
+
+	@Override
+	public String lockChannel(Integer groupID, Integer userID, String channelName) throws RemoteException
+	{
+		return serverContact.lockChannel(groupID, userID, channelName);
+	}
+
+	@Override
+	public String unlockChannel(Integer groupID, Integer userID, String channelName) throws RemoteException
+	{
+		return serverContact.unlockChannel(groupID, userID, channelName);
+	}
+
+	@Override
+	public String leaveGroup(Integer groupID, Integer userID) throws RemoteException
+	{
+		return serverContact.leaveGroup(groupID, userID);
+	}
+
+	@Override
+	public User viewUser(Integer userID) throws RemoteException
+	{
+		return serverContact.viewUser(userID);
+	}
+
+	@Override
+	public Integer getUserIDByName(String username) throws RemoteException
+	{
+		return serverContact.getUserIDByName(username);
+	}
+
+	@Override
+	public Integer getUserCount(Integer groupID) throws RemoteException
+	{
+		return serverContact.getUserCount(groupID);
+	}
+
+	@Override
+	public String addAllowedUser(String channelName, User adder, Integer addee, Integer groupID) throws RemoteException
+	{
+		return serverContact.addAllowedUser(channelName, adder, addee, groupID);
+	}
+
+	@Override
+	public void blockUser(Integer blockingUserID, Integer blockedUserID) throws RemoteException
+	{
+		serverContact.blockUser(blockingUserID, blockedUserID);
+	}
+
+	@Override
+	public String pinMessage(String channelName, Integer userID, Integer groupID, Integer messageIndex)
+			throws RemoteException
+	{
+		return serverContact.pinMessage(channelName, userID, groupID, messageIndex);
+	}
+
+	@Override
+	public String assignNewRole(Integer changerID, Integer changerdID, Integer groupID, Boolean canKick,
+			Boolean canLockChannel, Boolean canAssignRole, Boolean canCreateChannel) throws RemoteException
+	{
+		return serverContact.assignNewRole(changerID, changerdID, groupID, canKick, canLockChannel, canAssignRole, canCreateChannel);
+	}
+
+	@Override
+	public ArrayList<User> getAllRegisteredUsers() throws RemoteException
+	{
+		return serverContact.getAllRegisteredUsers();
+	}
+
+	@Override
+	public void sendInvitation(Integer invitedUserID, Invitation invite) throws RemoteException
+	{
+		serverContact.sendInvitation(invitedUserID, invite);
+	}
+
+	@Override
+	public String updateNewChannel(Integer groupID) throws RemoteException
+	{
+		return serverContact.updateNewChannel(groupID);
+	}
+
+	@Override
+	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException
+	{
+		serverContact.sendMessage(message, groupID, channelName);
+	}
+
+	
 
 }

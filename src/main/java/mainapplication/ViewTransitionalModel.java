@@ -65,7 +65,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 		try
 		{
 			view = loader.load();
-			setSize(800,500);
+			setSize(500,300);
 			mainview.setCenter(view);
 			CreateAccountController controller = loader.getController();
 			controller.setModel(this);
@@ -86,7 +86,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
-				setSize(1080,720);
+				setSize(800,500);
 				mainview.setCenter(view);
 				EditProfileViewController controller = loader.getController();
 				controller.setModel(this);
@@ -154,6 +154,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
+				setSize(500,300);
 				mainview.setCenter(view);
 				//CreateGroupController controller = loader.getController();
 				InvitationsViewController controller = loader.getController();
@@ -216,7 +217,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
-				setSize(500,500);
+				setSize(500,300);
 				mainview.setCenter(view);
 				PinnedMessagesViewController controller = loader.getController();
 				controller.setModel(this);

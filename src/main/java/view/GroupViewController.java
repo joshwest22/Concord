@@ -1,6 +1,7 @@
 package view;
 
 import concord.Channel;
+import concord.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,6 +43,9 @@ public class GroupViewController {
 
     @FXML
     private ListView<UserButton> usersListView;
+    
+    @FXML
+    private ListView<Message> messageListView;
 
 
     @FXML

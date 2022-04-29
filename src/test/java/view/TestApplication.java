@@ -12,11 +12,13 @@ import org.testfx.framework.junit5.Start;
 
 import concord.Client;
 import concord.Group;
+import concord.Message;
 //import concord.ClientInterface;
 //import concord.ClientSubstitute;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -52,6 +54,34 @@ public class TestApplication
 			e.printStackTrace();
 		}
 
+	}
+	
+	
+	private void testCreateAccount(FxRobot robot)
+	{
+		//threat path
+		robot.clickOn("#makeAccountButton");
+		robot.clickOn("#createAccountUsername");
+		robot.write("Username");
+		robot.clickOn("#realNameTextField");
+		robot.write("User Name");
+		//robot.clickOn("#createAccountPassword");
+		//robot.write("Password");
+		robot.clickOn("#createAccountButton");
+		Assertions.assertThat(robot.lookup("#createAccountLabel").queryAs(Label.class)).hasText("One or more field empty, try again");	
+		robot.clickOn("#backButton");
+
+		//happy path
+		robot.clickOn("#makeAccountButton");
+		robot.clickOn("#createAccountUsername");
+		robot.write("Username");
+		robot.clickOn("#realNameTextField");
+		robot.write("User Name");
+		robot.clickOn("#createAccountPassword");
+		robot.write("Password");
+		robot.clickOn("#createAccountButton");
+		//The assert below works and was used to fix bugs, but causes the next test to crash if enabled as page switches too quickly for text to be read
+		//Assertions.assertThat(robot.lookup("#createAccountLabel").queryAs(Label.class)).hasText("Welcome Username!");		
 	}
 	
 	public void testLogin(FxRobot robot)
@@ -97,8 +127,10 @@ public class TestApplication
 		robot.clickOn("#sendMessageBoxTextField");
 		robot.write("testMessage");
 		robot.clickOn("#sendButton");
+		Assertions.assertThat(robot.lookup("#messageListView").queryAs(ListView.class)).hasExactlyNumItems(1);
+		//assertEquals("testMessage",robot.lookup("#messageListView").queryListView());
 		//pin the message
-		
+		//clickOn message and then click pinned icon OR go to pinned view and pick a message
 		//open pinned view
 		testPinned(robot);
 		//click on locked channel
@@ -142,8 +174,12 @@ public class TestApplication
 	@Test
 	public void testApp(FxRobot robot)
 	{
+		//comment/uncomment to add or remove section of testing
+		testCreateAccount(robot);
 		testLogin(robot);
 		testGroup(robot);
 	}
+
+	
 	
 }

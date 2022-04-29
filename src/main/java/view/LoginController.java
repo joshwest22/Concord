@@ -55,7 +55,6 @@ public class LoginController {
     @FXML
     void onMakeAccountClicked(ActionEvent event) 
     {
-    	//model.showCreateAccountView();
     	this.model.showCreateAccountView();
     }
     

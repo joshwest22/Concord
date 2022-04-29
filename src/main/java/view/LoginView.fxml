@@ -53,7 +53,7 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button id="makeAccountButton" fx:id="makeAccountButton" alignment="CENTER" mnemonicParsing="false" onAction="#onMakeAccountClicked" prefHeight="26.0" prefWidth="165.0" text="No account? Make one!">
+                  <Button id="makeAccountButton" fx:id="makeAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onMakeAccountClicked" text="No account? Make one!">
                      <VBox.margin>
                         <Insets top="30.0" />
                      </VBox.margin>
