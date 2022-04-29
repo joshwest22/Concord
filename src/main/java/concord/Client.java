@@ -66,6 +66,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	@Override
 	public String notifyFinished()
 	{
+		//make all updates
 		System.out.println(clientName+" was called");
 		return clientName+" was called";
 	}
@@ -79,6 +80,15 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		
 		if (enteredName.equals(clientUsername) && enteredPassword.equals(clientPassword))
 		{
+			//set client as observer
+			try
+			{
+				serverContact.addObserver(this);
+			} catch (RemoteException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//set the online status to true
 			associatedUser.setOnlineStatus(true);
 			//first time login, but don't create a new user for a wrong password

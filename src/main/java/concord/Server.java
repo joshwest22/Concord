@@ -189,7 +189,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		{
 			try
 			{
-				o.updateNewChannel();
+				o.updateNewChannel(groupID);
 			} catch (RemoteException e)
 			{
 				// TODO Auto-generated catch block
@@ -413,7 +413,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	{
 		//db.getUser(message.getSentBy()).sendMessage(message)
 		db.getGroup(groupID).getChannelByName(channelName).getMessageLog().add(message);
-		
+		this.updateNewMessage(groupID);
 	}
 	
 }
