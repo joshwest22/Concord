@@ -35,7 +35,7 @@ public class ProfilePreviewController {
     @FXML
     void onClickedCloseButton(ActionEvent event) 
     {
-    	this.model.showGroupView(int groupID); //TODO //replace with selectedGroupID
+    	this.model.showGroupView(model.getClientModel().getCurrentSelectedGroupID()); 
     }
 
 	public void setModel(ViewTransitionalModel model)

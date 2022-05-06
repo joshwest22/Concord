@@ -5,6 +5,7 @@ import java.time.Instant;
 
 public class Message
 {
+	//don't forget to say that Message implements Reactable
 	String text;
 	Timestamp timestamp;
 	Boolean isPinned = false;
@@ -83,4 +84,5 @@ public class Message
 	{
 		this.inReplyTo = inReplyTo;
 	}
+	
 }

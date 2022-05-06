@@ -10,9 +10,11 @@ import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+import concord.Channel;
 import concord.Client;
 import concord.Group;
 import concord.Message;
+import javafx.collections.ObservableList;
 //import concord.ClientInterface;
 //import concord.ClientSubstitute;
 import javafx.fxml.FXMLLoader;
@@ -32,9 +34,10 @@ public class TestApplication
 	private void start(Stage stage) throws RemoteException
 	{
 		Client myClient = new Client("TestUser","TestPass");
-		myClient.addGroupID(12);
-		Group testGroup = myClient.getServerContact().getGroup(12);
-		//testGroup.createChannel("testChannel", testGroup);
+		myClient.createGroup(12, "district12");
+		myClient.addGroupID(12); // might not need this since addGroupID was integrated into createGroup
+		Group testGroup = myClient.getGroup(12); //apparently this is null
+		testGroup.createChannel("testChannel", testGroup);
 		myClient.addGroupID(5);
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Client.class.getResource("../view/LoginView.fxml"));
@@ -55,7 +58,6 @@ public class TestApplication
 		}
 
 	}
-	
 	
 	private void testCreateAccount(FxRobot robot)
 	{
@@ -101,6 +103,22 @@ public class TestApplication
 		Assertions.assertThat(robot.lookup("#groupButtonFlowPane").queryAs(FlowPane.class)).hasExactlyNumChildren(3);
 	}
 	
+	@SuppressWarnings("unchecked")
+	 ListView<Channel> getChannelFromList(FxRobot robot)
+
+	 {
+	   return (ListView<Channel>) robot.lookup("#channelsListView")
+	       .queryAll().iterator().next();
+	 }
+	
+	@SuppressWarnings("unchecked")
+	 ListView<Message> getMessageFromList(FxRobot robot)
+
+	 {
+	   return (ListView<Message>) robot.lookup("#messageListView")
+	       .queryAll().iterator().next();
+	 }
+	
 	public void testGroup(FxRobot robot)
 	{
 		
@@ -123,12 +141,18 @@ public class TestApplication
 		robot.clickOn("#createChannelSubmitButton");
 		//click on unlocked channel
 		robot.clickOn("testChannel");
+		//sanity check that channelList is empty
+		ListView<Channel> channelList = getChannelFromList(robot);
+		Assertions.assertThat(channelList).isEmpty();
+		//sanity check that messageList is empty
+		ListView<Message> messageList = getMessageFromList(robot);
+		Assertions.assertThat(messageList).isEmpty();
 		//send message in channel
 		robot.clickOn("#sendMessageBoxTextField");
 		robot.write("testMessage");
 		robot.clickOn("#sendButton");
-		Assertions.assertThat(robot.lookup("#messageListView").queryAs(ListView.class)).hasExactlyNumItems(1);
-		//assertEquals("testMessage",robot.lookup("#messageListView").queryListView());
+		Assertions.assertThat(channelList).hasExactlyNumItems(1);
+		Assertions.assertThat(messageList).hasExactlyNumItems(1);
 		//pin the message
 		//clickOn message and then click pinned icon OR go to pinned view and pick a message
 		//open pinned view
@@ -175,7 +199,7 @@ public class TestApplication
 	public void testApp(FxRobot robot)
 	{
 		//comment/uncomment to add or remove section of testing
-		testCreateAccount(robot);
+		//testCreateAccount(robot);
 		testLogin(robot);
 		testGroup(robot);
 	}

@@ -21,7 +21,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	private ObservableList<Group> groupList;
 	private ObservableList<Channel> channelList;
-	//private ObservableList<User> userList;
+	private ObservableList<User> userList;
 	
 	public Client(User associatedUser, Server serverContact, ArrayList<Integer> associatedGroupIDs, String name) throws RemoteException
 	{
@@ -29,8 +29,9 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.serverContact = serverContact;
 		this.associatedGroupIDs = associatedGroupIDs;
 		this.clientName = name;
-		//this.groupList = FXCollections.observableList(groupList); //not sure this is exactly the right syntax
-		//this.channelList = FXCollections.observableList(channelList);
+		this.groupList = FXCollections.observableArrayList(); //not sure this is exactly the right syntax
+		this.channelList = FXCollections.observableArrayList();
+		this.userList = FXCollections.observableArrayList();
 	}
 
 	public Client() throws RemoteException
@@ -42,11 +43,12 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
-		//this.groupList = FXCollections.observableList(groupList); //not sure this is exactly the right syntax
-		//this.channelList = FXCollections.observableList(channelList);
+		this.groupList = FXCollections.observableArrayList(); //not sure this is exactly the right syntax
+		this.channelList = FXCollections.observableArrayList();
+		this.userList = FXCollections.observableArrayList();
 	}
 	
-	public Client(String username, String password) throws RemoteException
+	public Client(String username,String password) throws RemoteException
 	{
 		User user = new User(username,password);
 		this.associatedUser = user;
@@ -55,8 +57,10 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
-		//this.groupList = FXCollections.observableList(groupList); //not sure this is exactly the right syntax
-		//this.channelList = FXCollections.observableList(channelList);
+		//these are crashing my test HARD
+		this.groupList = FXCollections.observableArrayList(); //not sure this is exactly the right syntax
+		this.channelList = FXCollections.observableArrayList();
+		this.userList = FXCollections.observableArrayList();
 	}
 
 	private static final long serialVersionUID = -6394155878301235563L;
@@ -97,7 +101,8 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 			try
 			{
 				serverContact.createUser(this.getAssociatedUser().getUsername(), this.getAssociatedUser().getRealname(), this.getAssociatedUser().getPassword(), this.getAssociatedUser().getUserID());
-				//should I call updateNewUser to alert the server to a change?
+				//should I call updateNewUser to alert the server to a change? Yes!
+				serverContact.updateNewUser(this.getCurrentSelectedGroupID());
 				
 			} catch (MalformedURLException e)
 			{
@@ -161,13 +166,13 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	
 	public void updateNewMessage() //client give the server the new message
 	{
-		this.serverContact.updateNewMessage(currentSelectedGroupID); //how to get current selected groupID
+		this.serverContact.updateNewMessage(currentSelectedGroupID); 
 		System.out.println("New message was created.");
 	}
 	
 	public void updateNewChannel()
 	{
-		this.serverContact.updateNewChannel(currentSelectedGroupID); //how to get current selected groupID; when button selected
+		this.serverContact.updateNewChannel(currentSelectedGroupID); 
 		System.out.println("New channel was created.");
 	}
 	
@@ -288,7 +293,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	{
 		serverContact.createUser(username, realname, password);
 		User user = getUserByUsername(username);
-		//userList.add(user); //add this back when observable lists figured out
+		userList.add(user); //add this back when observable lists figured out
 		return user;
 	}
 
@@ -296,7 +301,8 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	public Group createGroup(Integer groupID, String groupName) throws RemoteException
 	{
 		serverContact.createGroup(groupID, groupName);
-		//groupList.add(getGroup(groupID));
+		groupList.add(getGroup(groupID));
+		this.addGroupID(groupID);
 		return getGroup(groupID);
 	}
 	
@@ -312,7 +318,15 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	@Override
 	public void updateNewUser(Integer groupID) throws RemoteException
 	{
-		this.serverContact.updateNewUser(groupID);
+		//this.serverContact.updateNewUser(groupID);
+		//get updated list of users from server
+		ArrayList<User> usersList = this.getServerContact().getDb().getListOfUsers();
+		for (User u : usersList)
+		{
+			//make any new changes to the model; make sure all necessary changes are made; may need more
+			this.getAllRegisteredUsers().add(u);
+			//usersList.add(u);
+		}
 		
 	}
 
@@ -320,7 +334,19 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	public void updateNewMessage(Integer groupID) throws RemoteException
 	{
 		this.serverContact.updateNewMessage(groupID);
-		
+		//get updated list of messages in this group from the server
+		ArrayList<Channel> channelsList = this.getGroup(groupID).getChannels();
+		//make any changes to the client model
+		for (Channel c : channelsList)
+		{
+			//add every message in every channel in this group to client version
+			for (Message m : c.getMessageLog())
+			{
+				//add server messages to local client messages; "pull request"
+				//Might need help getting the next line to NOT be redundant
+				this.getGroup(groupID).getChannelByName(c.getChannelName()).getMessageLog().add(m);
+			}
+		}
 	}
 
 	@Override

@@ -1,10 +1,7 @@
 package view;
 
-import java.util.ArrayList;
-
 import concord.Channel;
-import concord.Group;
-import concord.Message;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import mainapplication.ViewTransitionalModelInterface;
 
@@ -63,9 +60,9 @@ public class ChannelButton extends Button
 	{
 		this.channelName = channelName;
 	}
-	public void onButtonPressed(Action event)
+	public void onButtonPressed(ActionEvent event)
 	{
-		
+		//TODO
 	}
 	
 	
