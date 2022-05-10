@@ -36,7 +36,7 @@ public class TestApplication
 		Client myClient = new Client("TestUser","TestPass");
 		myClient.createGroup(12, "district12");
 		myClient.addGroupID(12); // might not need this since addGroupID was integrated into createGroup
-		Group testGroup = myClient.getGroup(12); //apparently this is null
+		Group testGroup = myClient.getGroup(12); 
 		testGroup.createChannel("testChannel", testGroup);
 		myClient.addGroupID(5);
 		FXMLLoader loader = new FXMLLoader();
@@ -48,6 +48,8 @@ public class TestApplication
 			LoginController controller = loader.getController();
 			ViewTransitionalModel vm =new ViewTransitionalModel(view,myClient,stage); 
 			controller.setModel(vm);
+			myClient.login("TestUser", "TestPass");
+			vm.showGroupView(testGroup.getGroupID());
 			Scene s = new Scene(view);
 			stage.setScene(s);
 			stage.show();
@@ -121,7 +123,14 @@ public class TestApplication
 	
 	public void testGroup(FxRobot robot)
 	{
-		
+		try
+		{
+			Thread.sleep(2000);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//click on group
 		robot.clickOn("Group 12"); //directly look for button text
 		//click on existing channel
@@ -200,7 +209,7 @@ public class TestApplication
 	{
 		//comment/uncomment to add or remove section of testing
 		//testCreateAccount(robot);
-		testLogin(robot);
+		//testLogin(robot);
 		testGroup(robot);
 	}
 

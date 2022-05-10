@@ -404,7 +404,6 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 			throws RemoteException
 	{
 		db.getUser(invitedUserID).getPendingInvites().add(invite);
-		
 	}
 
 

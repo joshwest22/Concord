@@ -1,5 +1,7 @@
 package view;
 
+import concord.Group;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -52,11 +54,22 @@ public class MainPageController {
     public void setModel(ViewTransitionalModelInterface model)
     {
     	this.model = model;
-    	for(Integer groupID:this.model.getClientModel().getAssociatedGroupIDs())
+    	this.model.getClientModel()
+		.getGroupList()
+		.addListener((ListChangeListener<Group>)e ->
     	{
-    		GroupButton newButton = new GroupButton(groupID,"PlaceholderName", model);
-    		groupButtonFlowPane.getChildren().add(newButton);
-    	}
+    		for(Group group:this.model.getClientModel()
+    				.getGroupList())
+    		{
+        		//clear list
+    			this.model.getClientModel().getGroupList().clear();
+    			//check through every group and update any changes
+    			GroupButton newButton = new GroupButton(group.getGroupID(),"PlaceholderName", model);
+        		groupButtonFlowPane.getChildren().add(newButton);
+        	}	
+    	}); //was getAssociatedGroupIDs; switch to observable list and let it update dynamically
+    	
+    	//after login re-draw buttons with the contents of the for loop
     }
 
 }

@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -103,6 +104,20 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 				serverContact.createUser(this.getAssociatedUser().getUsername(), this.getAssociatedUser().getRealname(), this.getAssociatedUser().getPassword(), this.getAssociatedUser().getUserID());
 				//should I call updateNewUser to alert the server to a change? Yes!
 				serverContact.updateNewUser(this.getCurrentSelectedGroupID());
+				//add groups to groupList so that they can eventually be displayed
+				//serverContact.updateGroups();
+				//client updates local groups from server
+				for (Integer groupID : this.getAssociatedGroupIDs())
+				{
+					try
+					{
+						this.getGroupList().add(this.getGroup(groupID));
+					} catch (RemoteException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				
 			} catch (MalformedURLException e)
 			{
@@ -321,12 +336,26 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		//this.serverContact.updateNewUser(groupID);
 		//get updated list of users from server
 		ArrayList<User> usersList = this.getServerContact().getDb().getListOfUsers();
-		for (User u : usersList)
+		Platform.runLater(()->
+		{
+			for (User u : usersList)
 		{
 			//make any new changes to the model; make sure all necessary changes are made; may need more
-			this.getAllRegisteredUsers().add(u);
-			//usersList.add(u);
+			try
+			{
+				//add to server reg users
+				this.getAllRegisteredUsers().add(u);
+				//add to group reg users
+				this.getServerContact().getGroup(groupID).getRegisteredUsers().put(u, this.getGroup(groupID).basic);
+			} catch (RemoteException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
+		});
+		
 		
 	}
 
