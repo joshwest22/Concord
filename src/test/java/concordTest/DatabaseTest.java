@@ -12,6 +12,7 @@ import concord.Channel;
 import concord.Database;
 import concord.Group;
 import concord.Message;
+import concord.ReactionMessage;
 import concord.Role;
 import concord.User;
 
@@ -162,13 +163,26 @@ class DatabaseTest
 		Channel channel1 = chgroup1.getChannels().get(0);
 		int channelSize = channel1.getMessageLog().size();
 		assertEquals(channelSize,1);
+		//test reactions
+		ReactionMessage r = new ReactionMessage();
+		r.setText("reactionMessageText");
+		r.setEmojiCode("test_emoji");
+		chgroup1.admin.sendMessage(r, channel1);
+		assertEquals("reactionMessageText",channel1.getMessageLog().get(1).getText());
+		//how to make messageLog contain reactionMessage?? Change messageLog to reactionMessage?
+		//TODO//assertEquals("test_emoji",channel1.getMessageLog().get(1).getEmojiCode());
+		//test that customImg can be set and sent correctly
+		
+		//test that emojiList correct
+		
+		//test that customImgsList correct
 		//block satan
 		josh.blockUser(satan.getUserID());
 		assertEquals(satan.getUserID(),josh.getBlockedUserIDs().get(0));
 		//show length doesn't change
 		Message secondMsg = new Message("Hell is really hot.",666);
 		chgroup1.admin.sendMessage(secondMsg, channel1); //should not send bc blocked
-		assertEquals(channel1.getMessageLog().size(),2);
+		assertEquals(3,channel1.getMessageLog().size());
 		assertEquals(josh.getBlockedUserIDs().get(0),satan.getUserID());
 		//block a user using db method
 		db.blockUser(overlord.getUserID(), satan.getUserID());

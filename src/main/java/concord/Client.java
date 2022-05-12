@@ -2,6 +2,7 @@ package concord;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -325,7 +326,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	public String createChannel(String channelName, Integer userID, Integer groupID) throws RemoteException
 	{
 		serverContact.createChannel(channelName, userID, groupID);
-		//channelList.add(getServerContact().getGroup(groupID).getChannelByName(channelName));
+		channelList.add(getServerContact().getGroup(groupID).getChannelByName(channelName));
 		return channelName+"was created in group "+groupID+" on client";
 	}
 	
@@ -516,6 +517,14 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		serverContact.sendMessage(message, groupID, channelName);
 	}
 
+	public void reactToMessageEmoji(String emojiCode)
+	{
+		//TODO
+	}
 	
+	public void reactToMessageImg(URL customImg)
+	{
+		//TODO
+	}
 
 }
