@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.vdurmont.emoji.Emoji;
+import com.vdurmont.emoji.EmojiManager;
+import com.vdurmont.emoji.EmojiParser;
+
 import concord.Channel;
 import concord.Database;
 import concord.Group;
@@ -166,7 +170,14 @@ class DatabaseTest
 		//test reactions
 		ReactionMessage r = new ReactionMessage();
 		r.setText("reactionMessageText");
-		r.setEmojiCode("test_emoji");
+		r.setEmojiCode("😀");
+		//r.setEmojiCode(EmojiParser.parseToUnicode(":grinning"));
+		//assertEquals("😀",EmojiParser.parseToUnicode(r.getEmojiCode()));
+		//messing with emojis
+		ArrayList<Emoji> allEmojis = (ArrayList<Emoji>) EmojiManager.getAll();
+		Emoji emoji = EmojiManager.getForAlias("grinning");
+		assertEquals("grinning",emoji.getAliases().get(0));
+		assertEquals("😀",emoji.getUnicode());
 		chgroup1.admin.sendMessage(r, channel1);
 		assertEquals("reactionMessageText",channel1.getMessageLog().get(1).getText());
 		//how to make messageLog contain reactionMessage?? Change messageLog to reactionMessage?
