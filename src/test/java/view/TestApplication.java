@@ -1,5 +1,7 @@
 package view;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
 
@@ -14,7 +16,6 @@ import concord.Channel;
 import concord.Client;
 import concord.Group;
 import concord.Message;
-import javafx.collections.ObservableList;
 //import concord.ClientInterface;
 //import concord.ClientSubstitute;
 import javafx.fxml.FXMLLoader;
@@ -34,11 +35,11 @@ public class TestApplication
 	private void start(Stage stage) throws RemoteException
 	{
 		Client myClient = new Client("TestUser","TestPass");
-		myClient.createGroup(12, "district12");
-		myClient.addGroupID(12); // might not need this since addGroupID was integrated into createGroup
-		Group testGroup = myClient.getGroup(12); 
-		testGroup.createChannel("testChannel", testGroup);
-		myClient.addGroupID(5);
+		//myClient.createGroup(12, "district12");
+		//myClient.addGroupID(12); // might not need this since addGroupID was integrated into createGroup
+		//Group testGroup = myClient.getGroup(12); 
+		//hardcode channel
+		//testGroup.createChannel("testChannel", testGroup);
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Client.class.getResource("../view/LoginView.fxml"));
 		try
@@ -49,7 +50,6 @@ public class TestApplication
 			ViewTransitionalModel vm =new ViewTransitionalModel(view,myClient,stage); 
 			controller.setModel(vm);
 			myClient.login("TestUser", "TestPass");
-			vm.showGroupView(testGroup.getGroupID());
 			Scene s = new Scene(view);
 			stage.setScene(s);
 			stage.show();
@@ -102,7 +102,7 @@ public class TestApplication
 		robot.write("TestPass");
 		robot.clickOn("#loginButton");
 		//Assertions.assertThat(robot.lookup("#loginMainLabel").queryAs(Label.class)).hasText("Logged in!");
-		Assertions.assertThat(robot.lookup("#groupButtonFlowPane").queryAs(FlowPane.class)).hasExactlyNumChildren(3);
+		Assertions.assertThat(robot.lookup("#groupButtonFlowPane").queryAs(FlowPane.class)).hasExactlyNumChildren(1); //this will be 0 when groupPlaceholder removed
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -123,6 +123,13 @@ public class TestApplication
 	
 	public void testGroup(FxRobot robot)
 	{
+		//create group
+		robot.clickOn("#createGroupButton"); 
+		robot.clickOn("#serverNameTextField");
+		robot.write("myFirstGroup");
+		robot.clickOn("#serverIDTextField");
+		robot.write("12");
+		robot.clickOn("#enterButton");
 		try
 		{
 			Thread.sleep(2000);
@@ -132,10 +139,7 @@ public class TestApplication
 			e.printStackTrace();
 		}
 		//click on group
-		robot.clickOn("Group 12"); //directly look for button text
-		//click on existing channel
-		//robot.clickOn("testChannel");
-		
+		robot.clickOn("myFirstGroup"); //directly look for button by text
 		//create unlocked channel
 		robot.clickOn("#createChannelButton");
 		robot.clickOn("#createChannelText");
@@ -162,13 +166,23 @@ public class TestApplication
 		robot.clickOn("#sendButton");
 		Assertions.assertThat(channelList).hasExactlyNumItems(1);
 		Assertions.assertThat(messageList).hasExactlyNumItems(1);
+		//check that the message text is the same
+		assertEquals("testMessage",messageList.getItems().get(0).getText());
 		//pin the message
 		//clickOn message and then click pinned icon OR go to pinned view and pick a message
 		//open pinned view
 		testPinned(robot);
 		//click on locked channel
-		
+		robot.clickOn("lockedChannel");
 		//send message in channel
+		robot.clickOn("#sendMessageBoxTextField");
+		robot.write("testMessage");
+		robot.clickOn("#sendButton");
+		Assertions.assertThat(channelList).hasExactlyNumItems(1);
+		Assertions.assertThat(messageList).hasExactlyNumItems(1);
+		//add reaction to message
+		
+		//remove reaction to message
 		
 		//invite another user (that user needs to exist in server db)
 		testInvitation(robot);
@@ -209,7 +223,7 @@ public class TestApplication
 	{
 		//comment/uncomment to add or remove section of testing
 		//testCreateAccount(robot);
-		//testLogin(robot);
+		testLogin(robot);
 		testGroup(robot);
 	}
 

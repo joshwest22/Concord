@@ -1,6 +1,7 @@
 package view;
 
 import concord.Group;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,22 +55,47 @@ public class MainPageController {
     public void setModel(ViewTransitionalModelInterface model)
     {
     	this.model = model;
-    	this.model.getClientModel()
-		.getGroupList()
-		.addListener((ListChangeListener<Group>)e ->
+    	
+    	//this has to work for groups to show up!!//TODO
+    	//concurrent modification error => use Platform.runLater
+    	Platform.runLater(()->
     	{
-    		for(Group group:this.model.getClientModel()
-    				.getGroupList())
-    		{
-        		//clear list
-    			this.model.getClientModel().getGroupList().clear();
-    			//check through every group and update any changes
-    			GroupButton newButton = new GroupButton(group.getGroupID(),"PlaceholderName", model);
-        		groupButtonFlowPane.getChildren().add(newButton);
-        	}	
-    	}); //was getAssociatedGroupIDs; switch to observable list and let it update dynamically
+        	//was getAssociatedGroupIDs; switch to observable list and let it update dynamically
+    		model.getClientModel()
+    		.getGroupList()
+    		.addListener((ListChangeListener<Group>)e ->
+        	{
+        		//something wrong with this for loop!!!
+        		for(Group group:model.getClientModel()
+        				.getGroupList())
+        		{
+            		//clear list
+        			model.getClientModel().getGroupList().clear();
+        			//check through every group and update any changes
+        			GroupButton newButton = new GroupButton(group.getGroupID(),"PlaceholderName", model);
+            		groupButtonFlowPane.getChildren().add(newButton);
+            	}	
+        	});
+    	});
     	
     	//after login re-draw buttons with the contents of the for loop
+    	if (model.getClientModel().getAssociatedUser().getOnlineStatus() == true)
+    	{
+    		model.getClientModel()
+    		.getGroupList()
+    		.addListener((ListChangeListener<Group>)e ->
+        	{
+        		for(Group group:model.getClientModel()
+        				.getGroupList())
+        		{
+            		//clear list
+        			model.getClientModel().getGroupList().clear();
+        			//check through every group and update any changes
+        			GroupButton newButton = new GroupButton(group.getGroupID(),"PlaceholderName", model);
+            		groupButtonFlowPane.getChildren().add(newButton);
+            	}	
+        	}); //was getAssociatedGroupIDs; switch to observable list and let it update dynamically
+    	}
     }
 
 }

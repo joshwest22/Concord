@@ -36,13 +36,13 @@
             <VBox alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Group Name" />
-                  <TextField id="serverNameTextField" fx:id="serverNameTextField" alignment="CENTER" prefHeight="18.0" prefWidth="403.0" text="Enter Group Name" />
+                  <TextField id="serverNameTextField" fx:id="serverNameTextField" alignment="CENTER" prefHeight="18.0" prefWidth="403.0" promptText="Enter Group Name" />
                </children>
             </VBox>
             <VBox alignment="CENTER">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Group ID" />
-                  <TextField id="serverIDTextField" fx:id="serverIDTextField" alignment="CENTER" prefHeight="18.0" prefWidth="457.0" text="Enter Group ID" />
+                  <TextField id="serverIDTextField" fx:id="serverIDTextField" alignment="CENTER" prefHeight="18.0" prefWidth="457.0" promptText="Enter Group ID" />
                </children>
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

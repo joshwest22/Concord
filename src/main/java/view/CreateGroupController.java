@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import mainapplication.ViewTransitionalModelInterface;
+
+import java.rmi.RemoteException;
+
 import concord.Server;
 
 public class CreateGroupController {
@@ -37,8 +40,18 @@ public class CreateGroupController {
     void onClickEnterButton(ActionEvent event) 
     {
     	//Logic for group making
-    	//this logic is bad; create group in existing server
-    	server.createGroup(Integer.valueOf(serverIDTextField.getText()), serverNameTextField.getText());
+    	try
+		{
+			this.model.getClientModel().createGroup(Integer.valueOf(serverIDTextField.getText()), serverNameTextField.getText());
+		} catch (NumberFormatException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	this.model.showMainView();
     }
 

@@ -83,7 +83,6 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		String clientUsername = this.getAssociatedUser().getUsername();
 		String clientPassword = this.getAssociatedUser().getPassword();
 		//if login already exists
-		
 		if (enteredName.equals(clientUsername) && enteredPassword.equals(clientPassword))
 		{
 			//set client as observer
@@ -104,7 +103,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 			{
 				serverContact.createUser(this.getAssociatedUser().getUsername(), this.getAssociatedUser().getRealname(), this.getAssociatedUser().getPassword(), this.getAssociatedUser().getUserID());
 				//should I call updateNewUser to alert the server to a change? Yes!
-				serverContact.updateNewUser(this.getCurrentSelectedGroupID());
+				//breaking code rn//serverContact.updateNewUser(this.getCurrentSelectedGroupID());
 				//add groups to groupList so that they can eventually be displayed
 				//serverContact.updateGroups();
 				//client updates local groups from server
@@ -316,6 +315,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	@Override
 	public Group createGroup(Integer groupID, String groupName) throws RemoteException
 	{
+		System.out.println("gID "+groupID+" gName "+groupName); //this is correct
 		serverContact.createGroup(groupID, groupName);
 		groupList.add(getGroup(groupID));
 		this.addGroupID(groupID);
@@ -347,7 +347,11 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 				//add to server reg users
 				this.getAllRegisteredUsers().add(u);
 				//add to group reg users
-				this.getServerContact().getGroup(groupID).getRegisteredUsers().put(u, this.getGroup(groupID).basic);
+				//if first login with no groups, don't try to update group
+				if (this.getCurrentSelectedGroupID() > 0)
+				{
+					this.getServerContact().getGroup(groupID).getRegisteredUsers().put(u, this.getGroup(groupID).basic);
+				}
 			} catch (RemoteException e)
 			{
 				// TODO Auto-generated catch block

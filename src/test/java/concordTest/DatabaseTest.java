@@ -181,7 +181,7 @@ class DatabaseTest
 		chgroup1.admin.sendMessage(r, channel1);
 		assertEquals("reactionMessageText",channel1.getMessageLog().get(1).getText());
 		//how to make messageLog contain reactionMessage?? Change messageLog to reactionMessage?
-		//TODO//assertEquals("test_emoji",channel1.getMessageLog().get(1).getEmojiCode());
+		//TODO//assertEquals("😀",channel1.getMessageLog().get(1).getEmojiCode());
 		//test that customImg can be set and sent correctly
 		
 		//test that emojiList correct
