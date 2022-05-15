@@ -124,11 +124,11 @@ public class ReactionMessage extends Message implements Reactable
 		
 	}
 
-	@Override
-	public void retrieveClient(Client client)
-	{
-		Client myClient = client;
-		
-	}
+//	@Override
+//	public void retrieveClient(Client client)
+//	{
+//		Client myClient = client;
+//		
+//	}
 
 }

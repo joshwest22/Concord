@@ -10,6 +10,7 @@ public class Channel
 	ArrayList<Integer> allowedUserIDs;
 	ArrayList<Message> messageLog;
 	
+	
 	public Channel()
 	{
 		this.channelName = "default channel name";
