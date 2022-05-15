@@ -11,19 +11,19 @@
 
 <BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainPageController">
    <top>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox style="-fx-background-color: #442F74;" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="54.0" prefWidth="123.0">
                <children>
-                  <Button id="myProfileButton" fx:id="myProfileButton" mnemonicParsing="false" onAction="#onClickMyProfile" text="My Profile">
+                  <Button id="myProfileButton" fx:id="myProfileButton" mnemonicParsing="false" onAction="#onClickMyProfile" text="My Profile" textFill="#8e869f">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin></Button>
-                  <Button id="viewInvitesButton" fx:id="viewInvitesButton" mnemonicParsing="false" onAction="#onClickViewInvites" text="View Invites">
+                  <Button id="viewInvitesButton" fx:id="viewInvitesButton" mnemonicParsing="false" onAction="#onClickViewInvites" text="View Invites" textFill="#8e869f">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin></Button>
-                  <Button id="createGroupButton" fx:id="createGroupButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickCreateGroupButton" text="Create Group">
+                  <Button id="createGroupButton" fx:id="createGroupButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickCreateGroupButton" text="Create Group" textFill="#8e869f">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin></Button>
@@ -34,7 +34,7 @@
                   <Insets left="35.0" />
                </HBox.margin>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="248.0" text="Welcome to Concord!" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="248.0" text="Welcome to Concord!" textAlignment="CENTER" textFill="#8e869f">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -45,11 +45,11 @@
       </HBox>
    </top>
    <center>
-      <FlowPane id="groupButtonFlowPane" fx:id="groupButtonFlowPane" prefHeight="720.0" prefWidth="1080.0" BorderPane.alignment="CENTER">
+      <FlowPane id="groupButtonFlowPane" fx:id="groupButtonFlowPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #442F74;" BorderPane.alignment="CENTER">
          <children>
-            <Button id="group1Button" fx:id="group1Button" mnemonicParsing="false" onAction="#onClickGroupButton" text="Group Placeholder">
+            <Button id="group1Button" fx:id="group1Button" minHeight="75.0" minWidth="75.0" mnemonicParsing="false" onAction="#onClickGroupButton" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: #277554; -fx-background-radius: 10;" text="Group Placeholder" textFill="#8e869f">
                <FlowPane.margin>
-                  <Insets left="5.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </FlowPane.margin></Button>
          </children>
       </FlowPane>

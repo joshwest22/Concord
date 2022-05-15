@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.LoginController;
@@ -16,7 +17,9 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception 
     {
-		FXMLLoader loader = new FXMLLoader();
+    	//attempting to set custom icon in taskbar
+    	//primaryStage.getIcons().add(new Image("file:src/main/java/concord/concordLogo.png"));
+    	FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("../view/LoginView.fxml"));
 		BorderPane view = loader.load();
 		LoginController cont = loader.getController();

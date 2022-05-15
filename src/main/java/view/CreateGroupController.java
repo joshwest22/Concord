@@ -42,6 +42,7 @@ public class CreateGroupController {
     	//Logic for group making
     	try
 		{
+    		//Not sure group making is actually working
 			this.model.getClientModel().createGroup(Integer.valueOf(serverIDTextField.getText()), serverNameTextField.getText());
 		} catch (NumberFormatException e)
 		{

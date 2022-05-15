@@ -15,9 +15,9 @@
    <left>
       <HBox prefHeight="383.0" prefWidth="126.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="383.0" prefWidth="125.0">
+            <VBox prefHeight="471.0" prefWidth="142.0" style="-fx-background-color: #442F74;">
                <children>
-                  <Button id="createChannelButton" fx:id="createChannelButton" mnemonicParsing="false" onAction="#onClickedCreateChannel" text="Create Channel">
+                  <Button id="createChannelButton" fx:id="createChannelButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickedCreateChannel" prefHeight="26.0" prefWidth="131.0" text="Create Channel">
                      <VBox.margin>
                         <Insets bottom="2.0" left="2.0" top="12.0" />
                      </VBox.margin></Button>
@@ -33,13 +33,16 @@
       </HBox>
    </left>
    <top>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox style="-fx-background-color: #442F74;" BorderPane.alignment="CENTER">
          <children>
-            <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="26.0" prefWidth="148.0" text="Back">
+            <Button id="backButton" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="26.0" prefWidth="148.0" style="-fx-background-radius: 6; -fx-background-color: #AA8239;" text="Back">
                <HBox.margin>
-                  <Insets left="2.0" top="2.0" />
-               </HBox.margin></Button>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="589.0" text="Concord">
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding></Button>
+            <Label alignment="CENTER" prefHeight="24.0" prefWidth="586.0" text="Concord">
                <font>
                   <Font size="18.0" />
                </font></Label>
@@ -47,38 +50,32 @@
       </HBox>
    </top>
    <center>
-      <Pane id="parentPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane id="parentPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #442F74;" BorderPane.alignment="CENTER">
          <children>
-            <TextField id="sendMessageBoxTextField" fx:id="sendMessageBoxTextField" layoutX="9.0" layoutY="336.0" prefHeight="32.0" prefWidth="337.0" promptText="Type a message . . ." />
-            <ListView id="messageListView" fx:id="messageListView" layoutX="8.0" layoutY="58.0" onMouseClicked="#onClickMessageListView" prefHeight="272.0" prefWidth="347.0" />
-            <HBox layoutX="257.0" layoutY="5.0" prefHeight="29.0" prefWidth="212.0" spacing="10.0">
+            <TextField id="sendMessageBoxTextField" fx:id="sendMessageBoxTextField" layoutX="15.0" layoutY="336.0" prefHeight="32.0" prefWidth="346.0" promptText="Type a message . . ." style="-fx-background-color: #8E869F; -fx-prompt-text-fill: #424242; -fx-background-radius: 6;">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></TextField>
+            <ListView id="messageListView" fx:id="messageListView" layoutX="14.0" layoutY="58.0" onMouseClicked="#onClickMessageListView" prefHeight="272.0" prefWidth="347.0" style="-fx-background-color: #8E869F; -fx-background-radius: 4;" />
+            <HBox layoutX="206.0" layoutY="5.0" prefHeight="29.0" prefWidth="263.0" spacing="10.0">
                <children>
-                  <Button id="pinnedMessageButton" fx:id="pinnedMessageButton" mnemonicParsing="false" onAction="#onClickPinnedMessageButton" prefHeight="25.0" prefWidth="135.0" text="PinnedMsg">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Button>
-                  <TextField id="searchUsersTextField" fx:id="searchUsersTextField" prefHeight="25.0" prefWidth="92.0" text="Search ">
-                     <font>
-                        <Font size="8.0" />
-                     </font>
-                  </TextField>
-                  <Button id="giveRoleButton" fx:id="giveRoleButton" mnemonicParsing="false" onAction="#onClickGiveRoleButton" prefHeight="26.0" prefWidth="131.0" text="Give Role">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button id="inviteButton" fx:id="inviteButton" mnemonicParsing="false" onAction="#onClickInvite" prefHeight="26.0" prefWidth="128.0" text="Invite" />
+                  <TextField id="searchUsersTextField" fx:id="searchUsersTextField" alignment="CENTER" prefHeight="26.0" prefWidth="151.0" text="Search " />
+                  <Button id="pinnedMessageButton" fx:id="pinnedMessageButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickPinnedMessageButton" prefHeight="25.0" prefWidth="135.0" text="PinnedMsg" />
+                  <Button id="giveRoleButton" fx:id="giveRoleButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickGiveRoleButton" prefHeight="26.0" prefWidth="131.0" text="Give Role" />
+                  <Button id="inviteButton" fx:id="inviteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickInvite" prefHeight="26.0" prefWidth="128.0" text="Invite" />
                </children>
             </HBox>
-            <TextField id="channelNameTextField" fx:id="channelNameTextField" layoutX="14.0" layoutY="14.0" text="Channel Name" />
+            <TextField id="channelNameTextField" fx:id="channelNameTextField" layoutX="14.0" layoutY="14.0" text="Channel Name">
+               <font>
+                  <Font size="16.0" />
+               </font></TextField>
             <VBox layoutX="363.0" layoutY="39.0" prefHeight="291.0" prefWidth="100.0">
                <children>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="103.0" text="Users" />
                   <ListView id="usersListView" fx:id="usersListView" onMouseClicked="#onClickUsersListView" prefHeight="292.0" prefWidth="100.0" />
                </children>
             </VBox>
-            <Button id="sendButton" fx:id="sendButton" layoutX="355.0" layoutY="340.0" mnemonicParsing="false" onAction="#onClickSendButton" prefHeight="26.0" prefWidth="55.0" text="Send" />
+            <Button id="sendButton" fx:id="sendButton" alignment="CENTER" contentDisplay="CENTER" layoutX="375.0" layoutY="336.0" mnemonicParsing="false" onAction="#onClickSendButton" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #277554; -fx-background-radius: 5;" text="Send" />
          </children>
       </Pane>
    </center>

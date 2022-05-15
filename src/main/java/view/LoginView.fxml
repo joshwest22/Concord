@@ -11,19 +11,22 @@
 
 <BorderPane prefHeight="250.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
    <center>
-      <BorderPane>
+      <BorderPane style="-fx-background-color: #350147;">
          <center>
             <VBox alignment="CENTER" prefHeight="250.0" prefWidth="450.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label id="loginMainLabel" fx:id="loginMainLabel" alignment="TOP_CENTER" prefHeight="17.0" prefWidth="536.0" text="Welcome! Please login">
+                  <Label id="loginMainLabel" fx:id="loginMainLabel" alignment="TOP_CENTER" prefHeight="17.0" prefWidth="536.0" text="Welcome! Please login" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label text="Username">
+                  <Label text="Username" textFill="#fffdfd">
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
                   </Label>
                   <TextField id="loginUsername" fx:id="loginUsername" alignment="CENTER" promptText="Enter Username">
                      <VBox.margin>
@@ -33,7 +36,7 @@
                         <Font size="16.0" />
                      </font>
                   </TextField>
-                  <Label text="Password">
+                  <Label text="Password" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -45,21 +48,24 @@
                      <font>
                         <Font size="16.0" />
                      </font></PasswordField>
-                  <Button id="loginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="26.0" prefWidth="314.0" text="Log in!">
+                  <Button id="loginButton" fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="26.0" prefWidth="314.0" style="-fx-background-color: #2C588E; -fx-background-radius: 6;" styleClass=".button" text="Login" textFill="#f7f7f7">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button id="makeAccountButton" fx:id="makeAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onMakeAccountClicked" text="No account? Make one!">
+                  <Button id="makeAccountButton" fx:id="makeAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onMakeAccountClicked" style="-fx-background-color: #2C588E; -fx-background-radius: 6;" text="No account? Make one!" textFill="WHITE">
                      <VBox.margin>
-                        <Insets top="30.0" />
+                        <Insets bottom="8.0" top="15.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </padding>
                   </Button>
                </children>
             </VBox>
