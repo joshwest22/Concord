@@ -13,7 +13,7 @@
    <center>
       <BorderPane style="-fx-background-color: #350147;">
          <center>
-            <VBox alignment="CENTER" prefHeight="250.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="250.0" prefWidth="450.0" styleClass="dark-background" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
                <children>
                   <Label id="loginMainLabel" fx:id="loginMainLabel" alignment="TOP_CENTER" prefHeight="17.0" prefWidth="536.0" text="Welcome! Please login" textFill="WHITE">
                      <font>

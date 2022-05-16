@@ -222,7 +222,7 @@ public class TestApplication
 	public void testApp(FxRobot robot)
 	{
 		//comment/uncomment to add or remove section of testing
-		//testCreateAccount(robot);
+		testCreateAccount(robot);
 		testLogin(robot);
 		testGroup(robot);
 	}

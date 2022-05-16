@@ -17,7 +17,7 @@ public interface RMIObserved extends Remote
 	public String createChannel(String channelName, Integer userID, Integer groupID) throws RemoteException;
 	public String messageReceived(String channelName, String message, Integer userID, Integer groupID) throws RemoteException;
 	public String messageReceiveReply (String channelName, String message, Integer userID, Integer groupID, Message ReplyTo) throws RemoteException; 
-	public ArrayList<Message> viewChannelMessages (String channelName, Integer userID, Integer groupID) throws RemoteException;
+	public ArrayList<ReactionMessage> viewChannelMessages (String channelName, Integer userID, Integer groupID) throws RemoteException;
 	public String addUserToGroup (Integer groupID, Integer addingUserID, Integer addedUserID) throws RemoteException;
 	public String removeUserFromGroup (Integer groupID, Integer removingUserID, Integer removedUserID) throws RemoteException; 
 	public String lockChannel (Integer groupID, Integer userID, String channelName) throws RemoteException;
@@ -37,6 +37,6 @@ public interface RMIObserved extends Remote
 	public String updateNewChannel(Integer groupID) throws RemoteException;
 	public String updateNewUser(Integer groupID) throws RemoteException;
 	public String updateNewMessage(Integer groupID) throws RemoteException;
-	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException;
+	public void sendMessage(ReactionMessage message, Integer groupID, String channelName) throws RemoteException;
 
 }

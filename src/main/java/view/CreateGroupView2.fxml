@@ -9,13 +9,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateGroupController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateGroupController">
    <center>
-      <VBox prefHeight="286.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="286.0" prefWidth="600.0" styleClass="light-background" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Give your new server a personality with a name. You can always change it later" textAlignment="CENTER" wrappingWidth="350.0">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Give your new server a personality with a name. You can always change it later" textAlignment="CENTER" wrappingWidth="350.0">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -48,7 +48,7 @@
                         <Insets />
                      </HBox.margin>
                      <children>
-                        <Button id="backButton" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="43.0" prefWidth="79.0" text="Back" />
+                        <Button id="backButton" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="43.0" prefWidth="79.0" styleClass="backButton" text="Back" />
                      </children>
                      <padding>
                         <Insets top="12.0" />
@@ -59,7 +59,7 @@
                         <Insets />
                      </HBox.margin>
                      <children>
-                        <Button id="enterButton" fx:id="enterButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickEnterButton" prefHeight="43.0" prefWidth="79.0" text="Enter" />
+                        <Button id="enterButton" fx:id="enterButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickEnterButton" prefHeight="43.0" prefWidth="79.0" styleClass="submitButton" stylesheets="@stylesheet.css" text="Enter" />
                      </children>
                      <padding>
                         <Insets top="12.0" />
@@ -74,17 +74,20 @@
       </VBox>
    </center>
    <top>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefWidth="600.0" styleClass="light-background" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create A Group">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Create A Group">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
          </children>
          <BorderPane.margin>
-            <Insets bottom="5.0" />
+            <Insets />
          </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
       </VBox>
    </top>
 </BorderPane>

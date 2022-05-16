@@ -234,9 +234,9 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	@Override
-	public ArrayList<Message> viewChannelMessages(String channelName, Integer userID, Integer groupID)
+	public ArrayList<ReactionMessage> viewChannelMessages(String channelName, Integer userID, Integer groupID)
 	{
-		ArrayList<Message> messages = db.getGroup(groupID).getChannelByName(channelName).displayAllMessages(userID);
+		ArrayList<ReactionMessage> messages = db.getGroup(groupID).getChannelByName(channelName).displayAllMessages(userID);
 		return messages;
 	}
 	
@@ -408,7 +408,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 
 
 	@Override
-	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException
+	public void sendMessage(ReactionMessage message, Integer groupID, String channelName) throws RemoteException
 	{
 		//db.getUser(message.getSentBy()).sendMessage(message)
 		db.getGroup(groupID).getChannelByName(channelName).getMessageLog().add(message);

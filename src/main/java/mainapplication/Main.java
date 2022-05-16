@@ -32,6 +32,8 @@ public class Main extends Application
 	    
 	    
 	    Scene s = new Scene(view);
+	    //add css stylesheet for scenebuilder
+	    s.getStylesheets().add(getClass().getResource("view/stylesheet.css").toExternalForm());
 	    primaryStage.setScene(s);
 	    primaryStage.show();
 	    

@@ -1,0 +1,39 @@
+.button
+{
+	-fx-background-color: #917CC1;
+	-fx-text-fill: #FFFFFF;
+	-fx-background-radius: 6;
+}
+
+.submitButton
+{
+	-fx-background-color:  #277554;
+	-fx-text-fill: #FFFFFF;
+	-fx-background-radius: 6;
+}
+
+.backButton
+{
+	-fx-background-color: #AA8239;
+	-fx-background-radius: 6;
+}
+
+.background
+{
+	-fx-background-color: #442F74;
+}
+
+.dark-background
+{
+	-fx-background-color: #350147;
+}
+
+.light-background
+{
+	-fx-background-color:  #2C588E;
+}
+
+.text
+{
+	-fx-text-fill: #FFFFFF;
+}

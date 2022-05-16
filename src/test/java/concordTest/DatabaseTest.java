@@ -167,12 +167,13 @@ class DatabaseTest
 		Channel channel1 = chgroup1.getChannels().get(0);
 		int channelSize = channel1.getMessageLog().size();
 		assertEquals(channelSize,1);
+		
 		//test reactions
 		ReactionMessage r = new ReactionMessage();
 		r.setText("reactionMessageText");
 		r.setEmojiCode("😀");
 		//r.setEmojiCode(EmojiParser.parseToUnicode(":grinning"));
-		//assertEquals("😀",EmojiParser.parseToUnicode(r.getEmojiCode()));
+		assertEquals("😀",EmojiParser.parseToUnicode(r.getEmojiCode()));
 		//messing with emojis
 		ArrayList<Emoji> allEmojis = (ArrayList<Emoji>) EmojiManager.getAll();
 		Emoji emoji = EmojiManager.getForAlias("grinning");
@@ -181,12 +182,19 @@ class DatabaseTest
 		chgroup1.admin.sendMessage(r, channel1);
 		assertEquals("reactionMessageText",channel1.getMessageLog().get(1).getText());
 		//how to make messageLog contain reactionMessage?? Change messageLog to reactionMessage?
-		//TODO//assertEquals("😀",channel1.getMessageLog().get(1).getEmojiCode());
+		System.out.println("emoji"+EmojiParser.parseToAliases(channel1.getMessageLog().get(1).getEmojiCode()));
+		//assertEquals(true,EmojiManager.isEmoji(channel1.getMessageLog().get(1).getEmojiCode()));
+		assertEquals("😀",EmojiManager.getByUnicode(channel1.getMessageLog().get(1).getEmojiCode()));
 		//test that customImg can be set and sent correctly
-		
+		ReactionMessage custImg = new ReactionMessage();
+		custImg.setText("customImage message");
+		custImg.setCustomImg(url);
+		chgroup1.admin.sendMessage(custImg, channel1);
+		assertEquals("concordLogo.png",channel1.getMessageLog().get(2).getCustomImg());
 		//test that emojiList correct
 		
 		//test that customImgsList correct
+		
 		//block satan
 		josh.blockUser(satan.getUserID());
 		assertEquals(satan.getUserID(),josh.getBlockedUserIDs().get(0));

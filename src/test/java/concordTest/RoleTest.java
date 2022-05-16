@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import concord.Channel;
 import concord.Group;
 import concord.Message;
+import concord.ReactionMessage;
 import concord.Role;
 import concord.User;
 
@@ -24,7 +25,7 @@ class RoleTest
 	static User overlord;
 	static URL pfp;
 	static Channel channel;
-	static ArrayList<Message> msgLog;
+	static ArrayList<ReactionMessage> msgLog;
 	@BeforeAll
 	static void setUp() throws Exception
 	{
@@ -39,7 +40,7 @@ class RoleTest
 		testGroup.addNewUser(overlord,noob, basic);
 		testGroup.addNewUser(overlord,expert, admin);
 		channel = new Channel("testChannel", testGroup);
-		msgLog = new ArrayList<Message>();
+		msgLog = new ArrayList<ReactionMessage>();
 		channel.setMessageLog(msgLog);
 	}
 

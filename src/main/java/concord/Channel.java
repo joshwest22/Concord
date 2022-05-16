@@ -8,8 +8,8 @@ public class Channel
 	Group myGroup;
 	Boolean isLocked = false;
 	ArrayList<Integer> allowedUserIDs;
-	ArrayList<Message> messageLog;
-	
+	ArrayList<ReactionMessage> messageLog;
+	//ArrayList<ReactionMessage> reactionMessageLog;
 	
 	public Channel()
 	{
@@ -19,12 +19,14 @@ public class Channel
 		this.isLocked = false;
 		ArrayList<Integer> allowedUsers = new ArrayList<Integer>();
 		this.allowedUserIDs = allowedUsers;
-		ArrayList<Message> msgs = new ArrayList<Message>();
+//		ArrayList<Message> msgs = new ArrayList<Message>();
+//		this.messageLog = msgs;
+		ArrayList<ReactionMessage> msgs = new ArrayList<ReactionMessage>();
 		this.messageLog = msgs;
 	}
 	
 	public Channel(String channelName, Group myGroup, Boolean isLocked, ArrayList<Integer> allowedUsers,
-			ArrayList<Message> messageLog)
+			ArrayList<ReactionMessage> messageLog)
 	{
 		this.channelName = channelName;
 		this.myGroup = myGroup;
@@ -40,7 +42,8 @@ public class Channel
 		this.myGroup = myGroup;
 		this.isLocked = false;
 		this.allowedUserIDs = new ArrayList<Integer>();
-		this.messageLog = new ArrayList<Message>();
+		//this.messageLog = new ArrayList<Message>();
+		this.messageLog = new ArrayList<ReactionMessage>();
 	}
 
 	public String getChannelName()
@@ -83,22 +86,30 @@ public class Channel
 		this.allowedUserIDs = allowedUsers;
 	}
 
-	public ArrayList<Message> getMessageLog()
+	public ArrayList<ReactionMessage> getMessageLog()
 	{
 		return messageLog;
 	}
 
-	public void setMessageLog(ArrayList<Message> messageLog)
+	public void setMessageLog(ArrayList<ReactionMessage> messageLog)
 	{
 		this.messageLog = messageLog;
 	}
 	
 	public void sendNewMessage(Message m)
 	{
+		//convert m to reactionMessage
+		ReactionMessage rm = new ReactionMessage();
+		rm.setInReplyTo(m.getInReplyTo());
+		rm.setIsPinned(m.getIsPinned());
+		rm.setSentByUserID(m.getSentBy());
+		rm.setText(m.getText());
+		rm.setTimestamp(m.getTimestamp());
 		//add Message to messageLog
-		messageLog.add(m);
+		//messageLog.add(m);//pre reaction message code
+		messageLog.add(rm);
 	}
-	public ArrayList<Message> displayAllMessages(Integer userID)
+	public ArrayList<ReactionMessage> displayAllMessages(Integer userID)
 	{
 		return getMessageLog();
 	}

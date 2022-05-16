@@ -10,18 +10,18 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CreateAccountController">
    <center>
-      <BorderPane>
+      <BorderPane styleClass="background" stylesheets="@stylesheet.css">
          <top>
-            <Label id="createAccountLabel" fx:id="createAccountLabel" text="Create your account!" BorderPane.alignment="CENTER">
+            <Label id="createAccountLabel" fx:id="createAccountLabel" styleClass="text" text="Create your account!" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
          </top>
          <center>
-            <VBox alignment="CENTER" prefHeight="230.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="230.0" prefWidth="450.0" styleClass="background" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" text="Username">
+                  <Label alignment="CENTER" styleClass="text" text="Username">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -30,7 +30,7 @@
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" />
                      </VBox.margin></TextField>
-                  <Label alignment="CENTER" text="Real Name">
+                  <Label alignment="CENTER" styleClass="text" text="Real Name">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -42,7 +42,7 @@
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" />
                      </VBox.margin></TextField>
-                  <Label alignment="CENTER" text="Password">
+                  <Label alignment="CENTER" styleClass="text" text="Password">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -51,11 +51,17 @@
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" />
                      </VBox.margin></TextField>
-                  <Button id="createAccountButton" fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickSignUp" prefHeight="26.0" prefWidth="268.0" text="Sign up" />
-                  <Button id="backButton" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickBackButton" text="Back" />
+                  <Button id="createAccountButton" fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickSignUp" prefHeight="26.0" prefWidth="268.0" text="Sign up">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></Button>
+                  <Button id="backButton" fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="176.0" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="25.0" prefWidth="70.0" styleClass="backButton" text="Back">
+                     <VBox.margin>
+                        <Insets top="8.0" />
+                     </VBox.margin></Button>
                </children>
                <BorderPane.margin>
-                  <Insets top="-30.0" />
+                  <Insets />
                </BorderPane.margin>
             </VBox>
          </center>
