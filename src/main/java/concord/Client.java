@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
@@ -21,9 +22,9 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	private String currentSelectedChannelName;
 	private User currentSelectedUser;
 	
-	private ObservableList<Group> groupList;
-	private ObservableList<Channel> channelList;
-	private ObservableList<User> userList;
+	ObservableList<Group> groupList = FXCollections.observableArrayList();
+	ObservableList<Channel> channelList = FXCollections.observableArrayList();
+	ObservableList<User> userList = FXCollections.observableArrayList();
 	
 	public Client(User associatedUser, Server serverContact, ArrayList<Integer> associatedGroupIDs, String name) throws RemoteException
 	{
@@ -31,9 +32,6 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		this.serverContact = serverContact;
 		this.associatedGroupIDs = associatedGroupIDs;
 		this.clientName = name;
-		this.groupList = FXCollections.observableArrayList(); //not sure this is exactly the right syntax
-		this.channelList = FXCollections.observableArrayList();
-		this.userList = FXCollections.observableArrayList();
 	}
 
 	public Client() throws RemoteException
@@ -45,9 +43,6 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
-		this.groupList = FXCollections.observableArrayList(); //not sure this is exactly the right syntax
-		this.channelList = FXCollections.observableArrayList();
-		this.userList = FXCollections.observableArrayList();
 	}
 	
 	public Client(String username,String password) throws RemoteException
@@ -59,10 +54,6 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		ArrayList<Integer> myGroupIDs = new ArrayList<Integer>();
 		this.associatedGroupIDs = myGroupIDs;
 		this.clientName = "Name: 'client'";
-		//these are crashing my test HARD
-		this.groupList = FXCollections.observableArrayList(); //not sure this is exactly the right syntax
-		this.channelList = FXCollections.observableArrayList();
-		this.userList = FXCollections.observableArrayList();
 	}
 
 	private static final long serialVersionUID = -6394155878301235563L;
@@ -315,11 +306,16 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	@Override
 	public Group createGroup(Integer groupID, String groupName) throws RemoteException
 	{
+		ObservableList<Group> newGroupList = FXCollections.observableArrayList();
 		System.out.println("gID "+groupID+" gName "+groupName); //this is correct
 		serverContact.createGroup(groupID, groupName);
-		groupList.add(getGroup(groupID));
+		Group g = getGroup(groupID);
+		groupList.add(g); //crashing here for some reason
+		newGroupList.add(g);
+		int glistsize = groupList.size(); //should be 1 not 0
+		System.out.println("glistsize"+glistsize);
 		this.addGroupID(groupID);
-		return getGroup(groupID);
+		return g;
 	}
 	
 	@Override
@@ -367,7 +363,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	@Override
 	public void updateNewMessage(Integer groupID) throws RemoteException
 	{
-		this.serverContact.updateNewMessage(groupID);
+		//this.serverContact.updateNewMessage(groupID);
 		//get updated list of messages in this group from the server
 		ArrayList<Channel> channelsList = this.getGroup(groupID).getChannels();
 		//make any changes to the client model

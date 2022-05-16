@@ -6,6 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import mainapplication.ViewTransitionalModelInterface;
 
@@ -26,7 +27,7 @@ public class MainPageController {
     private Button createGroupButton;
     
     @FXML
-    private FlowPane groupButtonFlowPane;
+    private ListView<Group> groupListView;
 
     @FXML
     void onClickGroupButton(ActionEvent event) 
@@ -55,6 +56,7 @@ public class MainPageController {
     public void setModel(ViewTransitionalModelInterface model)
     {
     	this.model = model;
+    	//groupListView.setItems(model.getClientModel().getGroupList());
     	
     	//this has to work for groups to show up!!//TODO
     	//concurrent modification error => use Platform.runLater
@@ -65,15 +67,14 @@ public class MainPageController {
     		.getGroupList()
     		.addListener((ListChangeListener<Group>)e ->
         	{
-        		//something wrong with this for loop!!!
+        		//clear list
+    			model.getClientModel().getGroupList().clear();
         		for(Group group:model.getClientModel()
         				.getGroupList())
         		{
-            		//clear list
-        			model.getClientModel().getGroupList().clear();
+            		
         			//check through every group and update any changes
-        			GroupButton newButton = new GroupButton(group.getGroupID(),"PlaceholderName", model);
-            		groupButtonFlowPane.getChildren().add(newButton);
+        			model.getClientModel().getGroupList().add(group);
             	}	
         	});
     	});
@@ -85,14 +86,14 @@ public class MainPageController {
     		.getGroupList()
     		.addListener((ListChangeListener<Group>)e ->
         	{
+        		//clear list
+    			model.getClientModel().getGroupList().clear();
+    			
         		for(Group group:model.getClientModel()
         				.getGroupList())
         		{
-            		//clear list
-        			model.getClientModel().getGroupList().clear();
         			//check through every group and update any changes
-        			GroupButton newButton = new GroupButton(group.getGroupID(),"PlaceholderName", model);
-            		groupButtonFlowPane.getChildren().add(newButton);
+        			model.getClientModel().getGroupList().add(group);
             	}	
         	}); //was getAssociatedGroupIDs; switch to observable list and let it update dynamically
     	}

@@ -1,6 +1,7 @@
 package view;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -31,10 +32,12 @@ import mainapplication.ViewTransitionalModel;
 @ExtendWith(ApplicationExtension.class)
 public class TestApplication
 {
+	Client myClient;
+	ViewTransitionalModel vm;
 	@Start
 	private void start(Stage stage) throws RemoteException
 	{
-		Client myClient = new Client("TestUser","TestPass");
+		myClient = new Client("TestUser","TestPass");
 		//myClient.createGroup(12, "district12");
 		//myClient.addGroupID(12); // might not need this since addGroupID was integrated into createGroup
 		//Group testGroup = myClient.getGroup(12); 
@@ -47,7 +50,7 @@ public class TestApplication
 			BorderPane view;
 			view = loader.load();
 			LoginController controller = loader.getController();
-			ViewTransitionalModel vm =new ViewTransitionalModel(view,myClient,stage); 
+			vm =new ViewTransitionalModel(view,myClient,stage); 
 			controller.setModel(vm);
 			myClient.login("TestUser", "TestPass");
 			Scene s = new Scene(view);
@@ -102,7 +105,7 @@ public class TestApplication
 		robot.write("TestPass");
 		robot.clickOn("#loginButton");
 		//Assertions.assertThat(robot.lookup("#loginMainLabel").queryAs(Label.class)).hasText("Logged in!");
-		Assertions.assertThat(robot.lookup("#groupButtonFlowPane").queryAs(FlowPane.class)).hasExactlyNumChildren(1); //this will be 0 when groupPlaceholder removed
+		assertNumGroups(0,robot); //this will be 0 when groupPlaceholder removed
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -121,6 +124,12 @@ public class TestApplication
 	       .queryAll().iterator().next();
 	 }
 	
+	@SuppressWarnings("unchecked")
+	public void assertNumGroups(int number, FxRobot robot)
+	{
+		Assertions.assertThat(robot.lookup("#groupListView").queryAs(ListView.class)).hasExactlyNumItems(number);
+	}
+	
 	public void testGroup(FxRobot robot)
 	{
 		//create group
@@ -130,6 +139,16 @@ public class TestApplication
 		robot.clickOn("#serverIDTextField");
 		robot.write("12");
 		robot.clickOn("#enterButton");
+		try
+		{
+			assertTrue(myClient.getGroup(12)!= null);
+		} catch (RemoteException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		assertEquals(1,myClient.getGroupList().size());
+		assertNumGroups(1,robot);
 		try
 		{
 			Thread.sleep(2000);
@@ -222,7 +241,7 @@ public class TestApplication
 	public void testApp(FxRobot robot)
 	{
 		//comment/uncomment to add or remove section of testing
-		testCreateAccount(robot);
+		//testCreateAccount(robot);
 		testLogin(robot);
 		testGroup(robot);
 	}

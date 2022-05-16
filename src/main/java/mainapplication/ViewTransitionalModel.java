@@ -108,7 +108,7 @@ public class ViewTransitionalModel implements ViewTransitionalModelInterface
 			try
 			{
 				view = loader.load();
-				setSize(800,400);
+				setSize(600,300);
 				mainview.setCenter(view);
 				//CreateGroupController controller = loader.getController();
 				CreateGroupController controller = loader.getController();
