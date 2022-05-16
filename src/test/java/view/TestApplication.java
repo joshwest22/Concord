@@ -157,7 +157,7 @@ public class TestApplication
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//click on group
+		//click on group; may need to change based on listview instead of button
 		robot.clickOn("myFirstGroup"); //directly look for button by text
 		//create unlocked channel
 		robot.clickOn("#createChannelButton");

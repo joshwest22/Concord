@@ -49,6 +49,12 @@ public class Group
 	{
 		this(0,"groupName");
 	}
+	
+	@Override
+	public String toString()
+	{
+		return this.groupName;
+	}
 
 	public ArrayList<Channel> getChannels()
 	{

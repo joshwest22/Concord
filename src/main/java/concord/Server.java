@@ -199,6 +199,10 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 		return "New channel created";
 		
 	}
+	public String updateNewGroup()
+	{
+		//TODO add code previously in mainpagecontroller
+	}
 	@Override
 	public String updateNewMessage(Integer groupID)
 	{
