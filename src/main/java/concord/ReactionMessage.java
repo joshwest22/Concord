@@ -8,7 +8,6 @@ public class ReactionMessage extends Message implements Reactable
 {
 	Message message;
 	String emojiCode;
-	Integer sentByUserID;
 	ArrayList<String> emojiList;
 	URL customImg;
 	ArrayList<URL> customImgsList;
@@ -18,7 +17,6 @@ public class ReactionMessage extends Message implements Reactable
 		super();
 		this.message = message;
 		this.emojiCode = emojiCode;
-		this.sentByUserID = sentByUserID;
 		this.emojiList = new ArrayList<String>(Arrays.asList("emoji1","emoji2","emoji3"));
 		this.customImg = this.getClass().getResource("concordLogo.png");
 		this.customImgsList = new ArrayList<URL> (Arrays.asList(this.customImg));
@@ -30,7 +28,6 @@ public class ReactionMessage extends Message implements Reactable
 		super();
 		this.message = message;
 		this.emojiCode = "smile_emoji";
-		this.sentByUserID = sentByUserID;
 		this.emojiList = new ArrayList<String>(Arrays.asList("emoji1","emoji2","emoji3"));
 		this.customImg = this.getClass().getResource("concordLogo.png");
 		this.customImgsList = new ArrayList<URL> (Arrays.asList(this.customImg));
@@ -42,7 +39,6 @@ public class ReactionMessage extends Message implements Reactable
 		super();
 		this.message = new Message();
 		this.emojiCode = new String();
-		this.sentByUserID = -1;
 		this.emojiList = new ArrayList<String>(Arrays.asList("emoji1","emoji2","emoji3"));
 		this.customImg = this.getClass().getResource("concordLogo.png");
 		this.customImgsList = new ArrayList<URL> (Arrays.asList(this.customImg));
@@ -109,26 +105,28 @@ public class ReactionMessage extends Message implements Reactable
 	}
 
 	@Override
-	public void addReaction(ReactionMessage reactionMessage)
+	public void addReaction(String emojiReaction)
 	{
-		System.out.println("User ID: "+reactionMessage.getSentBy()+" reacted to "+reactionMessage.getMessage().getText()+" with "+reactionMessage.getEmojiCode());
+		this.setEmojiCode(emojiReaction);
+		System.out.println("User ID: "+this.getSentBy()+" reacted to "+this.getMessage().getText()+" with "+this.getEmojiCode());
 		//this has to either convert existing message into reactionMessage and then set emojiCode or customImg
 		//OR just set the emojiCode and customImg properties if msg is already a reactionMessage
 		
 	}
 
 	@Override
-	public void removeReaction(ReactionMessage reactionMessage)
+	public void removeReaction()
 	{
-		System.out.println("User ID: "+reactionMessage.getSentBy()+" removed their reaction to "+reactionMessage.getMessage().getText());
+		this.setEmojiCode("N/A");
+		System.out.println("User ID: "+this.getSentBy()+" removed their reaction to "+this.getMessage().getText());
 		
 	}
 
-//	@Override
-//	public void retrieveClient(Client client)
-//	{
-//		Client myClient = client;
-//		
-//	}
+	@Override
+	public String displayMessage()
+	{
+		return "UserID "+this.getMessage().getSentBy()+": "+this.getMessage().getText()+" Reaction: "+this.getEmojiCode();
+	}
+
 
 }
