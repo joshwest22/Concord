@@ -2,6 +2,9 @@ package concordTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -121,6 +124,17 @@ class ReactionMessageTest
 		assertEquals("😎", rm.getEmojiCode());
 		rm.addReaction("😐");
 		assertEquals("😐", rm.getEmojiCode());
+		URL url;
+		try
+		{
+			url = new URL("https://na.com");
+			rm.addReaction(url);
+			assertEquals(url,rm.getCustomImg());
+		} catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -129,7 +143,21 @@ class ReactionMessageTest
 		assertEquals("😎", rm.getEmojiCode());
 		rm.removeReaction();
 		assertEquals("N/A", rm.getEmojiCode());
+		URL url;
+		try
+		{
+			url = new URL("https://images.com");
+			rm.addReaction(url);
+			assertEquals(url, rm.getCustomImg());
+			rm.removeReaction();
+			assertEquals("https://N/A.com",rm.getCustomImg().toString());
+		} catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		rm.addReaction("😎");
+		
 	}
 
 }

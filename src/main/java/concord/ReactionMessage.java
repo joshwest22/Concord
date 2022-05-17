@@ -1,5 +1,6 @@
 package concord;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,11 +114,30 @@ public class ReactionMessage extends Message implements Reactable
 		//OR just set the emojiCode and customImg properties if msg is already a reactionMessage
 		
 	}
+	
+	@Override
+	public void addReaction(URL customImgURL)
+	{
+		this.setCustomImg(customImgURL);
+		System.out.println("User ID: "+this.getSentBy()+" reacted to "+this.getMessage().getText()+" with "+this.getCustomImg());
+
+	}
 
 	@Override
 	public void removeReaction()
 	{
 		this.setEmojiCode("N/A");
+		URL imgurl;
+		try
+		{
+			imgurl = new URL("https://N/A.com");
+			this.setCustomImg(imgurl);
+		} catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println("User ID: "+this.getSentBy()+" removed their reaction to "+this.getMessage().getText());
 		
 	}
