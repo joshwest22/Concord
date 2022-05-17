@@ -16,8 +16,7 @@ import concord.User;
 class ChannelTest
 {
 	Group group = new Group(653,"testingGroup");
-	//ArrayList<Message> msgLog = new ArrayList<Message>();
-	ArrayList<ReactionMessage> msgLog = new ArrayList<ReactionMessage>();
+	ArrayList<Message> msgLog = new ArrayList<Message>();
 	ArrayList<Integer> allowedUsers = new ArrayList<Integer>();
 	Channel channel = new Channel("main", group, false, allowedUsers, msgLog);
 	@BeforeAll

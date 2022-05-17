@@ -57,46 +57,6 @@ public class MainPageController {
     {
     	this.model = model;
     	groupListView.setItems(model.getClientModel().getGroupList());
-    	
-    	//this has to work for groups to show up!!//TODO
-    	//concurrent modification error => use Platform.runLater
-    	Platform.runLater(()->
-    	{
-//        	//was getAssociatedGroupIDs; switch to observable list and let it update dynamically
-//    		model.getClientModel()
-//    		.getGroupList()
-//    		.addListener((ListChangeListener<Group>)e ->
-//        	{
-//        		//clear list
-//    			model.getClientModel().getGroupList().clear();
-//        		for(Group group:model.getClientModel()
-//        				.getGroupList())
-//        		{
-//            		
-//        			//check through every group and update any changes
-//        			model.getClientModel().getGroupList().add(group);
-//            	}	
-//        	});
-    	});
-    	
-    	//after login re-draw buttons with the contents of the for loop
-    	if (model.getClientModel().getAssociatedUser().getOnlineStatus() == true)
-    	{
-//    		model.getClientModel()
-//    		.getGroupList()
-//    		.addListener((ListChangeListener<Group>)e ->
-//        	{
-//        		//clear list
-//    			model.getClientModel().getGroupList().clear();
-//    			
-//        		for(Group group:model.getClientModel()
-//        				.getGroupList())
-//        		{
-//        			//check through every group and update any changes
-//        			model.getClientModel().getGroupList().add(group);
-//            	}	
-//        	}); //was getAssociatedGroupIDs; switch to observable list and let it update dynamically
-    	}
     }
 
 }

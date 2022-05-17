@@ -213,8 +213,7 @@ public class Database implements Serializable
 			//call channel's displayAllMessages
 			if (c.getChannelName() == channelName)
 			{
-				//ArrayList<Message> msgLog = c.getMessageLog();
-				ArrayList<ReactionMessage> msgLog = c.getMessageLog();
+				ArrayList<Message> msgLog = c.getMessageLog();
 				ArrayList<Message> clearedMsgList = new ArrayList<Message>();
 				  for (Message m : msgLog)
 				  {

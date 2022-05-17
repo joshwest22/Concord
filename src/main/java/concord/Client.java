@@ -370,7 +370,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 		for (Channel c : channelsList)
 		{
 			//add every message in every channel in this group to client version
-			for (ReactionMessage m : c.getMessageLog())
+			for (Message m : c.getMessageLog())
 			{
 				//add server messages to local client messages; "pull request"
 				//Might need help getting the next line to NOT be redundant
@@ -412,7 +412,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	}
 
 	@Override
-	public ArrayList<ReactionMessage> viewChannelMessages(String channelName, Integer userID, Integer groupID)
+	public ArrayList<Message> viewChannelMessages(String channelName, Integer userID, Integer groupID)
 			throws RemoteException
 	{
 		return serverContact.viewChannelMessages(channelName, userID, groupID);
@@ -512,7 +512,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	}
 
 	@Override
-	public void sendMessage(ReactionMessage message, Integer groupID, String channelName) throws RemoteException
+	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException
 	{
 		serverContact.sendMessage(message, groupID, channelName);
 	}

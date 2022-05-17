@@ -8,7 +8,7 @@ public class Channel
 	Group myGroup;
 	Boolean isLocked = false;
 	ArrayList<Integer> allowedUserIDs;
-	ArrayList<ReactionMessage> messageLog;
+	ArrayList<Message> messageLog;
 	//ArrayList<ReactionMessage> reactionMessageLog;
 	
 	public Channel()
@@ -21,12 +21,12 @@ public class Channel
 		this.allowedUserIDs = allowedUsers;
 //		ArrayList<Message> msgs = new ArrayList<Message>();
 //		this.messageLog = msgs;
-		ArrayList<ReactionMessage> msgs = new ArrayList<ReactionMessage>();
+		ArrayList<Message> msgs = new ArrayList<Message>();
 		this.messageLog = msgs;
 	}
 	
 	public Channel(String channelName, Group myGroup, Boolean isLocked, ArrayList<Integer> allowedUsers,
-			ArrayList<ReactionMessage> messageLog)
+			ArrayList<Message> messageLog)
 	{
 		this.channelName = channelName;
 		this.myGroup = myGroup;
@@ -42,8 +42,7 @@ public class Channel
 		this.myGroup = myGroup;
 		this.isLocked = false;
 		this.allowedUserIDs = new ArrayList<Integer>();
-		//this.messageLog = new ArrayList<Message>();
-		this.messageLog = new ArrayList<ReactionMessage>();
+		this.messageLog = new ArrayList<Message>();
 	}
 
 	public String getChannelName()
@@ -86,12 +85,12 @@ public class Channel
 		this.allowedUserIDs = allowedUsers;
 	}
 
-	public ArrayList<ReactionMessage> getMessageLog()
+	public ArrayList<Message> getMessageLog()
 	{
 		return messageLog;
 	}
 
-	public void setMessageLog(ArrayList<ReactionMessage> messageLog)
+	public void setMessageLog(ArrayList<Message> messageLog)
 	{
 		this.messageLog = messageLog;
 	}
@@ -99,17 +98,17 @@ public class Channel
 	public void sendNewMessage(Message m)
 	{
 		//convert m to reactionMessage
-		ReactionMessage rm = new ReactionMessage();
-		rm.setInReplyTo(m.getInReplyTo());
-		rm.setIsPinned(m.getIsPinned());
-		rm.setSentByUserID(m.getSentBy());
-		rm.setText(m.getText());
-		rm.setTimestamp(m.getTimestamp());
+//		ReactionMessage rm = new ReactionMessage();
+//		rm.setInReplyTo(m.getInReplyTo());
+//		rm.setIsPinned(m.getIsPinned());
+//		rm.setSentByUserID(m.getSentBy());
+//		rm.setText(m.getText());
+//		rm.setTimestamp(m.getTimestamp());
 		//add Message to messageLog
-		//messageLog.add(m);//pre reaction message code
-		messageLog.add(rm);
+		messageLog.add(m);
+		//messageLog.add(rm);
 	}
-	public ArrayList<ReactionMessage> displayAllMessages(Integer userID)
+	public ArrayList<Message> displayAllMessages(Integer userID)
 	{
 		return getMessageLog();
 	}

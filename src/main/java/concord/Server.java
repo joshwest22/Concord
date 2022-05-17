@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import javafx.application.Platform;
+
 public class Server extends UnicastRemoteObject implements RMIObserved
 {
 	private Database db;
@@ -201,7 +203,55 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 	public String updateNewGroup()
 	{
-		//TODO add code previously in mainpagecontroller
+		for (RMIObserver o : observers)
+		{
+//			try
+//			{
+				//concurrent modification error => use Platform.runLater
+//		    	Platform.runLater(()->
+//		    	{
+//		        	//was getAssociatedGroupIDs; switch to observable list and let it update dynamically
+//		    		o.getGroupList()
+//		    		.addListener((ListChangeListener<Group>)e ->
+//		        	{
+//		        		//clear list
+//		    			model.getClientModel().getGroupList().clear();
+//		        		for(Group group:model.getClientModel()
+//		        				.getGroupList())
+//		        		{
+//		            		
+//		        			//check through every group and update any changes
+//		        			model.getClientModel().getGroupList().add(group);
+//		            	}	
+//		        	});
+//		    	});
+//		    	
+//		    	//after login re-draw buttons with the contents of the for loop
+//		    	if (model.getClientModel().getAssociatedUser().getOnlineStatus() == true)
+//		    	{
+//		    		model.getClientModel()
+//		    		.getGroupList()
+//		    		.addListener((ListChangeListener<Group>)e ->
+//		        	{
+//		        		//clear list
+//		    			model.getClientModel().getGroupList().clear();
+//		    			
+//		        		for(Group group:model.getClientModel()
+//		        				.getGroupList())
+//		        		{
+//		        			//check through every group and update any changes
+//		        			model.getClientModel().getGroupList().add(group);
+//		            	}	
+//		        	}); //was getAssociatedGroupIDs; switch to observable list and let it update dynamically
+//		    	}
+//			} catch (RemoteException e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
+		return "New group created";
+		
 	}
 	@Override
 	public String updateNewMessage(Integer groupID)
@@ -238,9 +288,9 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 	}
 
 	@Override
-	public ArrayList<ReactionMessage> viewChannelMessages(String channelName, Integer userID, Integer groupID)
+	public ArrayList<Message> viewChannelMessages(String channelName, Integer userID, Integer groupID)
 	{
-		ArrayList<ReactionMessage> messages = db.getGroup(groupID).getChannelByName(channelName).displayAllMessages(userID);
+		ArrayList<Message> messages = db.getGroup(groupID).getChannelByName(channelName).displayAllMessages(userID);
 		return messages;
 	}
 	
@@ -412,7 +462,7 @@ public class Server extends UnicastRemoteObject implements RMIObserved
 
 
 	@Override
-	public void sendMessage(ReactionMessage message, Integer groupID, String channelName) throws RemoteException
+	public void sendMessage(Message message, Integer groupID, String channelName) throws RemoteException
 	{
 		//db.getUser(message.getSentBy()).sendMessage(message)
 		db.getGroup(groupID).getChannelByName(channelName).getMessageLog().add(message);

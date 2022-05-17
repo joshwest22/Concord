@@ -25,7 +25,7 @@ class RoleTest
 	static User overlord;
 	static URL pfp;
 	static Channel channel;
-	static ArrayList<ReactionMessage> msgLog;
+	static ArrayList<Message> msgLog;
 	@BeforeAll
 	static void setUp() throws Exception
 	{
@@ -40,7 +40,7 @@ class RoleTest
 		testGroup.addNewUser(overlord,noob, basic);
 		testGroup.addNewUser(overlord,expert, admin);
 		channel = new Channel("testChannel", testGroup);
-		msgLog = new ArrayList<ReactionMessage>();
+		msgLog = new ArrayList<Message>();
 		channel.setMessageLog(msgLog);
 	}
 
