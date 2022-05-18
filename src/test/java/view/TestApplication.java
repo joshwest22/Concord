@@ -77,6 +77,14 @@ public class TestApplication
 		robot.clickOn("#createAccountButton");
 		Assertions.assertThat(robot.lookup("#createAccountLabel").queryAs(Label.class)).hasText("One or more field empty, try again");	
 		robot.clickOn("#backButton");
+		try
+		{
+			Thread.sleep(1500);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		//happy path
 		robot.clickOn("#makeAccountButton");
@@ -88,7 +96,15 @@ public class TestApplication
 		robot.write("Password");
 		robot.clickOn("#createAccountButton");
 		//The assert below works and was used to fix bugs, but causes the next test to crash if enabled as page switches too quickly for text to be read
-		//Assertions.assertThat(robot.lookup("#createAccountLabel").queryAs(Label.class)).hasText("Welcome Username!");		
+		//Assertions.assertThat(robot.lookup("#createAccountLabel").queryAs(Label.class)).hasText("Welcome Username!");
+		try
+		{
+			Thread.sleep(1500);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void testLogin(FxRobot robot)
@@ -132,6 +148,14 @@ public class TestApplication
 	
 	public void testGroup(FxRobot robot)
 	{
+		try
+		{
+			Thread.sleep(2000);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//create group
 		robot.clickOn("#createGroupButton"); 
 		robot.clickOn("#serverNameTextField");
@@ -149,20 +173,49 @@ public class TestApplication
 		}
 		assertEquals(1,myClient.getGroupList().size());
 		assertNumGroups(1,robot);
-		try
-		{
-			Thread.sleep(2000);
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		robot.clickOn("#createGroupButton"); 
 		robot.clickOn("#serverNameTextField");
 		robot.write("mySecondGroup");
 		robot.clickOn("#serverIDTextField");
 		robot.write("18");
 		robot.clickOn("#enterButton");
+		try
+		{
+			Thread.sleep(1500);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		robot.clickOn("#myProfileButton");
+//		try
+//		{
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		robot.clickOn("#viewProfileCloseButton");
+		robot.clickOn("#viewInvitesButton");
+		try
+		{
+			Thread.sleep(1000);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		robot.clickOn("#backButton");
+		try
+		{
+			Thread.sleep(1000);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//click on group; may need to change based on listview instead of button
 		robot.clickOn("myFirstGroup"); //directly look for button by text
 		//create unlocked channel

@@ -15,7 +15,7 @@
    <top>
       <HBox prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #36393F; -fx-border-radius: 25;" BorderPane.alignment="CENTER">
          <children>
-            <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="39.0" prefWidth="156.0" text="Back" />
+            <Button id="backButton" fx:id="backButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="39.0" prefWidth="156.0" styleClass="backButton" stylesheets="@stylesheet.css" text="Back" />
             <Label contentDisplay="CENTER" prefHeight="98.0" prefWidth="612.0" text="Invitations" textFill="WHITE">
                <font>
                   <Font size="24.0" />
@@ -63,13 +63,16 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <TextArea fx:id="InvitationTextArea" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #c1bfbf; -fx-background-radius: 10px;" text="NEW Group Invite!&#10;From: BadBoy Bradshaw&#10;Group: CoolTable">
+                  <TextArea fx:id="InvitationTextArea" style="-fx-background-color: #c1bfbf; -fx-background-radius: 10px;" text="NEW Group Invite!&#10;From: BadBoy Bradshaw&#10;Group: CoolTable">
                      <font>
                         <Font size="16.0" />
                      </font>
                      <padding>
                         <Insets left="10.0" />
                      </padding>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </GridPane.margin>
                   </TextArea>
                </children>
             </GridPane>

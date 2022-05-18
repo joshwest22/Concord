@@ -15,15 +15,15 @@
          <children>
             <VBox prefHeight="54.0" prefWidth="123.0">
                <children>
-                  <Button id="myProfileButton" fx:id="myProfileButton" mnemonicParsing="false" onAction="#onClickMyProfile" text="My Profile" textFill="#8e869f">
+                  <Button id="myProfileButton" fx:id="myProfileButton" mnemonicParsing="false" onAction="#onClickMyProfile" stylesheets="@stylesheet.css" text="My Profile" textFill="#8e869f">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin></Button>
-                  <Button id="viewInvitesButton" fx:id="viewInvitesButton" mnemonicParsing="false" onAction="#onClickViewInvites" text="View Invites" textFill="#8e869f">
+                  <Button id="viewInvitesButton" fx:id="viewInvitesButton" mnemonicParsing="false" onAction="#onClickViewInvites" stylesheets="@stylesheet.css" text="View Invites" textFill="#8e869f">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin></Button>
-                  <Button id="createGroupButton" fx:id="createGroupButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickCreateGroupButton" text="Create Group" textFill="#8e869f">
+                  <Button id="createGroupButton" fx:id="createGroupButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickCreateGroupButton" stylesheets="@stylesheet.css" text="Create Group" textFill="#8e869f">
                      <VBox.margin>
                         <Insets left="5.0" />
                      </VBox.margin></Button>
@@ -45,6 +45,6 @@
       </HBox>
    </top>
    <center>
-      <ListView id="groupListView" fx:id="groupListView" onMouseClicked="#groupViewClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView id="groupListView" fx:id="groupListView" onMouseClicked="#groupViewClicked" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #442F74;" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
