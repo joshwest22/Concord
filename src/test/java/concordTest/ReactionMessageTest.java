@@ -26,13 +26,20 @@ class ReactionMessageTest
 	@Test
 	void testDisplayMessage()
 	{
-		assertEquals("UserID 23: SoloSprint Reaction: 😎",rm.displayMessage());
+		ReactionMessage reactionm = new ReactionMessage();
+		Message m = new Message("mensaje",67);
+		rm.setMessage(m);
+		rm.setEmojiCode("😁");
+		assertEquals("UserID 67: mensaje Reaction: 😁",rm.displayMessage());
 	}
 
 	@Test
 	void testGetMessage()
 	{
-		assertEquals("SoloSprint",rm.getMessage().getText());
+		ReactionMessage newrm = new ReactionMessage();
+		Message m = new Message("test",24);
+		rm.setMessage(m);
+		assertEquals("test",rm.getMessage().getText());
 	}
 
 	@Test
@@ -66,20 +73,20 @@ class ReactionMessageTest
 		rm.setEmojiCode("😎");
 	}
 
-//	@Test
-//	void testGetSentByUserID()
-//	{
-//		assertEquals(23,rm.getSentByUserID());
-//	}
-//
-//	@Test
-//	void testSetSentByUserID()
-//	{
-//		assertEquals(23,rm.getSentByUserID());
-//		rm.setSentByUserID(42);
-//		assertEquals(42,rm.getSentByUserID());
-//		rm.setSentByUserID(23);
-//	}
+	@Test
+	void testGetSentByUserID()
+	{
+		assertEquals(23,rm.getSentByUserID());
+	}
+
+	@Test
+	void testSetSentByUserID()
+	{
+		assertEquals(23,rm.getSentByUserID());
+		rm.setSentByUserID(42);
+		assertEquals(42,rm.getSentByUserID());
+		rm.setSentByUserID(23);
+	}
 //
 //	@Test
 //	void testGetEmojiList()

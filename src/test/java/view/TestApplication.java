@@ -157,6 +157,12 @@ public class TestApplication
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		robot.clickOn("#createGroupButton"); 
+		robot.clickOn("#serverNameTextField");
+		robot.write("mySecondGroup");
+		robot.clickOn("#serverIDTextField");
+		robot.write("18");
+		robot.clickOn("#enterButton");
 		//click on group; may need to change based on listview instead of button
 		robot.clickOn("myFirstGroup"); //directly look for button by text
 		//create unlocked channel
@@ -241,7 +247,7 @@ public class TestApplication
 	public void testApp(FxRobot robot)
 	{
 		//comment/uncomment to add or remove section of testing
-		//testCreateAccount(robot);
+		testCreateAccount(robot);
 		testLogin(robot);
 		testGroup(robot);
 	}

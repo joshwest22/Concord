@@ -50,6 +50,18 @@ public class ReactionMessage extends Message implements Reactable
 		return message;
 	}
 
+	@Override
+	public String getText()
+	{
+		return this.getMessage().getText();
+	}
+
+	@Override
+	public void setText(String text)
+	{
+		this.getMessage().setText(text);
+	}
+
 	public void setMessage(Message message)
 	{
 		this.message = message;
@@ -67,12 +79,12 @@ public class ReactionMessage extends Message implements Reactable
 
 	public Integer getSentByUserID()
 	{
-		return sentByUserID;
+		return this.getMessage().getSentBy();
 	}
 
 	public void setSentByUserID(Integer sentByUserID)
 	{
-		this.sentByUserID = sentByUserID;
+		this.getMessage().setSentBy(sentByUserID);
 	}
 
 	public ArrayList<String> getEmojiList()
@@ -109,6 +121,7 @@ public class ReactionMessage extends Message implements Reactable
 	public void addReaction(String emojiReaction)
 	{
 		this.setEmojiCode(emojiReaction);
+		this.setText(this.setDisplayReactionMessage(emojiReaction));
 		System.out.println("User ID: "+this.getSentBy()+" reacted to "+this.getMessage().getText()+" with "+this.getEmojiCode());
 		//this has to either convert existing message into reactionMessage and then set emojiCode or customImg
 		//OR just set the emojiCode and customImg properties if msg is already a reactionMessage
@@ -119,6 +132,7 @@ public class ReactionMessage extends Message implements Reactable
 	public void addReaction(URL customImgURL)
 	{
 		this.setCustomImg(customImgURL);
+		this.setText(this.setDisplayReactionMessage(customImgURL.toString()));
 		System.out.println("User ID: "+this.getSentBy()+" reacted to "+this.getMessage().getText()+" with "+this.getCustomImg());
 
 	}
@@ -146,6 +160,22 @@ public class ReactionMessage extends Message implements Reactable
 	public String displayMessage()
 	{
 		return "UserID "+this.getMessage().getSentBy()+": "+this.getMessage().getText()+" Reaction: "+this.getEmojiCode();
+	}
+	
+	public String setDisplayReactionMessage(String reaction)
+	{
+		if(this.displayMessage().contains("Reaction: "))
+		{
+			int lenDisplayMsg = this.displayMessage().length();
+			return "UserID "+this.getMessage().getSentBy()+": "+this.displayMessage().substring(6+this.getSentByUserID().toString().length()+2,lenDisplayMsg-12)+"Reaction: "+reaction;
+
+		}
+		else
+		{
+			System.out.println("UserID "+this.getMessage().getSentBy()+": "+this.getMessage().getText()+" Reaction: "+reaction);
+			return "UserID "+this.getMessage().getSentBy()+": "+this.getMessage().getText()+" Reaction: "+reaction;
+		}
+		
 	}
 
 

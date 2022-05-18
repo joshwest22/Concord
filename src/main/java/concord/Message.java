@@ -96,4 +96,9 @@ public class Message
 	{
 		return this.toString();
 	}
+	
+	public String setDisplayReactionMessage(String reactionCode)
+	{
+		return "UserID "+this.getSentBy()+": "+this.getText()+" Reaction: "+reactionCode;
+	}
 }

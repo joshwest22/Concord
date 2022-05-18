@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import concord.Channel;
 import concord.Group;
 import concord.Message;
-import concord.ReactionMessage;
 import concord.User;
 
 class ChannelTest

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import mainapplication.ViewTransitionalModelInterface;
 
@@ -29,11 +30,6 @@ public class MainPageController {
     @FXML
     private ListView<Group> groupListView;
 
-    @FXML
-    void onClickGroupButton(ActionEvent event) 
-    {
-    	//GroupButton now handles logic
-    }
     
     @FXML
     void onClickViewInvites(ActionEvent event) 
@@ -51,6 +47,13 @@ public class MainPageController {
     void onClickCreateGroupButton(ActionEvent event) 
     {
     	this.model.showCreateGroupView();
+    }
+    
+    @FXML
+    void groupViewClicked(MouseEvent event) 
+    {
+    	Group group = groupListView.getSelectionModel().getSelectedItem();
+    	System.out.println(group+ " was clicked");
     }
     
     public void setModel(ViewTransitionalModelInterface model)

@@ -36,6 +36,6 @@ class MessageTest
 	@Test
 	void testToString()
 	{
-		assertEquals("UserID 42: HelloWorld @2022-09-01 09:01:15.0",m.toString());
+		assertEquals("UserID 42: HelloWorld",m.toString());
 	}
 }

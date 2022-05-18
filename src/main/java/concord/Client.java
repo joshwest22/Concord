@@ -192,7 +192,7 @@ public class Client extends UnicastRemoteObject implements RMIObserver, Serializ
 	{
 		try
 		{
-			ReactionMessage msg = (ReactionMessage) this.getAssociatedUser().sendMessage(message);
+			Message msg = this.getAssociatedUser().sendMessage(message);
 			this.getServerContact().sendMessage(msg, currentSelectedGroupID, currentSelectedChannelName);
 		} catch (RemoteException e)
 		{

@@ -365,7 +365,7 @@ class ServerTest
 		Group group = server.getGroup(50);
 		Channel channel = group.getChannelByName("patriotism");
 		//user sends a message in a channel
-		server.sendMessage((ReactionMessage) ol.sendMessage("hello world"), group.getGroupID(), channel.getChannelName());
+		server.sendMessage(ol.sendMessage("hello world"), group.getGroupID(), channel.getChannelName());
 		assertEquals("hello world",channel.getMessageLog().get(2).getText());
 	}
 
